@@ -1,483 +1,1250 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlipWala</title>
-  <meta name="description" content="Empire Flippers-style brokerage for the South Asian diaspora and first-time digital asset buyers. Deal sourcing, due diligence, and buyer matching — powered by AI.">
-  <style>:root {
-  --bg: #efe6da;
-  --panel: rgba(255, 250, 244, 0.86);
-  --ink: #181413;
-  --muted: #6d635c;
-  --line: rgba(55, 34, 18, 0.12);
-  --accent: #bb6127;
-  --hero: linear-gradient(135deg, #ca7231 0%, #efbc82 48%, #f7e9d0 100%);
-  --shadow: 0 24px 70px rgba(34, 22, 10, 0.14);
-  --radius-xl: 34px;
-  --radius-lg: 24px;
-  --radius-md: 18px;
-  --radius-pill: 999px;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
-  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "SF Mono", ui-monospace, monospace;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlipWala — Digital Asset Brokerage</title>
+<meta name="description" content="FlipWala: The digital asset broker for the South Asian diaspora and first-time digital business buyers. Buy, sell, and flip digital businesses with confidence.">
+<style>
+:root{
+  --bg:#171a1d;--panel:rgba(29,34,39,0.92);--ink:#f3ede6;--muted:#9e9890;
+  --line:rgba(255,255,255,0.08);--accent:#e38540;--accent2:#d4742f;
+  --green:#34d399;--red:#f87171;--blue:#60a5fa;
+  --card:rgba(35,40,46,0.85);--card-hover:rgba(42,48,55,0.95);
+  --radius:16px;--radius-lg:24px;--radius-pill:999px;
+  --font:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  --mono:'SF Mono','Cascadia Code','Consolas',monospace;
+  --wa:#25D366;
+  --inr-rate:83.5;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{cursor:pointer;font-family:var(--font)}
+input,select,textarea{font-family:var(--font)}
+.hidden{display:none!important}
 
-* {
-  box-sizing: border-box;
+/* NAV */
+.topnav{position:sticky;top:0;z-index:1000;background:rgba(23,26,29,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 24px}
+.topnav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#f5c78a);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#171a1d}
+.brand-name{font-size:22px;font-weight:800;letter-spacing:-0.03em}
+.brand-name span{color:var(--accent)}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{padding:8px 14px;border-radius:var(--radius);font-size:14px;font-weight:600;color:var(--muted);transition:.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);background:rgba(255,255,255,0.06);text-decoration:none}
+.nav-wa{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-pill);background:var(--wa);color:#fff;font-size:13px;font-weight:700;border:none;text-decoration:none!important}
+.nav-wa:hover{background:#1db954;text-decoration:none!important}
+.mobile-toggle{display:none;background:none;border:none;color:var(--ink);font-size:24px;padding:8px}
+
+/* SECTIONS */
+.section{max-width:1280px;margin:0 auto;padding:60px 24px}
+.section-label{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-title{font-size:36px;font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px}
+.section-sub{color:var(--muted);font-size:16px;max-width:600px;margin-bottom:32px}
+
+/* HERO */
+.hero-section{position:relative;overflow:hidden;padding:100px 24px 80px}
+.hero-section::before{content:'';position:absolute;top:-40%;right:-20%;width:80%;height:140%;background:radial-gradient(ellipse,rgba(227,133,64,0.12),transparent 60%);pointer-events:none}
+.hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:var(--radius-pill);background:rgba(227,133,64,0.12);border:1px solid rgba(227,133,64,0.25);font-size:13px;font-weight:600;color:var(--accent);margin-bottom:24px}
+.hero-h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-0.04em;line-height:1.05;max-width:14ch;margin-bottom:24px}
+.hero-h1 span{color:var(--accent)}
+.hero-p{font-size:20px;color:var(--muted);max-width:52ch;margin-bottom:36px;line-height:1.55}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-size:15px;font-weight:700;border:none;transition:.2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);text-decoration:none;color:#fff}
+.btn-outline{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-outline:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04);text-decoration:none}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-wa:hover{background:#1db954;text-decoration:none;color:#fff}
+.btn-sm{padding:10px 20px;font-size:13px}
+.hero-stats{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat-val{font-size:32px;font-weight:800;color:var(--accent)}
+.hero-stat-lbl{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;padding:16px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.filter-bar select,.filter-bar input{padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:14px;min-width:160px}
+.filter-bar select:focus,.filter-bar input:focus{outline:none;border-color:var(--accent)}
+.sort-bar{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.sort-btn{padding:8px 16px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;transition:.2s}
+.sort-btn:hover,.sort-btn.active{color:var(--ink);border-color:var(--accent);background:rgba(227,133,64,0.1)}
+
+/* LISTING CARDS */
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.listing-card{border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);padding:24px;transition:.25s;cursor:pointer;position:relative;overflow:hidden}
+.listing-card:hover{border-color:rgba(227,133,64,0.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.listing-badge{display:inline-block;padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+.badge-ecommerce{background:rgba(96,165,250,0.15);color:#60a5fa}
+.badge-saas{background:rgba(167,139,250,0.15);color:#a78bfa}
+.badge-content{background:rgba(251,191,36,0.15);color:#fbbf24}
+.badge-agency{background:rgba(52,211,153,0.15);color:#34d399}
+.badge-app{background:rgba(244,114,182,0.15);color:#f472b6}
+.badge-marketplace{background:rgba(248,113,113,0.15);color:#f87171}
+.badge-edtech{background:rgba(129,140,248,0.15);color:#818cf8}
+.badge-foodtech{background:rgba(251,146,60,0.15);color:#fb923c}
+.listing-name{font-size:20px;font-weight:700;margin-bottom:4px}
+.listing-desc{color:var(--muted);font-size:14px;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.listing-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.metric{padding:10px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04)}
+.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+.metric-val{font-size:16px;font-weight:700;margin-top:2px}
+.metric-val.revenue{color:var(--green)}
+.metric-val.price{color:var(--accent)}
+.listing-footer{display:flex;justify-content:space-between;align-items:center}
+.listing-age{font-size:13px;color:var(--muted)}
+.listing-margin{font-size:13px;font-weight:600;color:var(--green)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-lg);max-width:900px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:var(--ink);width:36px;height:36px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:1}
+.modal-close:hover{background:rgba(255,255,255,0.15)}
+.modal-header{padding:32px 32px 0;border-bottom:1px solid var(--line);padding-bottom:24px}
+.modal-body{padding:32px}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.modal-metric{padding:16px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line)}
+.modal-metric .metric-label{margin-bottom:4px}
+.modal-metric .metric-val{font-size:20px}
+.dd-checklist{list-style:none;margin:16px 0}
+.dd-checklist li{padding:8px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:14px}
+.dd-checklist li::before{content:'';width:18px;height:18px;border-radius:4px;border:2px solid var(--line);flex-shrink:0}
+.growth-story{padding:20px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);margin:16px 0;line-height:1.7;color:var(--muted)}
+
+/* SELL FORM */
+.sell-form{max-width:700px}
+.form-steps{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.form-step{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--line)}
+.form-step.active{color:var(--accent);border-color:var(--accent);background:rgba(227,133,64,0.1)}
+.form-step.done{color:var(--green);border-color:var(--green);background:rgba(52,211,153,0.1)}
+.form-step-num{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.form-step.active .form-step-num{background:var(--accent);color:#171a1d}
+.form-step.done .form-step-num{background:var(--green);color:#171a1d}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:15px}
+.form-group textarea{min-height:100px;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-hint{font-size:12px;color:var(--muted);margin-top:4px}
+.form-nav{display:flex;gap:12px;margin-top:32px}
+.confirmation-box{text-align:center;padding:48px 32px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.confirmation-box .deal-id{font-size:32px;font-weight:800;color:var(--accent);margin:16px 0}
+
+/* VALUATION CALC */
+.calc-container{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.calc-output{padding:32px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.val-range{font-size:28px;font-weight:800;color:var(--accent);margin:12px 0}
+.val-explain{color:var(--muted);font-size:14px;line-height:1.7;margin:16px 0}
+.comps-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
+.comps-table th{text-align:left;padding:10px;border-bottom:2px solid var(--line);color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.06em}
+.comps-table td{padding:10px;border-bottom:1px solid var(--line)}
+.currency-toggle{display:inline-flex;border-radius:var(--radius-pill);background:rgba(255,255,255,0.06);border:1px solid var(--line);overflow:hidden;margin-bottom:20px}
+.currency-toggle button{padding:8px 20px;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:13px;transition:.2s}
+.currency-toggle button.active{background:var(--accent);color:#fff}
+
+/* HOW IT WORKS */
+.hiw-tabs{display:flex;gap:8px;margin-bottom:32px}
+.hiw-tab{padding:12px 24px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--muted);font-weight:700;font-size:14px}
+.hiw-tab.active{background:rgba(227,133,64,0.1);border-color:var(--accent);color:var(--accent)}
+.steps-list{display:grid;gap:0;position:relative}
+.step{display:flex;gap:20px;padding:24px 0;position:relative}
+.step::before{content:'';position:absolute;left:23px;top:56px;bottom:0;width:2px;background:var(--line)}
+.step:last-child::before{display:none}
+.step-num{width:48px;height:48px;border-radius:50%;background:rgba(227,133,64,0.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--accent);flex-shrink:0;position:relative;z-index:1}
+.step-content h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.step-content p{color:var(--muted);font-size:14px}
+.step-context{margin-top:6px;font-size:13px;color:var(--accent);font-style:italic}
+
+/* ESCROW */
+.escrow-dashboard{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.escrow-tracker{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.escrow-step{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.escrow-step:last-child{border-bottom:none}
+.escrow-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid var(--line);flex-shrink:0}
+.escrow-dot.complete{background:var(--green);border-color:var(--green)}
+.escrow-dot.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px rgba(227,133,64,0.4)}
+.escrow-step-text{font-size:14px;font-weight:600}
+.escrow-step-sub{font-size:12px;color:var(--muted)}
+.escrow-fee-calc{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.fee-result{font-size:28px;font-weight:800;color:var(--accent);margin:12px 0}
+.trust-badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.trust-badge{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);font-size:13px;font-weight:600;color:var(--green)}
+.tx-history{margin-top:24px}
+.tx-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);margin-bottom:8px;border:1px solid rgba(255,255,255,0.04)}
+.tx-status{padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;text-transform:uppercase}
+.tx-complete{background:rgba(52,211,153,0.15);color:var(--green)}
+.tx-pending{background:rgba(251,191,36,0.15);color:#fbbf24}
+.tx-escrow{background:rgba(96,165,250,0.15);color:var(--blue)}
+
+/* PIPELINE */
+.pipeline{display:flex;gap:16px;overflow-x:auto;padding-bottom:16px}
+.pipeline-col{min-width:260px;flex:1;background:var(--card);border-radius:var(--radius-lg);border:1px solid var(--line);padding:16px}
+.pipeline-header{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.pipeline-count{width:24px;height:24px;border-radius:50%;background:rgba(227,133,64,0.15);color:var(--accent);font-size:12px;display:flex;align-items:center;justify-content:center}
+.pipeline-card{padding:14px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);margin-bottom:10px;cursor:grab}
+.pipeline-card:hover{border-color:rgba(227,133,64,0.2)}
+.pipeline-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.pipeline-card p{font-size:12px;color:var(--muted)}
+.pipeline-card .pipe-price{font-size:14px;font-weight:700;color:var(--accent);margin-top:6px}
+.add-to-pipeline{width:100%;padding:10px;border-radius:var(--radius);border:1px dashed var(--line);background:transparent;color:var(--muted);font-size:13px;margin-top:8px}
+.add-to-pipeline:hover{border-color:var(--accent);color:var(--accent)}
+
+/* COMMUNITY */
+.community-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.community-card{padding:28px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.community-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.community-card p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.testimonial{padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);margin-bottom:12px}
+.testimonial-text{font-style:italic;color:var(--muted);font-size:14px;margin-bottom:8px;line-height:1.6}
+.testimonial-author{font-size:13px;font-weight:600}
+.testimonial-role{font-size:12px;color:var(--muted)}
+
+/* FOOTER */
+.site-footer{border-top:1px solid var(--line);padding:48px 24px 32px;margin-top:40px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-brand{font-size:24px;font-weight:800;margin-bottom:8px}
+.footer-brand span{color:var(--accent)}
+.footer-desc{color:var(--muted);font-size:14px;margin-bottom:16px;max-width:300px}
+.footer-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px}
+.footer-col a{display:block;color:var(--ink);font-size:14px;padding:4px 0;opacity:0.8}
+.footer-col a:hover{opacity:1;color:var(--accent);text-decoration:none}
+.footer-bottom{max-width:1280px;margin:24px auto 0;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(23,26,29,0.98);flex-direction:column;padding:24px;gap:8px;z-index:999}
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:18px;padding:12px 16px}
+  .mobile-toggle{display:block}
+  .hero-h1{font-size:36px}
+  .calc-container,.escrow-dashboard,.modal-grid,.form-row{grid-template-columns:1fr}
+  .pipeline{flex-direction:column}
+  .pipeline-col{min-width:100%}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .listings-grid{grid-template-columns:1fr}
+  .filter-bar{flex-direction:column}
+  .filter-bar select,.filter-bar input{min-width:100%}
 }
-
-html,
-body {
-  margin: 0;
-  min-height: 100%;
-  background:
-    radial-gradient(circle at top left, rgba(255,255,255,0.58), transparent 28%),
-    radial-gradient(circle at 85% 10%, rgba(255,255,255,0.34), transparent 18%),
-    linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 90%, white 10%) 100%);
-  color: var(--ink);
-  font-family: var(--font-body);
-}
-
-body {
-  padding: 20px;
-}
-
-.frame {
-  width: min(1440px, 100%);
-  margin: 0 auto;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 42px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255,255,255,0.3);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: var(--hero);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
-}
-
-.brand-copy strong,
-.hero-title,
-.card-title,
-.section-title {
-  font-family: var(--font-display);
-}
-
-.brand-copy strong {
-  display: block;
-  font-size: 23px;
-  letter-spacing: -0.04em;
-}
-
-.brand-copy span {
-  display: block;
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.topbar-badges,
-.pill-row,
-.stats-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.pill,
-.badge,
-.stat-label {
-  font: 700 11px/1 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.badge,
-.pill {
-  padding: 9px 12px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.56);
-  color: var(--muted);
-}
-
-.shell {
-  display: grid;
-  grid-template-columns: 1.3fr 0.92fr;
-  gap: 22px;
-  padding: 24px;
-}
-
-.hero {
-  min-height: 360px;
-  border-radius: 30px;
-  background: var(--hero);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  right: -70px;
-  top: -50px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.52), transparent 66%);
-}
-
-.hero-kicker {
-  margin: 0 0 12px;
-  position: relative;
-  z-index: 1;
-  font: 700 12px/1 var(--font-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.74;
-}
-
-.hero-title {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  max-width: 12ch;
-  font-size: clamp(42px, 5.6vw, 82px);
-  line-height: 0.92;
-  letter-spacing: -0.06em;
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  max-width: 52ch;
-  font-size: 16px;
-  line-height: 1.58;
-  opacity: 0.88;
-}
-
-.stat-card {
-  min-width: 140px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.4);
-  border: 1px solid rgba(0,0,0,0.08);
-  position: relative;
-  z-index: 1;
-}
-
-.stat-label {
-  display: block;
-  opacity: 0.66;
-}
-
-.stat-value {
-  display: block;
-  margin-top: 8px;
-  font-size: 22px;
-  line-height: 1;
-}
-
-.stack {
-  display: grid;
-  gap: 18px;
-}
-
-.card {
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.54);
-  padding: 22px;
-}
-
-.section-title {
-  margin: 0;
-  font-size: 28px;
-  line-height: 0.96;
-  letter-spacing: -0.04em;
-}
-
-.card-copy,
-.feature-item span,
-.action-item span,
-.footer-note {
-  color: var(--muted);
-}
-
-.card-copy {
-  margin-top: 10px;
-  line-height: 1.55;
-}
-
-.feature-list,
-.action-list,
-.custom-area {
-  margin-top: 18px;
-  display: grid;
-  gap: 12px;
-}
-
-.feature-item,
-.action-item,
-.custom-box {
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.58);
-  padding: 16px;
-}
-
-.feature-item strong,
-.action-item strong,
-.custom-box strong {
-  display: block;
-  font-size: 16px;
-}
-
-.feature-item span,
-.action-item span,
-.custom-box span {
-  display: block;
-  margin-top: 6px;
-  line-height: 1.45;
-  font-size: 14px;
-}
-
-.custom-grid {
-  display: grid;
-  gap: 12px;
-}
-
-.custom-grid.two {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.selector-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.selector-pill {
-  padding: 8px 12px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.72);
-  font: 700 11px/1 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 18px 24px 24px;
-  border-top: 1px solid var(--line);
-}
-
-.footer-note {
-  font: 700 12px/1.45 var(--font-mono);
-}
-
-.gallery {
-  width: min(1440px, 100%);
-  margin: 0 auto;
-}
-
-.gallery-header {
-  margin-bottom: 24px;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.gallery-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  box-shadow: var(--shadow);
-  padding: 20px;
-}
-
-.gallery-card:hover {
-  transform: translateY(-2px);
-}
-
-.gallery-card h2 {
-  margin: 12px 0 0;
-  font: 700 30px/0.96 var(--font-display);
-  letter-spacing: -0.04em;
-}
-
-.gallery-card p {
-  margin: 10px 0 0;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-@media (max-width: 980px) {
-  .shell,
-  .custom-grid.two,
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-
-  body {
-    padding: 12px;
-  }
-
-  .frame {
-    border-radius: 26px;
-  }
+@media(max-width:600px){
+  .footer-inner{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+  .section{padding:40px 16px}
 }
 </style>
 </head>
 <body>
-  <main class="frame" style="--bg:#171a1d;--panel:rgba(29, 34, 39, 0.9);--ink:#f3ede6;--muted:#b7b1a9;--line:rgba(255, 255, 255, 0.08);--accent:#e38540;--hero:linear-gradient(135deg, #2c3138 0%, #454d55 30%, #e08b4f 100%);--shadow:0 28px 90px rgba(0, 0, 0, 0.34);">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true"></div>
-        <div class="brand-copy">
-          <strong>FlipWala</strong>
-          <span>The digital asset broker for South Asia and beyond.</span>
-        </div>
+
+<!-- NAV -->
+<nav class="topnav">
+<div class="topnav-inner">
+  <div class="brand" onclick="showSection('hero')">
+    <div class="brand-mark">FW</div>
+    <div class="brand-name">Flip<span>Wala</span></div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#" onclick="showSection('marketplace');return false">Marketplace</a>
+    <a href="#" onclick="showSection('sell');return false">Sell</a>
+    <a href="#" onclick="showSection('valuation');return false">Valuations</a>
+    <a href="#" onclick="showSection('hiw');return false">How It Works</a>
+    <a href="#" onclick="showSection('escrow');return false">Escrow</a>
+    <a href="#" onclick="showSection('pipeline');return false">Pipeline</a>
+    <a href="#" onclick="showSection('community');return false">Community</a>
+    <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
+  </div>
+  <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section" id="sec-hero">
+<div class="hero-inner">
+  <div class="hero-badge">&#127757; Trusted by 200+ digital business buyers across South Asia</div>
+  <h1 class="hero-h1">Buy, sell &amp; flip <span>digital businesses</span> with confidence.</h1>
+  <p class="hero-p">The digital asset broker built for the South Asian diaspora and first-time digital business buyers. From chai-cart eCommerce to EdTech SaaS -- we handle deal sourcing, due diligence, escrow, and ownership transfer.</p>
+  <div class="hero-actions">
+    <a href="#" onclick="showSection('marketplace');return false" class="btn btn-primary">Browse Marketplace</a>
+    <a href="#" onclick="showSection('sell');return false" class="btn btn-outline">Sell Your Business</a>
+    <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="btn btn-wa">&#9742; WhatsApp Us</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">&#8377;12Cr+</div><div class="hero-stat-lbl">Total Deal Volume</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">47</div><div class="hero-stat-lbl">Businesses Sold</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">94%</div><div class="hero-stat-lbl">Close Rate</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-lbl">Countries Served</div></div>
+  </div>
+</div>
+</section>
+
+<!-- MARKETPLACE -->
+<section class="section hidden" id="sec-marketplace">
+<div class="section-label">Marketplace</div>
+<h2 class="section-title">Active Listings</h2>
+<p class="section-sub">Vetted digital businesses ready for acquisition. Dual currency display for cross-border deals.</p>
+
+<div class="filter-bar">
+  <select id="filterType" onchange="filterListings()">
+    <option value="">All Business Types</option>
+    <option value="eCommerce">eCommerce</option>
+    <option value="SaaS">SaaS</option>
+    <option value="Content">Content</option>
+    <option value="Agency">Agency</option>
+    <option value="App">App</option>
+    <option value="Marketplace">Marketplace</option>
+    <option value="EdTech">EdTech</option>
+    <option value="FoodTech">FoodTech</option>
+  </select>
+  <select id="filterPrice" onchange="filterListings()">
+    <option value="">Any Price</option>
+    <option value="0-50">Under $50K / &#8377;40L</option>
+    <option value="50-150">$50K - $150K / &#8377;40L - &#8377;1.2Cr</option>
+    <option value="150-500">$150K - $500K / &#8377;1.2Cr - &#8377;4Cr</option>
+    <option value="500+">$500K+ / &#8377;4Cr+</option>
+  </select>
+  <select id="filterRegion" onchange="filterListings()">
+    <option value="">All Regions</option>
+    <option value="India">India</option>
+    <option value="Pakistan">Pakistan</option>
+    <option value="Bangladesh">Bangladesh</option>
+    <option value="Sri Lanka">Sri Lanka</option>
+    <option value="UAE">UAE</option>
+    <option value="US">US</option>
+    <option value="UK">UK</option>
+    <option value="Global">Global</option>
+  </select>
+  <input type="text" id="filterSearch" placeholder="Search listings..." oninput="filterListings()">
+</div>
+
+<div class="sort-bar">
+  <span style="font-size:13px;color:var(--muted);padding:8px 0">Sort by:</span>
+  <button class="sort-btn active" onclick="sortListings('price',this)">Price</button>
+  <button class="sort-btn" onclick="sortListings('revenue',this)">Revenue</button>
+  <button class="sort-btn" onclick="sortListings('multiple',this)">Multiple</button>
+  <button class="sort-btn" onclick="sortListings('newest',this)">Newest</button>
+</div>
+
+<div class="listings-grid" id="listingsGrid"></div>
+</section>
+
+<!-- SELL -->
+<section class="section hidden" id="sec-sell">
+<div class="section-label">Sell Your Business</div>
+<h2 class="section-title">List Your Digital Business</h2>
+<p class="section-sub">Get your business in front of qualified buyers across South Asia and beyond. Free valuation included.</p>
+
+<div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+<div class="sell-form" style="flex:1;min-width:300px">
+  <div class="form-steps" id="formSteps">
+    <div class="form-step active" data-step="1"><span class="form-step-num">1</span> Business</div>
+    <div class="form-step" data-step="2"><span class="form-step-num">2</span> Financials</div>
+    <div class="form-step" data-step="3"><span class="form-step-num">3</span> Growth</div>
+    <div class="form-step" data-step="4"><span class="form-step-num">4</span> Tech</div>
+    <div class="form-step" data-step="5"><span class="form-step-num">5</span> Why Selling</div>
+  </div>
+
+  <form id="sellForm" onsubmit="return false">
+  <!-- Step 1 -->
+  <div class="form-panel" data-step="1">
+    <div class="form-group"><label>Business Name</label><input type="text" id="sf_name" required placeholder="e.g. ChaiCart"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Business Type</label>
+        <select id="sf_type"><option>eCommerce</option><option>SaaS</option><option>Content</option><option>Agency</option><option>App</option><option>Marketplace</option><option>EdTech</option><option>FoodTech</option></select>
       </div>
-      <div class="topbar-badges">
-        <span class="badge">Brokerage</span><span class="badge">South Asia</span>
-      </div>
-    </header>
-    <section class="shell">
-      <section class="hero">
-        <div>
-          <p class="hero-kicker">flipwala.com</p>
-          <h1 class="hero-title">Buy, sell, and flip digital businesses with confidence.</h1>
-          <p class="hero-copy">Empire Flippers-style brokerage for the South Asian diaspora and first-time digital asset buyers. Deal sourcing, due diligence, and buyer matching — powered by AI.</p>
-        </div>
-        <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-label">Model</span>
-        <strong class="stat-value">Brokerage</strong>
-      </div>
-    
-      <div class="stat-card">
-        <span class="stat-label">Focus</span>
-        <strong class="stat-value">Digital Businesses</strong>
-      </div>
-    
-      <div class="stat-card">
-        <span class="stat-label">Market</span>
-        <strong class="stat-value">South Asia+</strong>
+      <div class="form-group"><label>Region</label>
+        <select id="sf_region"><option>India</option><option>Pakistan</option><option>Bangladesh</option><option>Sri Lanka</option><option>UAE</option><option>US</option><option>UK</option><option>Global</option></select>
       </div>
     </div>
-      </section>
-      <section class="stack">
-        <article class="card">
-          <h2 class="section-title">What We Offer</h2>
-          <p class="card-copy">End-to-end brokerage for digital businesses — from discovery to deal close, built for the South Asian market.</p>
-          <div class="feature-list">
-      <article class="feature-item">
-        <strong>Deal Sourcing</strong>
-        <span>Curated digital businesses and assets vetted for quality and potential.</span>
-      </article>
-    
-      <article class="feature-item">
-        <strong>AI Valuations</strong>
-        <span>Fair market pricing backed by revenue data and AI analysis.</span>
-      </article>
-    
-      <article class="feature-item">
-        <strong>Due Diligence</strong>
-        <span>Full verification of traffic, revenue, and technical health.</span>
-      </article>
-    
-      <article class="feature-item">
-        <strong>Buyer Matching</strong>
-        <span>Connect the right buyer to the right business, faster.</span>
-      </article>
+    <div class="form-group"><label>Business URL</label><input type="url" id="sf_url" placeholder="https://..."></div>
+    <div class="form-group"><label>Short Description</label><textarea id="sf_desc" placeholder="What does your business do?"></textarea></div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="form-panel hidden" data-step="2">
+    <div class="currency-toggle" id="sellCurrencyToggle">
+      <button type="button" class="active" onclick="setSellCurrency('INR',this)">&#8377; INR</button>
+      <button type="button" onclick="setSellCurrency('USD',this)">$ USD</button>
     </div>
-        </article>
-        <article class="card">
-          <h2 class="section-title">Coming Soon</h2>
-          <p class="card-copy">We're building something worth waiting for.</p>
-          <div class="action-list">
-      <article class="action-item">
-        <strong>WhatsApp Community</strong>
-        <span>Join the conversation where deals happen first.</span>
-      </article>
-    
-      <article class="action-item">
-        <strong>Weekly Listings</strong>
-        <span>Fresh digital business listings delivered to your inbox.</span>
-      </article>
-    
-      <article class="action-item">
-        <strong>Sell Your Asset</strong>
-        <span>List your digital business with our brokerage team.</span>
-      </article>
+    <div class="form-row">
+      <div class="form-group"><label>Monthly Revenue</label><input type="number" id="sf_revenue" placeholder="e.g. 320000"></div>
+      <div class="form-group"><label>Monthly Profit</label><input type="number" id="sf_profit" placeholder="e.g. 120000"></div>
     </div>
-        </article>
-      </section>
-    </section>
-    <section class="shell" style="padding-top:0">
-      <section class="card">
-        <h2 class="section-title">Get Started</h2>
-        <p class="card-copy">The digital asset broker for South Asia and beyond.</p>
-        
-        <div class="custom-area">
-          <article class="custom-box">
-            <strong>Join the Community</strong>
-            <span>Join our WhatsApp community of digital business buyers and sellers across South Asia and the diaspora.</span>
-            <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala%20%E2%80%94%20digital%20asset%20brokerage." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:12px 24px;border-radius:999px;background:#25D366;color:#fff;font:700 13px/1 var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;text-decoration:none">&#9742; Join on WhatsApp</a>
-          </article>
-          <article class="custom-box">
-            <strong>Stay Updated</strong>
-            <span>Get deal alerts and market insights delivered to your inbox.</span>
-            <form action="#" method="POST" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-              <input type="email" name="email" placeholder="your@email.com" required style="flex:1;min-width:200px;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,0.78);font:600 15px/1 var(--font-body);color:var(--ink);outline:none">
-              <button type="submit" style="padding:12px 24px;border-radius:999px;border:none;background:var(--accent);color:#fff;font:700 13px/1 var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;cursor:pointer">Subscribe</button>
-            </form>
-          </article>
+    <div class="form-row">
+      <div class="form-group"><label>Asking Price</label><input type="number" id="sf_asking" placeholder="e.g. 8500000"></div>
+      <div class="form-group"><label>Annual Revenue</label><input type="number" id="sf_annual" placeholder="e.g. 3840000"></div>
+    </div>
+    <div class="form-group"><label>Revenue Trend (last 6 months)</label>
+      <select id="sf_trend"><option>Growing (20%+)</option><option>Growing (10-20%)</option><option>Stable</option><option>Declining</option></select>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="form-panel hidden" data-step="3">
+    <div class="form-row">
+      <div class="form-group"><label>Monthly Unique Visitors</label><input type="number" id="sf_traffic" placeholder="e.g. 45000"></div>
+      <div class="form-group"><label>Email Subscribers</label><input type="number" id="sf_email_subs" placeholder="e.g. 12000"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Social Followers (total)</label><input type="number" id="sf_social" placeholder="e.g. 25000"></div>
+      <div class="form-group"><label>Monthly Growth Rate %</label><input type="number" id="sf_growth" placeholder="e.g. 8" step="0.1"></div>
+    </div>
+    <div class="form-group"><label>Traffic Sources</label><textarea id="sf_traffic_src" placeholder="e.g. 40% organic search, 30% social, 20% direct, 10% paid"></textarea></div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="form-panel hidden" data-step="4">
+    <div class="form-group"><label>Tech Stack</label><textarea id="sf_tech" placeholder="e.g. Shopify, React, Node.js, MongoDB, AWS..."></textarea></div>
+    <div class="form-group"><label>Team Size</label><input type="number" id="sf_team" placeholder="e.g. 3"></div>
+    <div class="form-group"><label>Weekly Hours Required</label><input type="number" id="sf_hours" placeholder="e.g. 15"></div>
+    <div class="form-group"><label>Key Dependencies</label><textarea id="sf_deps" placeholder="Any critical dependencies on specific people, platforms, or tools?"></textarea></div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="form-panel hidden" data-step="5">
+    <div class="form-group"><label>Why are you selling?</label><textarea id="sf_why" placeholder="New venture, relocation, lifestyle change..."></textarea></div>
+    <div class="form-group"><label>Ideal Buyer Profile</label><textarea id="sf_buyer" placeholder="Who would be the best buyer for this business?"></textarea></div>
+    <div class="form-group"><label>Contact Email</label><input type="email" id="sf_contact" required placeholder="you@email.com"></div>
+    <div class="form-group"><label>Contact WhatsApp (optional)</label><input type="tel" id="sf_whatsapp" placeholder="+91 98765 43210"></div>
+  </div>
+
+  <div class="form-nav">
+    <button type="button" class="btn btn-outline btn-sm hidden" id="sellPrev" onclick="sellStep(-1)">Back</button>
+    <button type="button" class="btn btn-primary btn-sm" id="sellNext" onclick="sellStep(1)">Next Step</button>
+  </div>
+  </form>
+
+  <div class="confirmation-box hidden" id="sellConfirm">
+    <div style="font-size:48px;margin-bottom:16px">&#10003;</div>
+    <h3 style="font-size:24px;font-weight:800;margin-bottom:8px">Listing Submitted!</h3>
+    <p style="color:var(--muted);margin-bottom:16px">Your deal has been registered. Our team will review and reach out within 48 hours.</p>
+    <div class="deal-id" id="dealIdDisplay">FW-000000</div>
+    <p style="color:var(--muted);font-size:14px;margin-top:16px">Save this deal ID for reference.</p>
+    <a href="https://wa.me/1234567890?text=Hi!%20My%20deal%20ID%20is%20" target="_blank" class="btn btn-wa" style="margin-top:20px">&#9742; Follow Up on WhatsApp</a>
+  </div>
+</div>
+
+<div style="max-width:320px">
+  <div style="padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);margin-bottom:20px">
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:8px">Prefer WhatsApp?</h3>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Skip the form. Message us directly with your business details and we will handle the rest.</p>
+    <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20to%20sell%20my%20digital%20business%20on%20FlipWala." target="_blank" class="btn btn-wa btn-sm" style="width:100%;justify-content:center">&#9742; Message on WhatsApp</a>
+  </div>
+  <div style="padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)">
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:12px">What happens next?</h3>
+    <div style="font-size:14px;color:var(--muted);line-height:1.7">
+      <p><strong style="color:var(--ink)">1.</strong> We review your submission (24-48 hrs)</p>
+      <p><strong style="color:var(--ink)">2.</strong> Free valuation call scheduled</p>
+      <p><strong style="color:var(--ink)">3.</strong> Listing goes live to qualified buyers</p>
+      <p><strong style="color:var(--ink)">4.</strong> We handle buyer matching &amp; negotiation</p>
+      <p><strong style="color:var(--ink)">5.</strong> Secure escrow &amp; ownership transfer</p>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- VALUATION -->
+<section class="section hidden" id="sec-valuation">
+<div class="section-label">Valuation Tool</div>
+<h2 class="section-title">Free Business Valuation</h2>
+<p class="section-sub">Get an instant estimate of what your digital business is worth. Based on real market multiples.</p>
+
+<div class="calc-container">
+<div>
+  <div class="currency-toggle" id="valCurrencyToggle">
+    <button type="button" class="active" onclick="setValCurrency('INR',this)">&#8377; INR</button>
+    <button type="button" onclick="setValCurrency('USD',this)">$ USD</button>
+  </div>
+  <div class="form-group"><label>Monthly Revenue</label><input type="number" id="vc_revenue" placeholder="e.g. 320000" oninput="calcValuation()"></div>
+  <div class="form-group"><label>Monthly Net Profit</label><input type="number" id="vc_profit" placeholder="e.g. 120000" oninput="calcValuation()"></div>
+  <div class="form-group"><label>Business Type</label>
+    <select id="vc_type" onchange="calcValuation()"><option>eCommerce</option><option>SaaS</option><option>Content</option><option>Agency</option><option>App</option><option>Marketplace</option><option>EdTech</option><option>FoodTech</option></select>
+  </div>
+  <div class="form-group"><label>Business Age (months)</label><input type="number" id="vc_age" placeholder="e.g. 24" oninput="calcValuation()"></div>
+  <div class="form-group"><label>Monthly Growth Rate %</label><input type="number" id="vc_growth" placeholder="e.g. 8" step="0.1" oninput="calcValuation()"></div>
+</div>
+
+<div>
+  <div class="calc-output" id="valOutput">
+    <h3 style="font-size:16px;font-weight:700;color:var(--muted)">Estimated Valuation Range</h3>
+    <div class="val-range" id="valRange">Enter your data to get a valuation</div>
+    <div id="valMultiple" style="font-size:14px;color:var(--muted)"></div>
+    <div class="val-explain" id="valExplain">
+      Fill in your business details on the left. We use industry-standard multiples adjusted for business type, age, growth rate, and profit margin to calculate a fair market range.
+    </div>
+  </div>
+  <div style="margin-top:24px">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">Comparable Recent Sales</h3>
+    <table class="comps-table">
+      <thead><tr><th>Business</th><th>Type</th><th>Revenue/mo</th><th>Sold For</th><th>Multiple</th></tr></thead>
+      <tbody id="compsBody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section hidden" id="sec-hiw">
+<div class="section-label">How It Works</div>
+<h2 class="section-title">Your Roadmap to a Successful Deal</h2>
+<p class="section-sub">Whether you are buying or selling, FlipWala handles the heavy lifting. Built for the South Asian market.</p>
+
+<div class="hiw-tabs">
+  <button class="hiw-tab active" onclick="showHiwTab('buyers',this)">For Buyers</button>
+  <button class="hiw-tab" onclick="showHiwTab('sellers',this)">For Sellers</button>
+</div>
+
+<div class="steps-list" id="hiwBuyers">
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Discover</h3><p>Browse vetted listings across eCommerce, SaaS, content, and more. Filter by region, price, and revenue.</p><div class="step-context">Listings include both INR and USD pricing for diaspora buyers.</div></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Evaluate</h3><p>Review full financials, traffic data, tech stack, and growth trajectory. Use our valuation tool to verify pricing.</p><div class="step-context">We verify revenue through bank statements, payment processor data, and analytics access.</div></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Due Diligence</h3><p>Our team conducts comprehensive due diligence: financial audit, traffic verification, legal review, and tech assessment.</p><div class="step-context">For cross-border deals, we coordinate with legal experts in India, UAE, and the US.</div></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Escrow &amp; Agreement</h3><p>Funds go into secure escrow. Both parties sign the Asset Purchase Agreement. No money moves until verification is complete.</p><div class="step-context">We support UPI, NEFT, wire transfers, and international payment methods.</div></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h3>Ownership Transfer</h3><p>Assets, accounts, and domains transfer with our team overseeing every step. 30-day post-sale support included.</p><div class="step-context">We provide a migration checklist customized for Indian hosting, GST, and domain registrars.</div></div></div>
+</div>
+
+<div class="steps-list hidden" id="hiwSellers">
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>List Your Business</h3><p>Submit your business details through our form or WhatsApp. We review and create a professional listing.</p><div class="step-context">Free listing -- we only earn when your deal closes.</div></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Free Valuation</h3><p>Our team analyzes your financials, traffic, and market position to determine fair market value.</p><div class="step-context">We benchmark against comparable sales in India and internationally.</div></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Marketing &amp; Exposure</h3><p>Your listing goes live to our network of qualified buyers across India, UAE, US, UK, and beyond.</p><div class="step-context">Featured listings get promoted in our weekly WhatsApp digest to 2,000+ subscribers.</div></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Buyer Match &amp; Negotiation</h3><p>We screen buyers, facilitate introductions, and help negotiate terms that work for both parties.</p><div class="step-context">NDA-protected -- buyer identities are verified before any data sharing.</div></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h3>Escrow &amp; Payout</h3><p>Deal closes through secure escrow. Funds released upon successful asset transfer verification.</p><div class="step-context">Payout directly to your Indian bank account, international wire, or crypto wallet.</div></div></div>
+</div>
+</section>
+
+<!-- ESCROW -->
+<section class="section hidden" id="sec-escrow">
+<div class="section-label">Escrow Center</div>
+<h2 class="section-title">Secure Transaction Management</h2>
+<p class="section-sub">Every deal goes through our secure escrow process. No funds move until both parties are satisfied.</p>
+
+<div class="escrow-dashboard">
+  <div>
+    <div class="escrow-tracker">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">Transaction Status Tracker</h3>
+      <div class="escrow-step"><div class="escrow-dot complete"></div><div><div class="escrow-step-text">Agreement Signed</div><div class="escrow-step-sub">Both parties sign the Asset Purchase Agreement</div></div></div>
+      <div class="escrow-step"><div class="escrow-dot complete"></div><div><div class="escrow-step-text">Buyer Deposit Received</div><div class="escrow-step-sub">Funds deposited into FlipWala escrow account</div></div></div>
+      <div class="escrow-step"><div class="escrow-dot active"></div><div><div class="escrow-step-text">Verification in Progress</div><div class="escrow-step-sub">Due diligence and asset verification underway</div></div></div>
+      <div class="escrow-step"><div class="escrow-dot"></div><div><div class="escrow-step-text">Asset Transfer</div><div class="escrow-step-sub">Domain, accounts, and assets transferred to buyer</div></div></div>
+      <div class="escrow-step"><div class="escrow-dot"></div><div><div class="escrow-step-text">Funds Released</div><div class="escrow-step-sub">Payment released to seller after buyer confirmation</div></div></div>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary btn-sm" onclick="alert('Escrow account linking will be available soon. Contact us on WhatsApp for current transactions.')">Link Escrow Account</button>
+    </div>
+
+    <div class="tx-history">
+      <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Transaction History</h3>
+      <div class="tx-row"><div><strong style="font-size:14px">FW-2024-0031</strong><div style="font-size:12px;color:var(--muted)">ChaiCart &bull; &#8377;85,00,000</div></div><span class="tx-status tx-complete">Completed</span></div>
+      <div class="tx-row"><div><strong style="font-size:14px">FW-2024-0042</strong><div style="font-size:12px;color:var(--muted)">TiffinTech &bull; $140,000</div></div><span class="tx-status tx-escrow">In Escrow</span></div>
+      <div class="tx-row"><div><strong style="font-size:14px">FW-2024-0047</strong><div style="font-size:12px;color:var(--muted)">CodeGuru Academy &bull; &#8377;1,80,00,000</div></div><span class="tx-status tx-pending">Pending</span></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="escrow-fee-calc">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">Escrow Fee Calculator</h3>
+      <div class="currency-toggle" id="escrowCurrToggle">
+        <button type="button" class="active" onclick="setEscrowCurrency('INR',this)">&#8377; INR</button>
+        <button type="button" onclick="setEscrowCurrency('USD',this)">$ USD</button>
+      </div>
+      <div class="form-group"><label>Deal Size</label><input type="number" id="escrowDealSize" placeholder="e.g. 8500000" oninput="calcEscrowFee()"></div>
+      <div class="fee-result" id="escrowFeeResult">--</div>
+      <div style="font-size:13px;color:var(--muted)" id="escrowFeeBreakdown">
+        Enter a deal size to see the escrow fee breakdown.
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge">&#128274; Secure Escrow</div>
+        <div class="trust-badge">&#9989; Verified Sellers</div>
+        <div class="trust-badge">&#128176; Insured Transactions</div>
+      </div>
+    </div>
+
+    <div style="padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);margin-top:20px">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">How Escrow Protects You</h3>
+      <ul style="list-style:none;font-size:14px;color:var(--muted);line-height:2">
+        <li>&#10003; Buyer funds held securely until all conditions met</li>
+        <li>&#10003; Seller verified through KYC and business documentation</li>
+        <li>&#10003; Asset transfer supervised by FlipWala team</li>
+        <li>&#10003; 30-day dispute resolution window</li>
+        <li>&#10003; Insurance coverage on transactions over &#8377;50L</li>
+        <li>&#10003; Multi-currency support (INR, USD, AED, GBP)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PIPELINE -->
+<section class="section hidden" id="sec-pipeline">
+<div class="section-label">Deal Pipeline</div>
+<h2 class="section-title">Your Deal Dashboard</h2>
+<p class="section-sub">Track your deals across every stage. Drag cards or use the action menu to move deals forward.</p>
+
+<div class="pipeline" id="pipelineBoard"></div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="section hidden" id="sec-community">
+<div class="section-label">Community</div>
+<h2 class="section-title">Join the FlipWala Network</h2>
+<p class="section-sub">Connect with digital business buyers and sellers across the South Asian diaspora.</p>
+
+<div class="community-grid">
+  <div class="community-card" style="border-color:rgba(37,211,102,0.3);background:linear-gradient(135deg,var(--card),rgba(37,211,102,0.05))">
+    <h3>&#128172; WhatsApp Community</h3>
+    <p>Join 2,000+ members discussing deals, sharing due diligence tips, and connecting with verified buyers and sellers.</p>
+    <a href="https://wa.me/1234567890?text=Hi!%20I%20want%20to%20join%20the%20FlipWala%20community" target="_blank" class="btn btn-wa btn-sm">&#9742; Join WhatsApp Group</a>
+  </div>
+
+  <div class="community-card">
+    <h3>&#128231; Weekly Deal Digest</h3>
+    <p>Fresh listings, market insights, and acquisition opportunities delivered every Thursday.</p>
+    <form onsubmit="digestSignup(event)" style="display:flex;gap:8px;margin-top:8px">
+      <input type="email" id="digestEmail" placeholder="your@email.com" required style="flex:1;padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:14px">
+      <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+    </form>
+    <div id="digestConfirm" class="hidden" style="margin-top:12px;color:var(--green);font-size:14px;font-weight:600">&#10003; You are subscribed! Check your inbox Thursday.</div>
+  </div>
+
+  <div class="community-card">
+    <h3>&#127891; Free Resources</h3>
+    <p>Guides, templates, and checklists for first-time digital business buyers.</p>
+    <ul style="list-style:none;font-size:14px;color:var(--muted);line-height:2;margin-top:8px">
+      <li><a href="#">&#128196; Due Diligence Checklist (PDF)</a></li>
+      <li><a href="#">&#128200; Valuation Guide for Indian Businesses</a></li>
+      <li><a href="#">&#128221; Asset Purchase Agreement Template</a></li>
+      <li><a href="#">&#127760; Cross-Border Deal Handbook</a></li>
+    </ul>
+  </div>
+</div>
+
+<div style="margin-top:40px">
+  <h3 style="font-size:20px;font-weight:700;margin-bottom:20px">What Our Clients Say</h3>
+  <div class="community-grid">
+    <div class="testimonial">
+      <div class="testimonial-text">"FlipWala made buying my first eCommerce business feel safe. The escrow process was smooth and the dual currency support was perfect since I was buying from the US for an India-based store."</div>
+      <div class="testimonial-author">Arjun P.</div>
+      <div class="testimonial-role">Bought ChaiCart &bull; Mumbai, India</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-text">"I listed my SaaS product and had 3 qualified offers within 2 weeks. The team handled everything from valuation to closing. Could not have done this on my own."</div>
+      <div class="testimonial-author">Priya S.</div>
+      <div class="testimonial-role">Sold CodeGuru Academy &bull; Bangalore, India</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-text">"As a first-generation NRI, finding a broker who understood both the Indian and American sides of cross-border digital deals was huge. FlipWala gets it."</div>
+      <div class="testimonial-author">Ravi M.</div>
+      <div class="testimonial-role">Buyer &bull; Dallas, TX / Hyderabad</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- LISTING DETAIL MODAL -->
+<div class="modal-overlay hidden" id="listingModal" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+  <button class="modal-close" onclick="closeModal()">&times;</button>
+  <div class="modal-header" id="modalHeader"></div>
+  <div class="modal-body" id="modalBody"></div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+<div class="footer-inner">
+  <div>
+    <div class="footer-brand">Flip<span>Wala</span></div>
+    <p class="footer-desc">The digital asset broker for the South Asian diaspora and first-time digital business buyers. Deal sourcing, due diligence, escrow, and ownership transfer.</p>
+    <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="btn btn-wa btn-sm">&#9742; WhatsApp Us</a>
+  </div>
+  <div class="footer-col">
+    <h4>Platform</h4>
+    <a href="#" onclick="showSection('marketplace');return false">Marketplace</a>
+    <a href="#" onclick="showSection('sell');return false">Sell Your Business</a>
+    <a href="#" onclick="showSection('valuation');return false">Valuations</a>
+    <a href="#" onclick="showSection('pipeline');return false">Deal Pipeline</a>
+  </div>
+  <div class="footer-col">
+    <h4>Resources</h4>
+    <a href="#" onclick="showSection('hiw');return false">How It Works</a>
+    <a href="#" onclick="showSection('escrow');return false">Escrow Center</a>
+    <a href="#" onclick="showSection('community');return false">Community</a>
+    <a href="#">Blog</a>
+  </div>
+  <div class="footer-col">
+    <h4>Regions</h4>
+    <a href="#">India</a>
+    <a href="#">Pakistan</a>
+    <a href="#">UAE</a>
+    <a href="#">US &amp; UK</a>
+  </div>
+</div>
+<div class="footer-bottom">
+  <span>&copy; 2026 FlipWala. All rights reserved.</span>
+  <span><a href="https://wa.me/1234567890" target="_blank">&#9742; WhatsApp</a> &bull; <a href="#">Privacy</a> &bull; <a href="#">Terms</a></span>
+</div>
+</footer>
+
+<script>
+/* ===== DATA ===== */
+const LISTINGS = [
+  {id:'fw001',name:'ChaiCart',type:'eCommerce',badge:'badge-ecommerce',desc:'Premium D2C chai and masala eCommerce brand with 15K monthly orders. Shopify-based, strong Instagram following.',
+   revenueINR:320000,profitINR:128000,askingINR:8500000,currency:'INR',region:'India',ageMonths:28,growthRate:12,
+   traffic:45000,emailSubs:8200,social:32000,margin:40,
+   techStack:'Shopify, Instagram Shop, Shiprocket, Razorpay',team:3,hours:15,
+   trafficSrc:'35% organic, 30% Instagram, 20% direct, 15% paid ads',
+   growthStory:'ChaiCart started as a pandemic project selling premium loose-leaf chai blends. Revenue has grown 12% month-over-month for the last 8 months, driven by a strong Instagram content strategy and repeat customers (42% repeat rate). The brand has been featured in YourStory and Economic Times.',
+   sellerBg:'Founded by a husband-wife team in Jaipur. Selling due to relocation to Canada. Willing to provide 60-day transition support.',
+   listed:'2026-03-15'},
+  {id:'fw002',name:'CodeGuru Academy',type:'EdTech',badge:'badge-edtech',desc:'Online coding bootcamp for Hindi-medium students. Live classes, recorded content, 2,400 active students.',
+   revenueINR:550000,profitINR:275000,askingINR:18000000,currency:'INR',region:'India',ageMonths:36,growthRate:18,
+   traffic:62000,emailSubs:24000,social:45000,margin:50,
+   techStack:'Custom LMS (React + Node.js), Razorpay, AWS, YouTube Live',team:5,hours:25,
+   trafficSrc:'40% YouTube organic, 25% Google search, 20% referrals, 15% WhatsApp',
+   growthStory:'CodeGuru fills a massive gap -- coding education in Hindi. With 2,400 paying students and a 50% margin, the business has strong unit economics. YouTube channel has 180K subscribers driving organic leads. Recently launched a placement guarantee program.',
+   sellerBg:'Solo founder, ex-Infosys engineer based in Lucknow. Wants to focus on a new AI venture. Team of 5 instructors can continue independently.',
+   listed:'2026-02-20'},
+  {id:'fw003',name:'TiffinTech',type:'FoodTech',badge:'badge-foodtech',desc:'B2B SaaS for tiffin/cloud kitchen operations. Order management, route optimization, billing. 180+ restaurant clients.',
+   revenueINR:350700,profitINR:175350,askingINR:11690000,currency:'USD',region:'Global',ageMonths:30,growthRate:15,
+   revenueUSD:4200,profitUSD:2100,askingUSD:140000,
+   traffic:12000,emailSubs:3200,social:5600,margin:50,
+   techStack:'React, Python/Django, PostgreSQL, AWS, Stripe + Razorpay',team:2,hours:20,
+   trafficSrc:'45% Google search, 30% referrals, 15% LinkedIn, 10% direct',
+   growthStory:'TiffinTech powers 180+ cloud kitchens and tiffin services across India, UAE, and the US diaspora market. MRR has grown from $1,800 to $4,200 in 12 months. Low churn (3% monthly) and strong word-of-mouth growth.',
+   sellerBg:'Built by a solo developer in Pune with cloud kitchen industry experience. Selling to pursue full-time employment. All code is well-documented.',
+   listed:'2026-03-01'},
+  {id:'fw004',name:'BollywoodBeats',type:'Content',badge:'badge-content',desc:'Bollywood music blog and curated playlist platform. 800K monthly pageviews, strong AdSense and affiliate revenue.',
+   revenueINR:180000,profitINR:144000,askingINR:4800000,currency:'INR',region:'India',ageMonths:48,growthRate:5,
+   traffic:820000,emailSubs:35000,social:68000,margin:80,
+   techStack:'WordPress, AdSense, Spotify API, Cloudflare',team:1,hours:8,
+   trafficSrc:'65% Google organic, 20% social, 10% direct, 5% referral',
+   growthStory:'A true passive income asset. BollywoodBeats ranks #1-3 for hundreds of Bollywood music keywords. 80% profit margin with minimal upkeep. Revenue is 70% AdSense, 20% Spotify/Amazon affiliate, 10% sponsored posts.',
+   sellerBg:'Run by a Bollywood music enthusiast in Delhi. Portfolio sale -- owner is consolidating to focus on a single larger project.',
+   listed:'2026-01-10'},
+  {id:'fw005',name:'DesignDukan',type:'Agency',badge:'badge-agency',desc:'White-label design agency serving US/UK SaaS companies. 12 retainer clients, average $2,800/mo per client.',
+   revenueINR:2800000,profitINR:980000,askingINR:28000000,currency:'USD',region:'US',ageMonths:42,growthRate:8,
+   revenueUSD:33600,profitUSD:11760,askingUSD:336000,
+   traffic:5200,emailSubs:1800,social:4200,margin:35,
+   techStack:'Figma, Webflow, Slack, Notion, Stripe',team:8,hours:30,
+   trafficSrc:'60% referrals, 20% LinkedIn, 15% cold outreach, 5% Clutch',
+   growthStory:'DesignDukan has built a reputation for high-quality UI/UX design at Indian price points for US SaaS companies. 12 retainer clients with 95% retention. Team of 8 designers in Bangalore operates semi-independently.',
+   sellerBg:'Founded by a former Flipkart design lead. Moving into a funded startup role. Team has agreed to stay on post-acquisition.',
+   listed:'2026-03-22'},
+  {id:'fw006',name:'PakPay Insights',type:'SaaS',badge:'badge-saas',desc:'Fintech analytics dashboard for Pakistani SMEs. Integrates with JazzCash, Easypaisa, and bank APIs.',
+   revenueINR:208750,profitINR:125250,askingINR:5850000,currency:'USD',region:'Pakistan',ageMonths:20,growthRate:22,
+   revenueUSD:2500,profitUSD:1500,askingUSD:70000,
+   traffic:8500,emailSubs:2100,social:3800,margin:60,
+   techStack:'Next.js, Node.js, MongoDB, JazzCash API, Easypaisa API',team:2,hours:18,
+   trafficSrc:'40% Google, 30% LinkedIn Pakistan, 20% referrals, 10% Twitter',
+   growthStory:'Pakistan\'s fintech market is booming and PakPay Insights is one of the first analytics tools built specifically for local payment rails. 22% MoM growth, 85 paying SME clients. First-mover advantage in an underserved market.',
+   sellerBg:'Two co-founders in Lahore. One is relocating to Dubai, the other wants to focus on a crypto project.',
+   listed:'2026-04-01'},
+  {id:'fw007',name:'LankaLearns',type:'EdTech',badge:'badge-edtech',desc:'Online tutoring marketplace connecting Sri Lankan students with diaspora tutors. Sinhala + Tamil language support.',
+   revenueINR:125250,profitINR:62625,askingINR:3340000,currency:'USD',region:'Sri Lanka',ageMonths:18,growthRate:25,
+   revenueUSD:1500,profitUSD:750,askingUSD:40000,
+   traffic:15000,emailSubs:4200,social:8900,margin:50,
+   techStack:'React, Firebase, Zoom API, Stripe',team:1,hours:12,
+   trafficSrc:'35% Facebook, 30% Google, 20% WhatsApp referrals, 15% direct',
+   growthStory:'LankaLearns connects Sri Lankan students with tutors from the diaspora (Australia, UK, Canada). Growing 25% MoM. 320 registered tutors, 1,200 active students. Strong network effects -- each new tutor brings 3-4 students.',
+   sellerBg:'Built by a Sri Lankan developer in Melbourne. Selling due to work visa constraints on side projects.',
+   listed:'2026-03-28'},
+  {id:'fw008',name:'DubaiBazaar',type:'Marketplace',badge:'badge-marketplace',desc:'Online classifieds marketplace for South Asian expats in UAE. Cars, furniture, jobs, housing. 45K monthly active users.',
+   revenueINR:418750,profitINR:251250,askingINR:12550000,currency:'USD',region:'UAE',ageMonths:36,growthRate:10,
+   revenueUSD:5000,profitUSD:3000,askingUSD:150000,
+   traffic:128000,emailSubs:18000,social:22000,margin:60,
+   techStack:'Laravel, MySQL, Redis, AWS, Google Ads',team:3,hours:20,
+   trafficSrc:'40% Google, 25% direct, 20% app installs, 15% social',
+   growthStory:'DubaiBazaar is the go-to classifieds platform for the 3.5M South Asian expat community in the UAE. Revenue from premium listings, featured ads, and a small job board section. iOS and Android apps with 22K downloads.',
+   sellerBg:'Built by a team of 3 in Dubai (Indian origin). Selling as part of a portfolio restructuring. Includes all IP, apps, and domain.',
+   listed:'2026-02-15'},
+  {id:'fw009',name:'CurryCloud Kitchen',type:'FoodTech',badge:'badge-foodtech',desc:'Multi-brand virtual restaurant platform operating 6 brands across Swiggy/Zomato in Hyderabad. Fully automated ordering.',
+   revenueINR:780000,profitINR:195000,askingINR:15600000,currency:'INR',region:'India',ageMonths:24,growthRate:14,
+   traffic:3200,emailSubs:1500,social:12000,margin:25,
+   techStack:'Custom dashboard (Vue.js), Swiggy/Zomato integration, Petpooja POS',team:6,hours:35,
+   trafficSrc:'85% Swiggy/Zomato, 10% direct orders, 5% social',
+   growthStory:'CurryCloud operates 6 virtual restaurant brands from 2 cloud kitchens in Hyderabad. Combined 780K MRR with 25% margin after all kitchen costs. Brands include North Indian, Biryani, Chinese, and healthy bowls. Top-rated on both platforms.',
+   sellerBg:'Operated by a food-tech entrepreneur in Hyderabad. Selling one kitchen operation to fund expansion in Bangalore. Full SOPs and staff in place.',
+   listed:'2026-04-05'},
+  {id:'fw010',name:'NRIMoney',type:'App',badge:'badge-app',desc:'Personal finance app for NRIs managing money across India and abroad. Tax optimization, investment tracking, forex alerts.',
+   revenueINR:627000,profitINR:376200,askingINR:20900000,currency:'USD',region:'Global',ageMonths:30,growthRate:16,
+   revenueUSD:7500,profitUSD:4500,askingUSD:250000,
+   traffic:35000,emailSubs:12000,social:15000,margin:60,
+   techStack:'Flutter, Node.js, PostgreSQL, Plaid API, RBI/FEMA compliance module',team:3,hours:22,
+   trafficSrc:'30% App Store organic, 25% Google, 20% referrals, 15% content marketing, 10% ads',
+   growthStory:'NRIMoney solves a real pain point -- managing finances across two countries. 18,000 active users, 4.6 stars on both app stores. Revenue from premium subscription ($8/mo) and affiliate commissions on forex/investment products.',
+   sellerBg:'Founded by an NRI couple (software engineers) in San Jose. Relocating back to India and want to hand off to a focused team.',
+   listed:'2026-03-10'}
+];
+
+const COMPS = [
+  {name:'SpiceShop.in',type:'eCommerce',rev:'₹2.8L/mo',sold:'₹72L',mult:'2.1x'},
+  {name:'LearnHindi.io',type:'EdTech',rev:'₹4.1L/mo',sold:'₹1.4Cr',mult:'2.8x'},
+  {name:'CloudMenu SaaS',type:'SaaS',rev:'$3.5K/mo',sold:'$126K',mult:'3.0x'},
+  {name:'CricketFanHub',type:'Content',rev:'₹1.2L/mo',sold:'₹32L',mult:'2.2x'},
+  {name:'FreelancePk',type:'Marketplace',rev:'$2.1K/mo',sold:'$58K',mult:'2.3x'},
+];
+
+const MULTIPLES = {eCommerce:[2.0,3.2],SaaS:[2.8,4.5],Content:[2.0,3.0],Agency:[1.8,2.8],App:[2.5,4.0],Marketplace:[2.2,3.8],EdTech:[2.5,3.5],FoodTech:[1.5,2.5]};
+
+/* ===== STATE ===== */
+let currentSection = 'hero';
+let sellCurrentStep = 1;
+let sellCurrency = 'INR';
+let valCurrency = 'INR';
+let escrowCurrency = 'INR';
+let currentSort = 'price';
+
+/* Pipeline state from localStorage */
+let pipelineData = JSON.parse(localStorage.getItem('fw_pipeline') || 'null') || {
+  watching:[{name:'BollywoodBeats',type:'Content',price:'₹48L'},{name:'LankaLearns',type:'EdTech',price:'$40K'}],
+  offered:[{name:'ChaiCart',type:'eCommerce',price:'₹85L'}],
+  diligence:[],
+  escrow:[],
+  completed:[]
+};
+
+/* ===== NAVIGATION ===== */
+function showSection(sec){
+  document.querySelectorAll('.hero-section,.section').forEach(el=>el.classList.add('hidden'));
+  const target = document.getElementById('sec-'+sec);
+  if(target) target.classList.remove('hidden');
+  currentSection = sec;
+  // update nav active
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const navMap = {marketplace:0,sell:1,valuation:2,hiw:3,escrow:4,pipeline:5,community:6};
+  if(navMap[sec]!==undefined) document.querySelectorAll('.nav-links a')[navMap[sec]]?.classList.add('active');
+  // close mobile nav
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  // render if needed
+  if(sec==='marketplace') renderListings();
+  if(sec==='pipeline') renderPipeline();
+  if(sec==='valuation') renderComps();
+}
+
+/* ===== HELPERS ===== */
+function fmt(n,currency){
+  if(currency==='USD') return '$'+n.toLocaleString('en-US');
+  return '₹'+n.toLocaleString('en-IN');
+}
+function fmtShort(n,currency){
+  if(currency==='USD'){
+    if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
+    if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
+    return '$'+n;
+  }
+  if(n>=10000000) return '₹'+(n/10000000).toFixed(2)+'Cr';
+  if(n>=100000) return '₹'+(n/100000).toFixed(1)+'L';
+  if(n>=1000) return '₹'+(n/1000).toFixed(0)+'K';
+  return '₹'+n;
+}
+function toUSD(inr){return Math.round(inr/83.5)}
+function toINR(usd){return Math.round(usd*83.5)}
+
+function getRevenue(l){return l.currency==='USD'?(l.revenueUSD||toUSD(l.revenueINR)):l.revenueINR}
+function getProfit(l){return l.currency==='USD'?(l.profitUSD||toUSD(l.profitINR)):l.profitINR}
+function getAsking(l){return l.currency==='USD'?(l.askingUSD||toUSD(l.askingINR)):l.askingINR}
+function getAskingUSD(l){return l.askingUSD||toUSD(l.askingINR)}
+
+/* ===== LISTINGS ===== */
+function renderListings(){
+  let filtered = [...LISTINGS];
+  const typeF = document.getElementById('filterType').value;
+  const priceF = document.getElementById('filterPrice').value;
+  const regionF = document.getElementById('filterRegion').value;
+  const searchF = document.getElementById('filterSearch').value.toLowerCase();
+
+  if(typeF) filtered = filtered.filter(l=>l.type===typeF);
+  if(regionF) filtered = filtered.filter(l=>l.region===regionF);
+  if(searchF) filtered = filtered.filter(l=>(l.name+' '+l.desc+' '+l.type).toLowerCase().includes(searchF));
+  if(priceF){
+    const usdAsking = l=>getAskingUSD(l);
+    if(priceF==='0-50') filtered=filtered.filter(l=>usdAsking(l)<50000);
+    else if(priceF==='50-150') filtered=filtered.filter(l=>usdAsking(l)>=50000&&usdAsking(l)<150000);
+    else if(priceF==='150-500') filtered=filtered.filter(l=>usdAsking(l)>=150000&&usdAsking(l)<500000);
+    else if(priceF==='500+') filtered=filtered.filter(l=>usdAsking(l)>=500000);
+  }
+
+  // Sort
+  if(currentSort==='price') filtered.sort((a,b)=>getAskingUSD(a)-getAskingUSD(b));
+  else if(currentSort==='revenue') filtered.sort((a,b)=>(b.revenueUSD||toUSD(b.revenueINR))-(a.revenueUSD||toUSD(a.revenueINR)));
+  else if(currentSort==='multiple') filtered.sort((a,b)=>{const mA=getAsking(a)/(getProfit(a)*12);const mB=getAsking(b)/(getProfit(b)*12);return mA-mB;});
+  else if(currentSort==='newest') filtered.sort((a,b)=>new Date(b.listed)-new Date(a.listed));
+
+  const grid = document.getElementById('listingsGrid');
+  if(!filtered.length){grid.innerHTML='<p style="color:var(--muted);padding:40px;text-align:center">No listings match your filters. Try adjusting your search.</p>';return;}
+
+  grid.innerHTML = filtered.map(l=>{
+    const revDisplay = l.currency==='USD' ? fmt(l.revenueUSD||toUSD(l.revenueINR),'USD')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(l.revenueINR,'INR')+'</span>' : fmt(l.revenueINR,'INR')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(toUSD(l.revenueINR),'USD')+'</span>';
+    const askDisplay = l.currency==='USD' ? fmt(l.askingUSD||toUSD(l.askingINR),'USD')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(l.askingINR,'INR')+'</span>' : fmtShort(l.askingINR,'INR')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(toUSD(l.askingINR),'USD')+'</span>';
+    const multiple = (getAsking(l)/(getProfit(l)*12)).toFixed(1);
+    return `<div class="listing-card" onclick="openListing('${l.id}')">
+      <span class="listing-badge ${l.badge}">${l.type}</span>
+      <div class="listing-name">${l.name}</div>
+      <div class="listing-desc">${l.desc}</div>
+      <div class="listing-metrics">
+        <div class="metric"><div class="metric-label">Revenue/mo</div><div class="metric-val revenue">${revDisplay}</div></div>
+        <div class="metric"><div class="metric-label">Asking Price</div><div class="metric-val price">${askDisplay}</div></div>
+      </div>
+      <div class="listing-footer">
+        <span class="listing-age">${l.ageMonths} months old &bull; ${l.region}</span>
+        <span class="listing-margin">${l.margin}% margin &bull; ${multiple}x</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterListings(){renderListings();}
+function sortListings(sort,btn){
+  currentSort=sort;
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderListings();
+}
+
+/* ===== LISTING DETAIL MODAL ===== */
+function openListing(id){
+  const l = LISTINGS.find(x=>x.id===id);
+  if(!l) return;
+  const cur = l.currency;
+  const rev = fmt(getRevenue(l),cur);
+  const profit = fmt(getProfit(l),cur);
+  const ask = fmt(getAsking(l),cur);
+  const altCur = cur==='USD'?'INR':'USD';
+  const altRev = fmt(cur==='USD'?l.revenueINR:(l.revenueUSD||toUSD(l.revenueINR)),altCur);
+  const altAsk = fmt(cur==='USD'?l.askingINR:(l.askingUSD||toUSD(l.askingINR)),altCur);
+  const multiple = (getAsking(l)/(getProfit(l)*12)).toFixed(1);
+
+  document.getElementById('modalHeader').innerHTML = `
+    <span class="listing-badge ${l.badge}" style="margin-bottom:12px">${l.type}</span>
+    <h2 style="font-size:28px;font-weight:800;margin-bottom:4px">${l.name}</h2>
+    <p style="color:var(--muted);font-size:15px">${l.desc}</p>
+  `;
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-grid">
+      <div class="modal-metric"><div class="metric-label">Monthly Revenue</div><div class="metric-val revenue" style="font-size:20px">${rev}</div><div style="font-size:12px;color:var(--muted)">${altRev}</div></div>
+      <div class="modal-metric"><div class="metric-label">Monthly Profit</div><div class="metric-val" style="font-size:20px;color:var(--green)">${profit}</div><div style="font-size:12px;color:var(--muted)">Margin: ${l.margin}%</div></div>
+      <div class="modal-metric"><div class="metric-label">Asking Price</div><div class="metric-val price" style="font-size:20px">${ask}</div><div style="font-size:12px;color:var(--muted)">${altAsk} &bull; ${multiple}x annual profit</div></div>
+      <div class="modal-metric"><div class="metric-label">Business Age</div><div class="metric-val" style="font-size:20px">${l.ageMonths} months</div><div style="font-size:12px;color:var(--muted)">Growth: ${l.growthRate}% MoM</div></div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 8px">Traffic & Audience</h3>
+    <div class="modal-grid">
+      <div class="modal-metric"><div class="metric-label">Monthly Visitors</div><div class="metric-val" style="font-size:18px">${l.traffic.toLocaleString()}</div></div>
+      <div class="modal-metric"><div class="metric-label">Email Subscribers</div><div class="metric-val" style="font-size:18px">${l.emailSubs.toLocaleString()}</div></div>
+      <div class="modal-metric"><div class="metric-label">Social Followers</div><div class="metric-val" style="font-size:18px">${l.social.toLocaleString()}</div></div>
+      <div class="modal-metric"><div class="metric-label">Region</div><div class="metric-val" style="font-size:18px">${l.region}</div></div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px"><strong>Traffic Sources:</strong> ${l.trafficSrc}</p>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 8px">Growth Story</h3>
+    <div class="growth-story">${l.growthStory}</div>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 8px">Seller Background</h3>
+    <div class="growth-story">${l.sellerBg}</div>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 8px">Tech & Operations</h3>
+    <div class="modal-grid">
+      <div class="modal-metric"><div class="metric-label">Tech Stack</div><div style="font-size:14px;margin-top:4px">${l.techStack}</div></div>
+      <div class="modal-metric"><div class="metric-label">Team / Hours</div><div style="font-size:14px;margin-top:4px">${l.team} people &bull; ${l.hours} hrs/week</div></div>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;margin:24px 0 8px">Due Diligence Checklist</h3>
+    <ul class="dd-checklist">
+      <li>Revenue verification (bank statements + payment processor)</li>
+      <li>Traffic verification (Google Analytics access)</li>
+      <li>P&L audit (last 12 months)</li>
+      <li>Customer concentration analysis</li>
+      <li>Legal / IP review</li>
+      <li>Technical code review</li>
+      <li>SEO backlink profile check</li>
+      <li>Supplier / vendor contract review</li>
+    </ul>
+
+    <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="makeOffer('${l.id}')">Make an Offer</button>
+      <button class="btn btn-outline" onclick="addToPipeline('${l.name}','${l.type}','${l.currency==='USD'?fmtShort(l.askingUSD||toUSD(l.askingINR),"USD"):fmtShort(l.askingINR,"INR")}')">Add to Pipeline</button>
+      <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20${encodeURIComponent(l.name)}%20(${l.id})" target="_blank" class="btn btn-wa">&#9742; Ask on WhatsApp</a>
+    </div>
+  `;
+
+  document.getElementById('listingModal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('listingModal').classList.add('hidden');
+  document.body.style.overflow='';
+}
+
+function makeOffer(id){
+  const l = LISTINGS.find(x=>x.id===id);
+  if(!l) return;
+  const offer = prompt('Enter your offer amount ('+l.currency+'):');
+  if(offer){
+    addToPipeline(l.name,l.type,l.currency==='USD'?'$'+Number(offer).toLocaleString():'₹'+Number(offer).toLocaleString('en-IN'));
+    movePipelineCard(l.name,'offered');
+    alert('Offer submitted for '+l.name+'! Our team will review and contact you within 24 hours. Check your Pipeline for updates.');
+    closeModal();
+  }
+}
+
+/* ===== SELL FORM ===== */
+function sellStep(dir){
+  const panels = document.querySelectorAll('.form-panel');
+  const steps = document.querySelectorAll('.form-step');
+  const next = sellCurrentStep + dir;
+  if(next < 1 || next > 5){
+    if(next > 5) submitSellForm();
+    return;
+  }
+  panels.forEach(p=>p.classList.add('hidden'));
+  document.querySelector(`.form-panel[data-step="${next}"]`).classList.remove('hidden');
+  steps.forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i+1 < next) s.classList.add('done');
+    if(i+1 === next) s.classList.add('active');
+  });
+  sellCurrentStep = next;
+  document.getElementById('sellPrev').classList.toggle('hidden',next===1);
+  document.getElementById('sellNext').textContent = next===5?'Submit Listing':'Next Step';
+}
+
+function setSellCurrency(c,btn){
+  sellCurrency=c;
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function submitSellForm(){
+  const data = {
+    name:document.getElementById('sf_name').value,
+    type:document.getElementById('sf_type').value,
+    region:document.getElementById('sf_region').value,
+    url:document.getElementById('sf_url').value,
+    desc:document.getElementById('sf_desc').value,
+    currency:sellCurrency,
+    revenue:document.getElementById('sf_revenue').value,
+    profit:document.getElementById('sf_profit').value,
+    asking:document.getElementById('sf_asking').value,
+    contact:document.getElementById('sf_contact').value,
+    submittedAt:new Date().toISOString()
+  };
+  if(!data.name||!data.contact){alert('Please fill in the business name and contact email.');return;}
+  const dealId = 'FW-'+Date.now().toString(36).toUpperCase();
+  data.dealId = dealId;
+  // Save to localStorage
+  const submissions = JSON.parse(localStorage.getItem('fw_submissions')||'[]');
+  submissions.push(data);
+  localStorage.setItem('fw_submissions',JSON.stringify(submissions));
+  // Show confirmation
+  document.getElementById('sellForm').classList.add('hidden');
+  document.getElementById('sellConfirm').classList.remove('hidden');
+  document.getElementById('dealIdDisplay').textContent = dealId;
+}
+
+/* ===== VALUATION ===== */
+let valCurrencyState = 'INR';
+function setValCurrency(c,btn){
+  valCurrencyState=c;
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  calcValuation();
+}
+
+function calcValuation(){
+  const rev = parseFloat(document.getElementById('vc_revenue').value)||0;
+  const profit = parseFloat(document.getElementById('vc_profit').value)||0;
+  const type = document.getElementById('vc_type').value;
+  const age = parseFloat(document.getElementById('vc_age').value)||0;
+  const growth = parseFloat(document.getElementById('vc_growth').value)||0;
+
+  if(!rev||!profit){
+    document.getElementById('valRange').textContent='Enter your data to get a valuation';
+    document.getElementById('valMultiple').textContent='';
+    document.getElementById('valExplain').textContent='Fill in your business details on the left. We use industry-standard multiples adjusted for business type, age, growth rate, and profit margin to calculate a fair market range.';
+    return;
+  }
+
+  const [lowM,highM] = MULTIPLES[type]||[2,3];
+  // Adjustments
+  let adjLow=lowM, adjHigh=highM;
+  if(age>36){adjLow+=0.3;adjHigh+=0.3;}
+  else if(age<12){adjLow-=0.3;adjHigh-=0.3;}
+  if(growth>15){adjLow+=0.4;adjHigh+=0.5;}
+  else if(growth>8){adjLow+=0.2;adjHigh+=0.2;}
+  else if(growth<0){adjLow-=0.5;adjHigh-=0.5;}
+  const margin=profit/rev*100;
+  if(margin>60){adjLow+=0.3;adjHigh+=0.3;}
+  else if(margin<20){adjLow-=0.3;adjHigh-=0.3;}
+
+  adjLow=Math.max(adjLow,1.0);adjHigh=Math.max(adjHigh,adjLow+0.5);
+
+  const annualProfit=profit*12;
+  const low=Math.round(annualProfit*adjLow);
+  const high=Math.round(annualProfit*adjHigh);
+  const cur = valCurrencyState;
+
+  document.getElementById('valRange').textContent=fmtShort(low,cur)+' — '+fmtShort(high,cur);
+  document.getElementById('valMultiple').textContent=adjLow.toFixed(1)+'x — '+adjHigh.toFixed(1)+'x annual net profit';
+  document.getElementById('valExplain').innerHTML=`
+    <strong>How we calculated this:</strong><br>
+    Annual net profit: ${fmt(annualProfit,cur)}<br>
+    Base multiple for ${type}: ${lowM.toFixed(1)}x — ${highM.toFixed(1)}x<br>
+    Age adjustment (${age} months): ${age>36?'+0.3x':age<12?'-0.3x':'none'}<br>
+    Growth adjustment (${growth}% MoM): ${growth>15?'+0.4-0.5x':growth>8?'+0.2x':growth<0?'-0.5x':'none'}<br>
+    Margin adjustment (${margin.toFixed(0)}%): ${margin>60?'+0.3x':margin<20?'-0.3x':'none'}<br>
+    <br>
+    <em>This is an indicative range. Final valuation depends on due diligence, market conditions, and buyer demand.</em>
+  `;
+}
+
+function renderComps(){
+  document.getElementById('compsBody').innerHTML = COMPS.map(c=>`<tr><td>${c.name}</td><td>${c.type}</td><td>${c.rev}</td><td>${c.sold}</td><td>${c.mult}</td></tr>`).join('');
+}
+
+/* ===== HOW IT WORKS ===== */
+function showHiwTab(tab,btn){
+  document.querySelectorAll('.hiw-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('hiwBuyers').classList.toggle('hidden',tab!=='buyers');
+  document.getElementById('hiwSellers').classList.toggle('hidden',tab!=='sellers');
+}
+
+/* ===== ESCROW FEE ===== */
+function setEscrowCurrency(c,btn){
+  escrowCurrency=c;
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  calcEscrowFee();
+}
+
+function calcEscrowFee(){
+  const deal = parseFloat(document.getElementById('escrowDealSize').value)||0;
+  if(!deal){document.getElementById('escrowFeeResult').textContent='--';document.getElementById('escrowFeeBreakdown').textContent='Enter a deal size to see the escrow fee breakdown.';return;}
+  // Tiered fee structure
+  let pct;
+  if(escrowCurrency==='USD'){
+    if(deal<25000) pct=6;
+    else if(deal<100000) pct=5;
+    else if(deal<500000) pct=4;
+    else pct=3;
+  } else {
+    const usdEquiv=deal/83.5;
+    if(usdEquiv<25000) pct=6;
+    else if(usdEquiv<100000) pct=5;
+    else if(usdEquiv<500000) pct=4;
+    else pct=3;
+  }
+  const fee=Math.round(deal*pct/100);
+  document.getElementById('escrowFeeResult').textContent=fmt(fee,escrowCurrency)+' ('+pct+'%)';
+  document.getElementById('escrowFeeBreakdown').innerHTML=`
+    Deal size: ${fmt(deal,escrowCurrency)}<br>
+    Fee rate: ${pct}% (tiered based on deal size)<br>
+    <br>
+    <strong>Fee tiers:</strong><br>
+    Under ${escrowCurrency==='USD'?'$25K':'₹20L'}: 6%<br>
+    ${escrowCurrency==='USD'?'$25K-$100K':'₹20L-₹85L'}: 5%<br>
+    ${escrowCurrency==='USD'?'$100K-$500K':'₹85L-₹4Cr'}: 4%<br>
+    ${escrowCurrency==='USD'?'$500K+':'₹4Cr+'}: 3%<br>
+    <br>
+    <em>Fee split: 50% buyer, 50% seller (unless negotiated otherwise).</em>
+  `;
+}
+
+/* ===== PIPELINE ===== */
+function savePipeline(){localStorage.setItem('fw_pipeline',JSON.stringify(pipelineData));}
+
+function renderPipeline(){
+  const cols = [
+    {key:'watching',label:'Watching',color:'var(--muted)'},
+    {key:'offered',label:'Offered',color:'var(--accent)'},
+    {key:'diligence',label:'Due Diligence',color:'var(--blue)'},
+    {key:'escrow',label:'In Escrow',color:'#fbbf24'},
+    {key:'completed',label:'Completed',color:'var(--green)'}
+  ];
+  document.getElementById('pipelineBoard').innerHTML = cols.map(col=>{
+    const cards = (pipelineData[col.key]||[]).map((c,i)=>`
+      <div class="pipeline-card">
+        <h4>${c.name}</h4>
+        <p>${c.type}</p>
+        <div class="pipe-price">${c.price}</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          ${col.key!=='completed'?`<button class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:11px" onclick="movePipelineForward('${col.key}',${i})">Move &rarr;</button>`:''}
+          <button class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:11px;color:var(--red)" onclick="removePipelineCard('${col.key}',${i})">Remove</button>
         </div>
-      
-      </section>
-      
-    </section>
-    <footer class="footer">
-      <span class="footer-note">© 2026 FlipWala</span>
-      <span class="footer-note">flipwala.com</span>
-    </footer>
-  </main>
+      </div>
+    `).join('');
+    return `<div class="pipeline-col">
+      <div class="pipeline-header">${col.label} <span class="pipeline-count" style="background:${col.color}20;color:${col.color}">${(pipelineData[col.key]||[]).length}</span></div>
+      ${cards}
+    </div>`;
+  }).join('');
+}
+
+function addToPipeline(name,type,price){
+  if(pipelineData.watching.some(c=>c.name===name)) return;
+  pipelineData.watching.push({name,type,price});
+  savePipeline();
+  if(currentSection==='pipeline') renderPipeline();
+}
+
+function movePipelineCard(name,targetCol){
+  const order=['watching','offered','diligence','escrow','completed'];
+  for(const col of order){
+    const idx = pipelineData[col].findIndex(c=>c.name===name);
+    if(idx!==-1){
+      const card = pipelineData[col].splice(idx,1)[0];
+      pipelineData[targetCol].push(card);
+      savePipeline();
+      if(currentSection==='pipeline') renderPipeline();
+      return;
+    }
+  }
+}
+
+function movePipelineForward(fromCol,idx){
+  const order=['watching','offered','diligence','escrow','completed'];
+  const nextIdx = order.indexOf(fromCol)+1;
+  if(nextIdx>=order.length) return;
+  const card = pipelineData[fromCol].splice(idx,1)[0];
+  pipelineData[order[nextIdx]].push(card);
+  savePipeline();
+  renderPipeline();
+}
+
+function removePipelineCard(col,idx){
+  pipelineData[col].splice(idx,1);
+  savePipeline();
+  renderPipeline();
+}
+
+/* ===== DIGEST SIGNUP ===== */
+function digestSignup(e){
+  e.preventDefault();
+  const email = document.getElementById('digestEmail').value;
+  if(email){
+    const subs = JSON.parse(localStorage.getItem('fw_digest')||'[]');
+    subs.push({email,date:new Date().toISOString()});
+    localStorage.setItem('fw_digest',JSON.stringify(subs));
+    document.getElementById('digestConfirm').classList.remove('hidden');
+    document.getElementById('digestEmail').value='';
+  }
+}
+
+/* ===== KEYBOARD ===== */
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ===== INIT ===== */
+// Show hero by default
+document.getElementById('sec-hero').classList.remove('hidden');
+</script>
 </body>
 </html>
