@@ -292,6 +292,129 @@ input,select,textarea{font-family:var(--font)}
   .section{padding:40px 16px}
   .payment-methods-grid{grid-template-columns:1fr}
 }
+
+/* AI AGENT */
+.agent-dashboard{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.agent-status-panel{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.agent-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.agent-stat{padding:16px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);text-align:center}
+.agent-stat .stat-num{font-size:28px;font-weight:800;color:var(--accent)}
+.agent-stat .stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+.agent-log{list-style:none;max-height:340px;overflow-y:auto}
+.agent-log li{padding:12px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);margin-bottom:8px;border:1px solid rgba(255,255,255,0.04);font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.agent-log li .log-icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.agent-log .log-review .log-icon{background:rgba(96,165,250,0.15);color:var(--blue)}
+.agent-log .log-flag .log-icon{background:rgba(248,113,113,0.15);color:var(--red)}
+.agent-log .log-auto .log-icon{background:rgba(52,211,153,0.15);color:var(--green)}
+.agent-log .log-time{font-size:11px;color:var(--muted);margin-top:4px}
+.agent-controls{margin-top:20px}
+.agent-control-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);margin-bottom:8px}
+.agent-control-row label{font-size:14px;font-weight:600}
+.toggle-switch{position:relative;display:inline-block;width:48px;height:26px}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,0.12);border-radius:26px;transition:.3s}
+.toggle-slider:before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:var(--ink);border-radius:50%;transition:.3s}
+.toggle-switch input:checked+.toggle-slider{background:var(--accent)}
+.toggle-switch input:checked+.toggle-slider:before{transform:translateX(22px)}
+
+/* BRAND BOX */
+.brand-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+.brand-tier-card{padding:28px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);position:relative;transition:.25s}
+.brand-tier-card:hover{border-color:rgba(227,133,64,0.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.brand-tier-card.bb-featured{border-color:rgba(227,133,64,0.4);background:linear-gradient(135deg,var(--card),rgba(227,133,64,0.06))}
+.brand-tier-card .bb-tier-label{display:inline-block;padding:4px 12px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+.brand-tier-card h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.brand-tier-card .bb-price{font-size:24px;font-weight:800;color:var(--accent);margin:12px 0}
+.brand-tier-card .bb-price .bb-alt{font-size:14px;color:var(--muted);font-weight:600}
+.brand-tier-card ul{list-style:none;font-size:14px;color:var(--muted);line-height:2}
+.brand-tier-card ul li::before{content:'\2713 ';color:var(--green);font-weight:700}
+.brand-builder-box{padding:32px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);margin-bottom:40px}
+.brand-preview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px}
+.brand-preview-card{padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);text-align:center}
+.brand-preview-card h4{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--accent)}
+
+/* HOT DEALS */
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+.deal-card{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden;transition:.25s}
+.deal-card:hover{border-color:rgba(227,133,64,0.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.deal-card .deal-badge{position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:var(--radius-pill);background:rgba(248,113,113,0.15);color:var(--red);font-size:11px;font-weight:700;text-transform:uppercase}
+.deal-card .deal-name{font-size:18px;font-weight:700;margin-bottom:4px}
+.deal-card .deal-desc{color:var(--muted);font-size:14px;margin-bottom:16px}
+.deal-prices{display:flex;gap:16px;align-items:baseline;margin-bottom:12px}
+.deal-original{font-size:16px;color:var(--muted);text-decoration:line-through}
+.deal-discounted{font-size:22px;font-weight:800;color:var(--green)}
+.deal-savings{padding:4px 10px;border-radius:var(--radius-pill);background:rgba(52,211,153,0.15);color:var(--green);font-size:12px;font-weight:700}
+.deal-countdown{display:flex;gap:8px;margin:16px 0}
+.countdown-unit{text-align:center;padding:8px 12px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);min-width:56px}
+.countdown-unit .cd-num{font-size:20px;font-weight:800;color:var(--accent)}
+.countdown-unit .cd-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+.templates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.template-card{padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);transition:.2s}
+.template-card:hover{border-color:rgba(227,133,64,0.2);background:rgba(227,133,64,0.04)}
+.template-card h4{font-size:16px;font-weight:700;margin-bottom:4px}
+.template-card .tpl-price{font-size:16px;font-weight:700;color:var(--accent);margin:8px 0}
+.template-card .tpl-price .tpl-alt{font-size:13px;color:var(--muted);font-weight:600}
+.template-card .tpl-features{list-style:none;font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:12px}
+.template-card .tpl-features li::before{content:'\2022 ';color:var(--accent)}
+
+/* RESELLER */
+.reseller-dashboard{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.reseller-panel{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.reseller-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.reseller-stat{padding:16px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);text-align:center}
+.reseller-stat .rs-num{font-size:24px;font-weight:800}
+.reseller-stat .rs-lbl{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em}
+.storefront-list{list-style:none}
+.storefront-item{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);margin-bottom:8px;border:1px solid rgba(255,255,255,0.04)}
+.referral-box{padding:20px;border-radius:var(--radius);background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.15);margin-top:20px}
+.referral-box h4{color:var(--green);font-size:15px;font-weight:700;margin-bottom:8px}
+
+/* NFT */
+.nft-flow{display:flex;gap:0;align-items:center;justify-content:center;flex-wrap:wrap;margin:32px 0}
+.nft-flow-step{padding:20px 24px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);text-align:center;min-width:180px;position:relative}
+.nft-flow-step .nfs-icon{font-size:28px;margin-bottom:8px}
+.nft-flow-step .nfs-label{font-size:14px;font-weight:700}
+.nft-flow-step .nfs-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.nft-flow-arrow{font-size:24px;color:var(--accent);padding:0 8px;flex-shrink:0}
+.nft-cert{max-width:480px;margin:32px auto;padding:32px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--card),rgba(227,133,64,0.06));border:2px solid rgba(227,133,64,0.3);text-align:center;position:relative;overflow:hidden}
+.nft-cert::before{content:'NFT';position:absolute;top:-10px;right:-10px;font-size:80px;font-weight:900;color:rgba(227,133,64,0.06);pointer-events:none}
+.nft-cert h3{font-size:20px;font-weight:800;margin-bottom:16px;color:var(--accent)}
+.nft-cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin:16px 0}
+.nft-cert-field{padding:12px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
+.nft-cert-field .ncf-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+.nft-cert-field .ncf-value{font-size:14px;font-weight:700;margin-top:4px;word-break:break-all}
+.nft-chains{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.nft-chain{padding:10px 20px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.04);border:1px solid var(--line);font-size:13px;font-weight:600}
+.nft-benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px}
+.nft-benefit{padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
+.nft-benefit h4{font-size:15px;font-weight:700;margin-bottom:6px}
+.nft-benefit p{color:var(--muted);font-size:13px;line-height:1.6}
+
+/* ADMIN */
+.admin-gate{max-width:400px;margin:0 auto;text-align:center;padding:60px 24px}
+.admin-gate input{width:100%;padding:14px 20px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:16px;margin:16px 0;text-align:center}
+.admin-panel{display:none}
+.admin-panel.unlocked{display:block}
+.admin-top-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.admin-top-stat{padding:20px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line);text-align:center}
+.admin-top-stat .ats-num{font-size:28px;font-weight:800}
+.admin-top-stat .ats-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.admin-card{padding:24px;border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--line)}
+.flow-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);margin-bottom:8px;border:1px solid rgba(255,255,255,0.04)}
+.flow-row .flow-name{font-size:14px;font-weight:600}
+.flow-row .flow-tag{font-size:11px;padding:2px 8px;border-radius:var(--radius-pill);font-weight:600}
+.flow-add-row{display:flex;gap:8px;margin-top:12px}
+.flow-add-row input{flex:1;padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:13px}
+
+@media(max-width:900px){
+  .agent-dashboard,.reseller-dashboard,.admin-grid{grid-template-columns:1fr}
+  .brand-tiers,.deals-grid,.templates-grid{grid-template-columns:1fr}
+  .brand-preview{grid-template-columns:1fr}
+  .nft-flow{flex-direction:column}
+  .nft-flow-arrow{transform:rotate(90deg)}
+  .reseller-stat-row,.admin-top-stats{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -312,6 +435,12 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('pipeline');return false">Pipeline</a>
     <a href="#" onclick="showSection('community');return false">Community</a>
     <a href="#" onclick="showSection('domains');return false">Domains</a>
+    <a href="#" onclick="showSection('agent');return false">AI Agent</a>
+    <a href="#" onclick="showSection('brand-box');return false">Brand Box</a>
+    <a href="#" onclick="showSection('hot-deals');return false">Hot Deals</a>
+    <a href="#" onclick="showSection('reseller');return false">Reseller</a>
+    <a href="#" onclick="showSection('nft');return false">NFT</a>
+    <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
   </div>
   <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
@@ -960,6 +1089,455 @@ input,select,textarea{font-family:var(--font)}
 </div>
 </section>
 
+<!-- AI AGENT -->
+<section class="section hidden" id="sec-agent">
+<div class="section-label">AI Agent</div>
+<h2 class="section-title">AI Listing Manager</h2>
+<p class="section-sub">Your intelligent agent reviews, categorizes, and flags listings 24/7 so you never miss a deal or a risk.</p>
+
+<div class="agent-dashboard">
+  <div>
+    <div class="agent-status-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 style="font-size:18px;font-weight:700">Agent Status</h3>
+        <span id="agentStatusBadge" style="padding:4px 12px;border-radius:var(--radius-pill);font-size:12px;font-weight:700;background:rgba(52,211,153,0.15);color:var(--green)">ACTIVE</span>
+      </div>
+      <div class="agent-stat-grid">
+        <div class="agent-stat"><div class="stat-num" id="agentReviewed">24</div><div class="stat-lbl">Reviewed Today</div></div>
+        <div class="agent-stat"><div class="stat-num" id="agentFlagged" style="color:var(--red)">3</div><div class="stat-lbl">Flagged Items</div></div>
+        <div class="agent-stat"><div class="stat-num" id="agentApproved" style="color:var(--green)">18</div><div class="stat-lbl">Auto-Approved</div></div>
+        <div class="agent-stat"><div class="stat-num" id="agentPending" style="color:#fbbf24">3</div><div class="stat-lbl">Pending Review</div></div>
+      </div>
+    </div>
+
+    <div class="agent-controls" style="margin-top:20px">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:12px">Agent Controls</h3>
+      <div class="agent-control-row">
+        <label>Enable AI Agent</label>
+        <label class="toggle-switch"><input type="checkbox" id="agentEnabled" checked onchange="saveAgentConfig()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="agent-control-row">
+        <label>Review Frequency</label>
+        <select id="agentFrequency" onchange="saveAgentConfig()" style="padding:6px 12px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:13px">
+          <option value="realtime">Real-time</option>
+          <option value="hourly">Hourly</option>
+          <option value="daily" selected>Daily</option>
+          <option value="weekly">Weekly</option>
+        </select>
+      </div>
+      <div class="agent-control-row">
+        <label>Auto-Categorization</label>
+        <label class="toggle-switch"><input type="checkbox" id="agentAutoCat" checked onchange="saveAgentConfig()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="agent-control-row">
+        <label>Flag Suspicious Pricing</label>
+        <label class="toggle-switch"><input type="checkbox" id="agentFlagPricing" checked onchange="saveAgentConfig()"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="agent-control-row">
+        <label>Auto-Approve Verified Sellers</label>
+        <label class="toggle-switch"><input type="checkbox" id="agentAutoApprove" onchange="saveAgentConfig()"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="agent-status-panel">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">Activity Log</h3>
+      <ul class="agent-log" id="agentLog">
+        <li class="log-review"><span class="log-icon">&#128269;</span><div><div>Agent reviewed listing <strong>#FW-042</strong> -- CurryCloud Kitchen</div><div class="log-time">2 minutes ago</div></div></li>
+        <li class="log-flag"><span class="log-icon">&#9888;</span><div><div>Agent flagged <strong>suspicious pricing</strong> on listing #FW-038 -- margin exceeds 90%</div><div class="log-time">15 minutes ago</div></div></li>
+        <li class="log-auto"><span class="log-icon">&#10003;</span><div><div>Agent auto-categorized <strong>3 new listings</strong> as eCommerce, SaaS, Content</div><div class="log-time">1 hour ago</div></div></li>
+        <li class="log-review"><span class="log-icon">&#128269;</span><div><div>Agent reviewed listing <strong>#FW-041</strong> -- NRIMoney App</div><div class="log-time">2 hours ago</div></div></li>
+        <li class="log-auto"><span class="log-icon">&#10003;</span><div><div>Agent auto-approved <strong>DesignDukan</strong> -- verified seller, financials match</div><div class="log-time">3 hours ago</div></div></li>
+        <li class="log-flag"><span class="log-icon">&#9888;</span><div><div>Agent flagged <strong>duplicate listing</strong> detected -- PakPay Insights matches existing entry</div><div class="log-time">4 hours ago</div></div></li>
+        <li class="log-review"><span class="log-icon">&#128269;</span><div><div>Agent completed <strong>daily batch review</strong> -- 24 listings processed</div><div class="log-time">5 hours ago</div></div></li>
+        <li class="log-auto"><span class="log-icon">&#10003;</span><div><div>Agent updated revenue data for <strong>ChaiCart</strong> -- +8% from last month</div><div class="log-time">6 hours ago</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- BRAND-IN-A-BOX -->
+<section class="section hidden" id="sec-brand-box">
+<div class="section-label">Brand-in-a-Box</div>
+<h2 class="section-title">Build a Complete Brand</h2>
+<p class="section-sub">Everything you need to launch a professional digital brand in one package. Domain, logo, social profiles, theme, and content.</p>
+
+<div class="brand-tiers">
+  <div class="brand-tier-card">
+    <span class="bb-tier-label" style="background:rgba(52,211,153,0.15);color:var(--green)">Starter</span>
+    <h3>Starter Brand</h3>
+    <div class="bb-price">$2,499</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Perfect for first-time digital entrepreneurs launching their first business.</p>
+    <ul>
+      <li>Premium Domain (.com, .io, or .co)</li>
+      <li>AI-Generated Logo (3 concepts)</li>
+      <li>3 Social Media Profiles Setup</li>
+      <li>Basic Shopify/WordPress Theme</li>
+      <li>Brand Color Palette &amp; Typography</li>
+      <li>WhatsApp Support (14 days)</li>
+    </ul>
+    <button class="btn btn-outline btn-sm" style="margin-top:16px;width:100%;justify-content:center" onclick="alert('Starter Brand package selected! Contact us on WhatsApp to get started.')">Get Starter Brand</button>
+  </div>
+
+  <div class="brand-tier-card bb-featured">
+    <span class="bb-tier-label" style="background:rgba(227,133,64,0.15);color:var(--accent)">Popular</span>
+    <h3>Growth Brand</h3>
+    <div class="bb-price">$4,999</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:16px">For serious entrepreneurs ready to compete. Everything in Starter plus advanced assets.</p>
+    <ul>
+      <li>Everything in Starter Brand</li>
+      <li>Custom Shopify/WordPress Theme</li>
+      <li>10-Page Content Library</li>
+      <li>Email Templates (Welcome, Abandoned Cart, Newsletter)</li>
+      <li>Social Media Content Calendar (30 days)</li>
+      <li>Google Analytics &amp; Search Console Setup</li>
+      <li>WhatsApp Support (30 days)</li>
+    </ul>
+    <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20the%20Growth%20Brand%20package" target="_blank" class="btn btn-primary btn-sm" style="margin-top:16px;width:100%;justify-content:center">Get Growth Brand</a>
+  </div>
+
+  <div class="brand-tier-card">
+    <span class="bb-tier-label" style="background:rgba(167,139,250,0.15);color:#a78bfa">Empire</span>
+    <h3>Empire Brand</h3>
+    <div class="bb-price">$9,999</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:16px">The ultimate brand launchpad. Full brand identity, content engine, and SEO foundation.</p>
+    <ul>
+      <li>Everything in Growth Brand</li>
+      <li>Premium Domain (.com + .io + .ai)</li>
+      <li>Complete Brand Guidelines Document</li>
+      <li>30-Day Content Calendar (all platforms)</li>
+      <li>Full SEO Setup (sitemap, schema, meta tags)</li>
+      <li>Custom Email Domain &amp; Transactional Templates</li>
+      <li>Competitor Analysis Report</li>
+      <li>Priority WhatsApp Support (90 days)</li>
+    </ul>
+    <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20the%20Empire%20Brand%20package" target="_blank" class="btn btn-primary btn-sm" style="margin-top:16px;width:100%;justify-content:center">Get Empire Brand</a>
+  </div>
+</div>
+
+<!-- Interactive Brand Builder -->
+<div class="brand-builder-box">
+  <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">&#127912; Interactive Brand Builder</h3>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Enter your brand name to see live previews of logo concepts, domain availability, and social handle suggestions.</p>
+  <div style="display:flex;gap:12px;margin-bottom:20px">
+    <input type="text" id="brandNameInput" placeholder="Enter your brand name (e.g. VibeStore, TechFlip)" style="flex:1;padding:14px 20px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:16px" onkeydown="if(event.key==='Enter')buildBrandPreview()">
+    <button class="btn btn-primary" onclick="buildBrandPreview()">Preview Brand</button>
+  </div>
+  <div id="brandPreviewResults"></div>
+</div>
+</section>
+
+<!-- HOT DEALS -->
+<section class="section hidden" id="sec-hot-deals">
+<div class="section-label">Hot Deals</div>
+<h2 class="section-title">Limited-Time Deals</h2>
+<p class="section-sub">Time-sensitive opportunities on verified digital businesses. When the timer hits zero, the deal expires.</p>
+
+<div class="deals-grid" id="dealsGrid"></div>
+
+<div style="margin-top:40px">
+  <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Pre-Built Asset Templates</h3>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:20px">Skip the build phase. Start with a proven template and customize to your niche.</p>
+  <div class="templates-grid">
+    <div class="template-card">
+      <h4>&#128187; SaaS Starter Kit</h4>
+      <div class="tpl-price">$499</div>
+      <ul class="tpl-features">
+        <li>Next.js + Tailwind boilerplate</li>
+        <li>Stripe billing integration</li>
+        <li>Auth (Google, Email, OTP)</li>
+        <li>Admin dashboard</li>
+        <li>Landing page template</li>
+      </ul>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('SaaS Starter Kit added to cart! Contact us on WhatsApp to complete purchase.')">Use Template</button>
+    </div>
+    <div class="template-card">
+      <h4>&#128240; Content Site Template</h4>
+      <div class="tpl-price">$299</div>
+      <ul class="tpl-features">
+        <li>WordPress + SEO theme</li>
+        <li>AdSense integration ready</li>
+        <li>50 AI-written starter articles</li>
+        <li>Email capture system</li>
+        <li>Social sharing setup</li>
+      </ul>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('Content Site Template added to cart! Contact us on WhatsApp to complete purchase.')">Use Template</button>
+    </div>
+    <div class="template-card">
+      <h4>&#128722; Shopify Dropship Store</h4>
+      <div class="tpl-price">$799</div>
+      <ul class="tpl-features">
+        <li>Premium Shopify theme</li>
+        <li>50 winning products loaded</li>
+        <li>Vetted supplier connections (US + Global)</li>
+        <li>Facebook Ads templates</li>
+        <li>ShipStation / USPS integration</li>
+      </ul>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('Shopify Dropship Store added to cart! Contact us on WhatsApp to complete purchase.')">Use Template</button>
+    </div>
+    <div class="template-card">
+      <h4>&#129302; AI Tool Bundle</h4>
+      <div class="tpl-price">$599</div>
+      <ul class="tpl-features">
+        <li>OpenAI / Claude API integration</li>
+        <li>SaaS wrapper with billing</li>
+        <li>5 pre-built AI tool templates</li>
+        <li>Usage metering system</li>
+        <li>API documentation</li>
+      </ul>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('AI Tool Bundle added to cart! Contact us on WhatsApp to complete purchase.')">Use Template</button>
+    </div>
+    <div class="template-card">
+      <h4>&#128232; Newsletter Business</h4>
+      <div class="tpl-price">$399</div>
+      <ul class="tpl-features">
+        <li>Beehiiv / Substack setup</li>
+        <li>Landing page + signup forms</li>
+        <li>30-day content calendar</li>
+        <li>Monetization playbook</li>
+        <li>Growth automation (referrals)</li>
+      </ul>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('Newsletter Business added to cart! Contact us on WhatsApp to complete purchase.')">Use Template</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- RESELLER -->
+<section class="section hidden" id="sec-reseller">
+<div class="section-label">Reseller Platform</div>
+<h2 class="section-title">Build on FlipWala</h2>
+<p class="section-sub">Create your own storefront, list digital assets, and earn revenue reselling on the FlipWala platform.</p>
+
+<div class="reseller-stat-row">
+  <div class="reseller-stat"><div class="rs-num" style="color:var(--accent)" id="rsStorefronts">0</div><div class="rs-lbl">My Storefronts</div></div>
+  <div class="reseller-stat"><div class="rs-num" style="color:var(--green)" id="rsSales">0</div><div class="rs-lbl">Total Sales</div></div>
+  <div class="reseller-stat"><div class="rs-num" style="color:var(--accent)" id="rsRevenueUSD">$0</div><div class="rs-lbl">Revenue (USD)</div></div>
+</div>
+
+<div class="reseller-dashboard">
+  <div>
+    <div class="reseller-panel">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">My Storefronts</h3>
+      <ul class="storefront-list" id="resellerStorefronts">
+        <li style="padding:40px;text-align:center;color:var(--muted);font-size:14px">No storefronts yet. Create your first one below.</li>
+      </ul>
+      <div style="margin-top:16px">
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:8px">Create New Storefront</h4>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="newStorefrontName" placeholder="Storefront name (e.g. MyFlipDeals)" style="flex:1;padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:14px">
+          <button class="btn btn-primary btn-sm" onclick="createStorefront()">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="reseller-panel" style="margin-top:20px">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:12px">Commission Tracker</h3>
+      <div style="padding:16px;border-radius:var(--radius);background:rgba(227,133,64,0.06);border:1px solid rgba(227,133,64,0.15);margin-bottom:12px">
+        <div style="font-size:14px;font-weight:600">Your Commission Rate</div>
+        <div style="font-size:24px;font-weight:800;color:var(--accent);margin-top:4px">10%</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">On all sales through your storefronts</div>
+      </div>
+      <div style="padding:16px;border-radius:var(--radius);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)">
+        <div style="font-size:14px;font-weight:600">Pending Commission</div>
+        <div style="font-size:20px;font-weight:800;color:var(--green);margin-top:4px" id="rsPendingComm">$0</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="reseller-panel">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Referral Program</h3>
+      <div style="padding:20px;border-radius:var(--radius);background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.15);margin-bottom:16px;text-align:center">
+        <div style="font-size:36px;font-weight:900;color:var(--green)">5%</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:4px">Earn on every deal you refer</div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:14px;font-weight:600;display:block;margin-bottom:6px">Your Referral Link</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="referralLink" readonly value="https://flipwala.com/ref/YOUR_ID" style="flex:1;padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--muted);font-size:13px">
+          <button class="btn btn-outline btn-sm" onclick="copyReferralLink()">Copy</button>
+        </div>
+      </div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.8">
+        <strong style="color:var(--ink)">How it works:</strong><br>
+        1. Share your referral link with potential buyers/sellers<br>
+        2. They sign up and complete a deal on FlipWala<br>
+        3. You earn 5% of the escrow fee on their first deal<br>
+        4. Payouts via bank transfer (ACH), PayPal, or crypto
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- NFT OWNERSHIP -->
+<section class="section hidden" id="sec-nft">
+<div class="section-label">NFT Ownership</div>
+<h2 class="section-title">Blockchain-Verified Ownership Transfer</h2>
+<p class="section-sub">Every FlipWala asset transfer is backed by an NFT -- providing immutable, on-chain proof of ownership.</p>
+
+<div class="nft-flow">
+  <div class="nft-flow-step">
+    <div class="nfs-icon">&#128176;</div>
+    <div class="nfs-label">Asset Purchased</div>
+    <div class="nfs-sub">Deal closed via escrow</div>
+  </div>
+  <div class="nft-flow-arrow">&#10142;</div>
+  <div class="nft-flow-step">
+    <div class="nfs-icon">&#129689;</div>
+    <div class="nfs-label">NFT Minted</div>
+    <div class="nfs-sub">On-chain certificate created</div>
+  </div>
+  <div class="nft-flow-arrow">&#10142;</div>
+  <div class="nft-flow-step">
+    <div class="nfs-icon">&#128274;</div>
+    <div class="nfs-label">Ownership Verified</div>
+    <div class="nfs-sub">Smart contract validates</div>
+  </div>
+  <div class="nft-flow-arrow">&#10142;</div>
+  <div class="nft-flow-step">
+    <div class="nfs-icon">&#10003;</div>
+    <div class="nfs-label">Transfer Complete</div>
+    <div class="nfs-sub">NFT in buyer's wallet</div>
+  </div>
+</div>
+
+<div class="nft-cert">
+  <h3>&#128220; NFT Ownership Certificate</h3>
+  <div class="nft-cert-grid">
+    <div class="nft-cert-field"><div class="ncf-label">Asset Name</div><div class="ncf-value">ChaiCart eCommerce</div></div>
+    <div class="nft-cert-field"><div class="ncf-label">Token ID</div><div class="ncf-value">#FW-NFT-2026-0042</div></div>
+    <div class="nft-cert-field"><div class="ncf-label">Owner</div><div class="ncf-value">0x7a3b...4f2e (Arjun P.)</div></div>
+    <div class="nft-cert-field"><div class="ncf-label">Blockchain</div><div class="ncf-value">Polygon (MATIC)</div></div>
+    <div class="nft-cert-field"><div class="ncf-label">Date Minted</div><div class="ncf-value">April 10, 2026</div></div>
+    <div class="nft-cert-field"><div class="ncf-label">Deal Value</div><div class="ncf-value">$101,796</div></div>
+  </div>
+  <button class="btn btn-outline btn-sm" style="margin-top:16px" onclick="alert('View on PolygonScan: This is a demo certificate.')">View on Blockchain &#8599;</button>
+</div>
+
+<h3 style="font-size:18px;font-weight:700;margin-bottom:16px;text-align:center">Supported Blockchains</h3>
+<div class="nft-chains">
+  <div class="nft-chain" style="border-color:rgba(96,165,250,0.3)">&#9830; Ethereum</div>
+  <div class="nft-chain" style="border-color:rgba(167,139,250,0.3)">&#9733; Solana</div>
+  <div class="nft-chain" style="border-color:rgba(167,139,250,0.3)">&#11043; Polygon</div>
+  <div class="nft-chain" style="border-color:rgba(96,165,250,0.3)">&#9672; Base</div>
+</div>
+
+
+<h3 style="font-size:18px;font-weight:700;margin:32px 0 16px">Benefits of NFT Ownership</h3>
+<div class="nft-benefits">
+  <div class="nft-benefit">
+    <h4>&#128274; Immutable Record</h4>
+    <p>Once minted, ownership history cannot be altered. Every transfer is permanently recorded on-chain, providing indisputable proof of ownership.</p>
+  </div>
+  <div class="nft-benefit">
+    <h4>&#9889; Instant Verification</h4>
+    <p>Anyone can verify asset ownership in seconds by checking the blockchain. No need for lengthy legal verification processes.</p>
+  </div>
+  <div class="nft-benefit">
+    <h4>&#128176; Royalty Tracking</h4>
+    <p>Original sellers can receive royalties on future resales. Smart contracts automatically distribute royalty payments on each transfer.</p>
+  </div>
+  <div class="nft-benefit">
+    <h4>&#128196; On-Chain History</h4>
+    <p>Complete provenance of every asset -- who owned it, when it transferred, and at what price. Full transparency for buyers and sellers.</p>
+  </div>
+</div>
+</section>
+
+<!-- ADMIN -->
+<section class="section hidden" id="sec-admin">
+<div class="section-label">Admin Panel</div>
+<h2 class="section-title">FlipWala Admin</h2>
+<p class="section-sub">Platform administration and flow management.</p>
+
+<div class="admin-gate" id="adminGate">
+  <div style="font-size:48px;margin-bottom:16px">&#128274;</div>
+  <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Admin Access Required</h3>
+  <p style="color:var(--muted);font-size:14px">Enter the admin password to access the control panel.</p>
+  <input type="password" id="adminPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter')adminLogin()">
+  <button class="btn btn-primary" style="width:100%" onclick="adminLogin()">Unlock Admin Panel</button>
+  <p id="adminError" style="color:var(--red);font-size:13px;margin-top:8px" class="hidden">Incorrect password. Try again.</p>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-top-stats">
+    <div class="admin-top-stat"><div class="ats-num" style="color:var(--accent)" id="adminListings">10</div><div class="ats-lbl">Total Listings</div></div>
+    <div class="admin-top-stat"><div class="ats-num" style="color:var(--green)" id="adminDeals">5</div><div class="ats-lbl">Active Deals</div></div>
+    <div class="admin-top-stat"><div class="ats-num" style="color:var(--accent)" id="adminRevenueUSD">$1.48M</div><div class="ats-lbl">Revenue (USD)</div></div>
+  </div>
+
+  <div class="admin-grid">
+    <div class="admin-card">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Flow Manager</h3>
+      <div id="flowManagerList">
+        <div class="flow-row" data-flow="new-listing-review">
+          <div><div class="flow-name">New Listing Review</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked onchange="toggleFlow('new-listing-review',this)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="flow-row" data-flow="price-alert">
+          <div><div class="flow-name">Price Alert Notifications</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked onchange="toggleFlow('price-alert',this)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="flow-row" data-flow="buyer-seller-match">
+          <div><div class="flow-name">Buyer-Seller Matching</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked onchange="toggleFlow('buyer-seller-match',this)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="flow-row" data-flow="escrow-auto">
+          <div><div class="flow-name">Escrow Auto-Advance</div></div>
+          <label class="toggle-switch"><input type="checkbox" onchange="toggleFlow('escrow-auto',this)"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="flow-row" data-flow="duplicate-detect">
+          <div><div class="flow-name">Duplicate Detection</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked onchange="toggleFlow('duplicate-detect',this)"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="flow-add-row">
+        <input type="text" id="newFlowName" placeholder="New flow name...">
+        <button class="btn btn-primary btn-sm" onclick="addFlow()">Add Flow</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="admin-card" style="margin-bottom:20px">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">AI Review Agent Status</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
+            <span style="font-size:14px;font-weight:600">Agent Online</span>
+          </div>
+          <span style="font-size:13px;color:var(--muted)">Last run: 2 min ago</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="padding:12px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Processed Today</div>
+            <div style="font-size:20px;font-weight:800;color:var(--accent);margin-top:4px">24</div>
+          </div>
+          <div style="padding:12px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Accuracy</div>
+            <div style="font-size:20px;font-weight:800;color:var(--green);margin-top:4px">96.8%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Make.com Integration</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Connect FlipWala flows to Make.com (formerly Integromat) for advanced automation.</p>
+        <div style="padding:16px;border-radius:var(--radius);background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.15);margin-bottom:12px">
+          <div style="font-size:13px;color:#a78bfa;font-weight:600;margin-bottom:4px">Webhook URL</div>
+          <code style="font-size:12px;color:var(--muted);word-break:break-all;font-family:var(--mono)">https://hook.make.com/flipwala/webhook/YOUR_KEY</code>
+        </div>
+        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="alert('Make.com integration coming soon. Contact admin for early access.')">Configure Integration</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
 <!-- LISTING DETAIL MODAL -->
 <div class="modal-overlay hidden" id="listingModal" onclick="if(event.target===this)closeModal()">
 <div class="modal">
@@ -983,6 +1561,8 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('sell');return false">Sell Your Business</a>
     <a href="#" onclick="showSection('valuation');return false">Valuations</a>
     <a href="#" onclick="showSection('pipeline');return false">Deal Pipeline</a>
+    <a href="#" onclick="showSection('hot-deals');return false">Hot Deals</a>
+    <a href="#" onclick="showSection('brand-box');return false">Brand-in-a-Box</a>
   </div>
   <div class="footer-col">
     <h4>Resources</h4>
@@ -990,14 +1570,16 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('escrow');return false">Escrow Center</a>
     <a href="#" onclick="showSection('community');return false">Community</a>
     <a href="#" onclick="showSection('domains');return false">Domain Services</a>
-    <a href="#">Blog</a>
+    <a href="#" onclick="showSection('agent');return false">AI Agent</a>
+    <a href="#" onclick="showSection('reseller');return false">Reseller</a>
+    <a href="#" onclick="showSection('nft');return false">NFT Ownership</a>
   </div>
   <div class="footer-col">
-    <h4>Regions</h4>
-    <a href="#">India</a>
-    <a href="#">Pakistan</a>
-    <a href="#">UAE</a>
-    <a href="#">US &amp; UK</a>
+    <h4>Company</h4>
+    <a href="#">About</a>
+    <a href="#">Careers</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
   </div>
 </div>
 <div class="footer-bottom">
@@ -1163,7 +1745,7 @@ function showSection(sec){
   currentSection = sec;
   // update nav active
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const navMap = {marketplace:0,sell:1,valuation:2,hiw:3,escrow:4,pipeline:5,community:6,domains:7};
+  const navMap = {marketplace:0,sell:1,valuation:2,hiw:3,escrow:4,pipeline:5,community:6,domains:7,agent:8,'brand-box':9,'hot-deals':10,reseller:11,nft:12,admin:13};
   if(navMap[sec]!==undefined) document.querySelectorAll('.nav-links a')[navMap[sec]]?.classList.add('active');
   // close mobile nav
   document.getElementById('navLinks').classList.remove('open');
@@ -1172,6 +1754,10 @@ function showSection(sec){
   if(sec==='marketplace') renderListings();
   if(sec==='pipeline') renderPipeline();
   if(sec==='valuation') renderComps();
+  if(sec==='agent') loadAgentConfig();
+  if(sec==='hot-deals') renderDeals();
+  if(sec==='reseller') loadResellerData();
+  if(sec==='admin') checkAdminSession();
 }
 
 /* ===== HELPERS ===== */
@@ -1712,6 +2298,332 @@ function digestSignup(e){
     document.getElementById('digestConfirm').classList.remove('hidden');
     document.getElementById('digestEmail').value='';
   }
+}
+
+/* ===== AI AGENT ===== */
+function loadAgentConfig(){
+  const config = JSON.parse(localStorage.getItem('fw_agent_config')||'null') || {
+    enabled:true, frequency:'daily', autoCat:true, flagPricing:true, autoApprove:false
+  };
+  document.getElementById('agentEnabled').checked = config.enabled;
+  document.getElementById('agentFrequency').value = config.frequency;
+  document.getElementById('agentAutoCat').checked = config.autoCat;
+  document.getElementById('agentFlagPricing').checked = config.flagPricing;
+  document.getElementById('agentAutoApprove').checked = config.autoApprove;
+  const badge = document.getElementById('agentStatusBadge');
+  if(config.enabled){
+    badge.textContent='ACTIVE';badge.style.background='rgba(52,211,153,0.15)';badge.style.color='var(--green)';
+  } else {
+    badge.textContent='DISABLED';badge.style.background='rgba(248,113,113,0.15)';badge.style.color='var(--red)';
+  }
+}
+
+function saveAgentConfig(){
+  const config = {
+    enabled: document.getElementById('agentEnabled').checked,
+    frequency: document.getElementById('agentFrequency').value,
+    autoCat: document.getElementById('agentAutoCat').checked,
+    flagPricing: document.getElementById('agentFlagPricing').checked,
+    autoApprove: document.getElementById('agentAutoApprove').checked
+  };
+  localStorage.setItem('fw_agent_config', JSON.stringify(config));
+  loadAgentConfig();
+}
+
+/* ===== BRAND BUILDER ===== */
+function buildBrandPreview(){
+  const name = document.getElementById('brandNameInput').value.trim();
+  if(!name){alert('Please enter a brand name.');return;}
+  const slug = name.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const colors = ['#e38540','#34d399','#60a5fa','#a78bfa','#f472b6','#fbbf24'];
+  const seed = slug.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const c1 = colors[seed % colors.length];
+  const c2 = colors[(seed+3) % colors.length];
+  const initials = name.split(/\s+/).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+
+  const tlds = ['.com','.io','.ai','.dev','.app','.co'];
+  const domainHTML = tlds.map(tld=>{
+    const hash = (seed * (tld.length+1) * 7) % 100;
+    const avail = hash < 50;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:var(--radius);background:rgba(255,255,255,0.02);margin-bottom:4px;border:1px solid rgba(255,255,255,0.04)">
+      <span style="font-size:14px;font-weight:600">${slug}${tld}</span>
+      <span style="padding:3px 8px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;${avail?'background:rgba(52,211,153,0.15);color:var(--green)':'background:rgba(248,113,113,0.15);color:var(--red)'}">${avail?'Available':'Taken'}</span>
+    </div>`;
+  }).join('');
+
+  const socials = ['Instagram','Twitter/X','LinkedIn','Facebook','YouTube','TikTok'];
+  const socialHTML = socials.map(s=>{
+    const hash2 = (seed * s.length) % 100;
+    const avail = hash2 < 60;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px">
+      <span>${s}: @${slug}</span>
+      <span style="color:${avail?'var(--green)':'var(--red)};font-weight:600;font-size:12px">${avail?'Available':'Taken'}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('brandPreviewResults').innerHTML = `
+    <div class="brand-preview">
+      <div class="brand-preview-card">
+        <h4>Logo Concepts</h4>
+        <div style="display:flex;gap:12px;justify-content:center;margin:12px 0">
+          <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,${c1},${c2});display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#fff">${initials}</div>
+          <div style="width:64px;height:64px;border-radius:50%;background:${c1};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#fff">${initials}</div>
+          <div style="width:64px;height:64px;border-radius:8px;background:linear-gradient(180deg,${c2},${c1});display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#fff">${initials[0]||''}</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">3 AI-generated concepts for "${name}"</div>
+      </div>
+      <div class="brand-preview-card">
+        <h4>Domain Availability</h4>
+        ${domainHTML}
+      </div>
+      <div class="brand-preview-card">
+        <h4>Social Handles</h4>
+        <div style="text-align:left">${socialHTML}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ===== HOT DEALS ===== */
+const HOT_DEALS = [
+  {id:'hd1',name:'Verified Shopify Store (Health Niche)',desc:'Fully stocked Shopify store in the health/wellness niche with 6 months of revenue history.',
+   originalUSD:14399,discountedUSD:9599,savings:33,endTime:null},
+  {id:'hd2',name:'SaaS MVP - HR Automation Tool',desc:'Built and validated HR tool SaaS with 50 beta users. React + Node.js. Ready to scale.',
+   originalUSD:29940,discountedUSD:19160,savings:36,endTime:null},
+  {id:'hd3',name:'Content Portfolio - 3 Niche Blogs',desc:'Three interlinked niche blogs generating passive AdSense revenue. 120K combined monthly pageviews.',
+   originalUSD:9580,discountedUSD:6587,savings:31,endTime:null},
+  {id:'hd4',name:'Mobile App - Recipe & Cooking',desc:'React Native cooking app with 15K downloads. Monetized with ads and premium recipes.',
+   originalUSD:21557,discountedUSD:14371,savings:33,endTime:null},
+  {id:'hd5',name:'WhatsApp Newsletter Business',desc:'Curated WhatsApp broadcast list with 8,000+ subscribers in finance niche. Growing 15% MoM.',
+   originalUSD:7186,discountedUSD:4790,savings:33,endTime:null}
+];
+
+// Set deal end times relative to now
+function initDealTimers(){
+  const now = Date.now();
+  const hours = [6,12,24,48,72];
+  HOT_DEALS.forEach((d,i)=>{
+    d.endTime = now + hours[i] * 3600000;
+  });
+}
+initDealTimers();
+
+function renderDeals(){
+  const grid = document.getElementById('dealsGrid');
+  grid.innerHTML = HOT_DEALS.map(d=>{
+    const now = Date.now();
+    const remaining = Math.max(0, d.endTime - now);
+    const hrs = Math.floor(remaining / 3600000);
+    const mins = Math.floor((remaining % 3600000) / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    const days = Math.floor(hrs / 24);
+    const dispHrs = hrs % 24;
+
+    return `<div class="deal-card">
+      <span class="deal-badge">${d.savings}% OFF</span>
+      <div class="deal-name">${d.name}</div>
+      <div class="deal-desc">${d.desc}</div>
+      <div class="deal-prices">
+        <span class="deal-original">$${d.originalUSD.toLocaleString('en-US')}</span>
+      </div>
+      <div class="deal-prices">
+        <span class="deal-discounted">$${d.discountedUSD.toLocaleString('en-US')}</span>
+        <span class="deal-savings">Save ${d.savings}%</span>
+      </div>
+      <div class="deal-countdown" data-deal-id="${d.id}">
+        <div class="countdown-unit"><div class="cd-num">${days}</div><div class="cd-lbl">Days</div></div>
+        <div class="countdown-unit"><div class="cd-num">${dispHrs}</div><div class="cd-lbl">Hours</div></div>
+        <div class="countdown-unit"><div class="cd-num">${mins}</div><div class="cd-lbl">Mins</div></div>
+        <div class="countdown-unit"><div class="cd-num">${secs}</div><div class="cd-lbl">Secs</div></div>
+      </div>
+      <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="claimDeal('${d.id}')">Claim Deal</button>
+    </div>`;
+  }).join('');
+}
+
+function claimDeal(id){
+  const deal = HOT_DEALS.find(d=>d.id===id);
+  if(!deal) return;
+  const msg = encodeURIComponent('Hi! I want to claim the Hot Deal: '+deal.name+' ($'+deal.discountedUSD.toLocaleString('en-US')+')');
+  window.open('https://wa.me/1234567890?text='+msg,'_blank');
+}
+
+// Countdown timer interval
+setInterval(function(){
+  if(currentSection !== 'hot-deals') return;
+  const countdowns = document.querySelectorAll('.deal-countdown');
+  countdowns.forEach(el=>{
+    const dealId = el.dataset.dealId;
+    const deal = HOT_DEALS.find(d=>d.id===dealId);
+    if(!deal) return;
+    const now = Date.now();
+    const remaining = Math.max(0, deal.endTime - now);
+    const hrs = Math.floor(remaining / 3600000);
+    const mins = Math.floor((remaining % 3600000) / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    const days = Math.floor(hrs / 24);
+    const dispHrs = hrs % 24;
+    const units = el.querySelectorAll('.countdown-unit .cd-num');
+    if(units.length===4){
+      units[0].textContent = days;
+      units[1].textContent = dispHrs;
+      units[2].textContent = mins;
+      units[3].textContent = secs;
+    }
+  });
+},1000);
+
+/* ===== RESELLER ===== */
+function loadResellerData(){
+  const data = JSON.parse(localStorage.getItem('fw_reseller')||'null') || {
+    storefronts:[], sales:0, revenueUSD:0, pendingCommUSD:0
+  };
+  document.getElementById('rsStorefronts').textContent = data.storefronts.length;
+  document.getElementById('rsSales').textContent = data.sales;
+  document.getElementById('rsRevenueUSD').textContent = '$'+data.revenueUSD.toLocaleString('en-US');
+  document.getElementById('rsPendingComm').textContent = '$'+data.pendingCommUSD.toLocaleString('en-US');
+
+  const list = document.getElementById('resellerStorefronts');
+  if(data.storefronts.length){
+    list.innerHTML = data.storefronts.map((sf,i)=>`
+      <li class="storefront-item">
+        <div>
+          <div style="font-size:14px;font-weight:700">${sf.name}</div>
+          <div style="font-size:12px;color:var(--muted)">Created ${sf.created}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span style="padding:4px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;background:rgba(52,211,153,0.15);color:var(--green)">${sf.status||'Active'}</span>
+          <button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:11px;color:var(--red)" onclick="deleteStorefront(${i})">Delete</button>
+        </div>
+      </li>
+    `).join('');
+  } else {
+    list.innerHTML = '<li style="padding:40px;text-align:center;color:var(--muted);font-size:14px">No storefronts yet. Create your first one below.</li>';
+  }
+
+  // Set referral link
+  const refId = data.storefronts.length ? data.storefronts[0].name.toLowerCase().replace(/[^a-z0-9]/g,'') : 'YOUR_ID';
+  document.getElementById('referralLink').value = 'https://flipwala.com/ref/'+refId;
+}
+
+function createStorefront(){
+  const name = document.getElementById('newStorefrontName').value.trim();
+  if(!name){alert('Please enter a storefront name.');return;}
+  const data = JSON.parse(localStorage.getItem('fw_reseller')||'null') || {
+    storefronts:[], sales:0, revenueUSD:0, pendingCommUSD:0
+  };
+  data.storefronts.push({name, created:new Date().toLocaleDateString('en-US'), status:'Active'});
+  localStorage.setItem('fw_reseller', JSON.stringify(data));
+  document.getElementById('newStorefrontName').value = '';
+  loadResellerData();
+}
+
+function deleteStorefront(idx){
+  const data = JSON.parse(localStorage.getItem('fw_reseller')||'{}');
+  if(data.storefronts) data.storefronts.splice(idx,1);
+  localStorage.setItem('fw_reseller', JSON.stringify(data));
+  loadResellerData();
+}
+
+
+function copyReferralLink(){
+  const input = document.getElementById('referralLink');
+  input.select();
+  document.execCommand('copy');
+  alert('Referral link copied to clipboard!');
+}
+
+/* ===== ADMIN ===== */
+function checkAdminSession(){
+  if(sessionStorage.getItem('fw_admin_auth')==='true'){
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminPanel').classList.add('unlocked');
+    loadAdminState();
+  }
+}
+
+function adminLogin(){
+  const pw = document.getElementById('adminPassword').value;
+  if(pw==='demo'){
+    sessionStorage.setItem('fw_admin_auth','true');
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminPanel').classList.add('unlocked');
+    document.getElementById('adminError').classList.add('hidden');
+    loadAdminState();
+  } else {
+    document.getElementById('adminError').classList.remove('hidden');
+  }
+}
+
+function loadAdminState(){
+  const state = JSON.parse(localStorage.getItem('fw_admin')||'null') || {
+    flows:{
+      'new-listing-review':true,
+      'price-alert':true,
+      'buyer-seller-match':true,
+      'escrow-auto':false,
+      'upi-verify':true,
+      'fema-compliance':true,
+      'duplicate-detect':true
+    },
+    customFlows:[]
+  };
+  // Apply flow states
+  Object.keys(state.flows).forEach(flowId=>{
+    const row = document.querySelector(`.flow-row[data-flow="${flowId}"]`);
+    if(row){
+      const toggle = row.querySelector('input[type="checkbox"]');
+      if(toggle) toggle.checked = state.flows[flowId];
+    }
+  });
+  // Render custom flows
+  renderCustomFlows(state);
+}
+
+function toggleFlow(flowId, el){
+  const state = JSON.parse(localStorage.getItem('fw_admin')||'null') || {flows:{},customFlows:[]};
+  state.flows[flowId] = el.checked;
+  localStorage.setItem('fw_admin', JSON.stringify(state));
+}
+
+function addFlow(){
+  const name = document.getElementById('newFlowName').value.trim();
+  if(!name){alert('Please enter a flow name.');return;}
+  const state = JSON.parse(localStorage.getItem('fw_admin')||'null') || {flows:{},customFlows:[]};
+  const flowId = 'custom-'+name.toLowerCase().replace(/[^a-z0-9]/g,'-');
+  state.flows[flowId] = true;
+  state.customFlows.push({id:flowId, name:name});
+  localStorage.setItem('fw_admin', JSON.stringify(state));
+  document.getElementById('newFlowName').value = '';
+  renderCustomFlows(state);
+}
+
+function renderCustomFlows(state){
+  const list = document.getElementById('flowManagerList');
+  // Remove existing custom flows
+  list.querySelectorAll('.flow-row-custom').forEach(el=>el.remove());
+  // Add custom flows
+  (state.customFlows||[]).forEach(cf=>{
+    const row = document.createElement('div');
+    row.className = 'flow-row flow-row-custom';
+    row.dataset.flow = cf.id;
+    row.innerHTML = `
+      <div><div class="flow-name">${cf.name}</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:4px" onclick="deleteFlow('${cf.id}')">&times;</button>
+        <label class="toggle-switch"><input type="checkbox" ${state.flows[cf.id]?'checked':''} onchange="toggleFlow('${cf.id}',this)"><span class="toggle-slider"></span></label>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function deleteFlow(flowId){
+  const state = JSON.parse(localStorage.getItem('fw_admin')||'null') || {flows:{},customFlows:[]};
+  delete state.flows[flowId];
+  state.customFlows = (state.customFlows||[]).filter(cf=>cf.id!==flowId);
+  localStorage.setItem('fw_admin', JSON.stringify(state));
+  renderCustomFlows(state);
 }
 
 /* ===== KEYBOARD ===== */
