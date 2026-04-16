@@ -444,6 +444,74 @@ input,select,textarea{font-family:var(--font)}
   .nft-flow-arrow{transform:rotate(90deg)}
   .reseller-stat-row,.admin-top-stats{grid-template-columns:1fr 1fr}
 }
+
+/* ===== SUBSCRIPTIONS ===== */
+.sub-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:32px}
+.tier-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:32px;text-align:center;transition:.3s}
+.tier-card:hover{border-color:rgba(227,133,64,0.3);transform:translateY(-3px)}
+.tier-card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(227,133,64,0.15)}
+.tier-card .tier-price{font-size:36px;font-weight:800;color:var(--ink);margin:12px 0 4px}
+.tier-card .tier-price span{font-size:16px;color:var(--muted);font-weight:400}
+.tier-card .tier-name{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:8px}
+.tier-card ul{list-style:none;text-align:left;margin:16px 0;padding:0}
+.tier-card ul li{padding:6px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--line)}
+.tier-card ul li::before{content:"\2713 ";color:var(--accent);font-weight:700;margin-right:6px}
+
+/* ===== AI OPS ===== */
+.ai-ops-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:32px}
+.ai-ops-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;transition:.3s}
+.ai-ops-card:hover{border-color:rgba(227,133,64,0.3)}
+.ai-ops-card h4{font-size:18px;font-weight:700;margin-bottom:4px}
+.ops-status{display:inline-block;padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.ops-status.online{background:rgba(74,222,128,0.15);color:var(--green)}
+.ops-status.standby{background:rgba(227,133,64,0.15);color:var(--accent)}
+.ops-caps{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.ops-caps span{background:rgba(227,133,64,0.1);color:var(--accent);padding:4px 10px;border-radius:var(--radius-pill);font-size:12px;font-weight:600}
+.ops-feed{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.ops-feed div{padding:6px 0;font-size:13px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.04)}
+.ops-metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
+.ops-metric{background:rgba(227,133,64,0.06);border-radius:var(--radius);padding:12px;text-align:center}
+.ops-metric .ops-metric-val{font-size:22px;font-weight:800;color:var(--accent)}
+.ops-metric .ops-metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+
+/* ===== SECURITY SCORE ===== */
+.sec-score-ring{width:120px;height:120px;border-radius:50%;border:6px solid var(--line);border-top-color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:spin-slow 3s linear infinite}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+.sec-score-ring .score-val{font-size:28px;font-weight:800;color:var(--accent)}
+.sec-findings{margin-top:20px}
+.sec-findings .finding{padding:10px 14px;border-radius:var(--radius);margin-bottom:8px;font-size:13px;display:flex;align-items:center;gap:10px}
+.sec-findings .finding.critical{background:rgba(248,113,113,0.12);color:var(--red)}
+.sec-findings .finding.warning{background:rgba(251,191,36,0.12);color:#fbbf24}
+.sec-findings .finding.info{background:rgba(96,165,250,0.12);color:var(--blue)}
+.sec-findings .finding.pass{background:rgba(74,222,128,0.1);color:var(--green)}
+
+/* ===== FW VERIFICATION MODAL ===== */
+.fw-verify-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center}
+.fw-verify-overlay.hidden{display:none}
+.fw-verify-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px;max-width:480px;width:90%;text-align:center}
+.fw-verify-box h3{font-size:22px;font-weight:800;margin-bottom:8px}
+.fw-verify-box p{color:var(--muted);font-size:14px;margin-bottom:24px}
+.fw-step{display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius);margin-bottom:10px;background:var(--card);border:1px solid var(--line);cursor:pointer;transition:.2s}
+.fw-step:hover{border-color:var(--accent)}
+.fw-step.active{border-color:var(--accent);background:rgba(227,133,64,0.08)}
+.fw-step.done{border-color:var(--green);background:rgba(74,222,128,0.06)}
+.fw-step .step-num{width:28px;height:28px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.fw-step.active .step-num{background:var(--accent);color:#000}
+.fw-step.done .step-num{background:var(--green);color:#000}
+
+/* ===== FW REVEAL POPUP ===== */
+.fw-reveal-popup{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center}
+.fw-reveal-popup.hidden{display:none}
+.fw-reveal-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:40px;max-width:420px;width:90%;text-align:center}
+.fw-reveal-box h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.fw-reveal-box p{color:var(--muted);font-size:14px;margin-bottom:20px}
+
+/* ===== FW PLATFORM BADGE ===== */
+.fw-platform-badge{position:absolute;top:12px;right:12px;background:var(--accent);color:#000;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:.04em;z-index:2}
+
+@media(max-width:768px){
+  .sub-tiers,.ai-ops-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -469,6 +537,8 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('hot-deals');return false">Hot Deals</a>
     <a href="#" onclick="showSection('reseller');return false">Reseller</a>
     <a href="#" onclick="showSection('nft');return false">NFT</a>
+    <a href="#" onclick="showSection('subscriptions');return false">Subscriptions</a>
+    <a href="#" onclick="showSection('ai-ops');return false">AI Ops</a>
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
   </div>
@@ -1478,6 +1548,160 @@ input,select,textarea{font-family:var(--font)}
 </div>
 </section>
 
+<!-- SUBSCRIPTIONS -->
+<section class="section hidden" id="sec-subscriptions">
+<div class="section-label">Subscriptions</div>
+<h2 class="section-title">FlipWala Membership</h2>
+<p class="section-sub">Unlock premium deal flow, AI-powered valuations, and priority escrow. <span id="fwCurrentPlan" style="color:var(--accent);font-weight:700"></span></p>
+
+<div class="sub-tiers">
+  <div class="tier-card" onclick="selectPlan('starter')">
+    <div class="tier-name">Starter</div>
+    <div class="tier-price">$29<span>/mo</span></div>
+    <ul>
+      <li>3 listing reveals per month</li>
+      <li>Basic AI valuation reports</li>
+      <li>Community access</li>
+      <li>Email support</li>
+      <li>Standard escrow</li>
+    </ul>
+    <button class="btn btn-outline" style="width:100%">Select Starter</button>
+  </div>
+
+  <div class="tier-card featured" onclick="selectPlan('pro')">
+    <div style="background:var(--accent);color:#000;padding:4px 14px;border-radius:var(--radius-pill);font-size:11px;font-weight:700;display:inline-block;margin-bottom:8px">MOST POPULAR</div>
+    <div class="tier-name">Pro</div>
+    <div class="tier-price">$79<span>/mo</span></div>
+    <ul>
+      <li>Unlimited listing reveals</li>
+      <li>Advanced AI due diligence</li>
+      <li>Priority deal alerts</li>
+      <li>WhatsApp broker access</li>
+      <li>Express escrow (48hr)</li>
+      <li>Domain valuation tools</li>
+    </ul>
+    <button class="btn" style="width:100%">Select Pro</button>
+  </div>
+
+  <div class="tier-card" onclick="selectPlan('enterprise')">
+    <div class="tier-name">Enterprise</div>
+    <div class="tier-price">$199<span>/mo</span></div>
+    <ul>
+      <li>Everything in Pro</li>
+      <li>Both FW + VibeFlippers access</li>
+      <li>Dedicated acquisition advisor</li>
+      <li>Custom deal sourcing</li>
+      <li>White-glove escrow & transfer</li>
+      <li>Portfolio analytics dashboard</li>
+      <li>API access</li>
+    </ul>
+    <button class="btn btn-outline" style="width:100%">Select Enterprise</button>
+  </div>
+</div>
+</section>
+
+<!-- AI OPS -->
+<section class="section hidden" id="sec-ai-ops">
+<div class="section-label">AI Operations</div>
+<h2 class="section-title">FlipWala AI Ops Center</h2>
+<p class="section-sub">Real-time AI agents powering deal analysis, ML valuations, and platform security.</p>
+
+<div class="ai-ops-grid">
+  <div class="ai-ops-card">
+    <span class="ops-status online">Online</span>
+    <h4>&#129302; AI Deal Engineer</h4>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Autonomous deal analysis, valuation modeling, and acquisition scoring across FW marketplace.</p>
+    <div class="ops-caps">
+      <span>Revenue Analysis</span><span>Traffic Audit</span><span>Risk Scoring</span><span>Comp Analysis</span>
+    </div>
+    <div class="ops-metric-row">
+      <div class="ops-metric"><div class="ops-metric-val">847</div><div class="ops-metric-label">Deals Scored</div></div>
+      <div class="ops-metric"><div class="ops-metric-val">94%</div><div class="ops-metric-label">Accuracy</div></div>
+      <div class="ops-metric"><div class="ops-metric-val">2.1s</div><div class="ops-metric-label">Avg Response</div></div>
+    </div>
+    <div class="ops-feed">
+      <div>&#9679; Scored "ChaiCart.in" — 7.2/10 acquisition fit</div>
+      <div>&#9679; Flagged revenue inconsistency on listing #FW-042</div>
+      <div>&#9679; Generated comp report for EdTech SaaS vertical</div>
+    </div>
+  </div>
+
+  <div class="ai-ops-card">
+    <span class="ops-status online">Online</span>
+    <h4>&#128200; ML Valuation Engine</h4>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Machine learning models for real-time business valuations, multiple regression, and market benchmarking.</p>
+    <div class="ops-caps">
+      <span>DCF Modeling</span><span>Multiple Analysis</span><span>Market Comps</span><span>Growth Forecast</span>
+    </div>
+    <div class="ops-metric-row">
+      <div class="ops-metric"><div class="ops-metric-val">1.2K</div><div class="ops-metric-label">Valuations</div></div>
+      <div class="ops-metric"><div class="ops-metric-val">±8%</div><div class="ops-metric-label">Margin Error</div></div>
+      <div class="ops-metric"><div class="ops-metric-val">12</div><div class="ops-metric-label">Models Active</div></div>
+    </div>
+    <div class="ops-feed">
+      <div>&#9679; Updated SaaS multiple benchmarks — Q1 2026 data</div>
+      <div>&#9679; Retrained eCommerce valuation model (n=340)</div>
+      <div>&#9679; Published South Asia market premium adjustment</div>
+    </div>
+  </div>
+
+  <div class="ai-ops-card">
+    <span class="ops-status standby">Monitoring</span>
+    <h4>&#128737; Security Monitor</h4>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Platform security, fraud detection, escrow integrity, and listing verification monitoring.</p>
+    <div class="ops-caps">
+      <span>Fraud Detection</span><span>Escrow Guard</span><span>KYC Verify</span><span>Threat Intel</span>
+    </div>
+    <div style="margin:20px 0">
+      <div class="sec-score-ring"><span class="score-val">92</span></div>
+      <p style="text-align:center;font-size:13px;color:var(--muted)">Platform Security Score</p>
+    </div>
+    <div class="sec-findings">
+      <div class="finding pass">&#10003; Escrow integrity — all funds verified</div>
+      <div class="finding pass">&#10003; KYC compliance — 98% verified sellers</div>
+      <div class="finding warning">&#9888; 2 listings pending revenue verification</div>
+      <div class="finding info">&#8505; Rate limiting active — 12 blocked IPs today</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FW VERIFICATION MODAL -->
+<div class="fw-verify-overlay hidden" id="fwVerificationModal">
+<div class="fw-verify-box">
+  <h3>&#128274; Buyer Verification</h3>
+  <p>Complete verification to unlock full listing details, contact sellers, and initiate escrow on FlipWala.</p>
+  <div class="fw-step active" id="fwStep1" onclick="fwVerifyStep(1)">
+    <div class="step-num">1</div>
+    <div style="text-align:left"><div style="font-weight:700;font-size:14px">Identity Verification</div><div style="font-size:12px;color:var(--muted)">Upload government ID (PAN, Aadhaar, or passport)</div></div>
+  </div>
+  <div class="fw-step" id="fwStep2" onclick="fwVerifyStep(2)">
+    <div class="step-num">2</div>
+    <div style="text-align:left"><div style="font-weight:700;font-size:14px">Proof of Funds</div><div style="font-size:12px;color:var(--muted)">Bank statement or pre-approval letter</div></div>
+  </div>
+  <div class="fw-step" id="fwStep3" onclick="fwVerifyStep(3)">
+    <div class="step-num">3</div>
+    <div style="text-align:left"><div style="font-weight:700;font-size:14px">Complete</div><div style="font-size:12px;color:var(--muted)">Verification confirmed — full access granted</div></div>
+  </div>
+  <div style="display:flex;gap:12px;margin-top:20px">
+    <button class="btn" onclick="fwVerifyStep('next')" style="flex:1">Continue</button>
+    <button class="btn btn-outline" onclick="skipFwVerification()" style="flex:1">Skip for Now</button>
+  </div>
+  <button style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer" onclick="closeFwVerifyModal()">&times;</button>
+</div>
+</div>
+
+<!-- FW REVEAL POPUP -->
+<div class="fw-reveal-popup hidden" id="fwRevealPopup">
+<div class="fw-reveal-box">
+  <div style="font-size:48px;margin-bottom:12px">&#128274;</div>
+  <h3>Focus on 3</h3>
+  <p>Free members can reveal up to 3 listings per month. You've reached your limit. Upgrade to Pro for unlimited reveals.</p>
+  <button class="btn" onclick="showSection('subscriptions');closeFwRevealPopup();" style="width:100%;margin-bottom:10px">Upgrade to Pro — $79/mo</button>
+  <button class="btn btn-outline" onclick="closeFwRevealPopup()" style="width:100%">Maybe Later</button>
+</div>
+</div>
+
 <!-- ADMIN -->
 <section class="section hidden" id="sec-admin">
 <div class="section-label">Admin Panel</div>
@@ -1774,7 +1998,7 @@ function showSection(sec){
   currentSection = sec;
   // update nav active
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const navMap = {marketplace:0,sell:1,valuation:2,hiw:3,escrow:4,pipeline:5,community:6,domains:7,agent:8,'brand-box':9,'hot-deals':10,reseller:11,nft:12,admin:13};
+  const navMap = {marketplace:0,sell:1,valuation:2,hiw:3,escrow:4,pipeline:5,community:6,domains:7,agent:8,'brand-box':9,'hot-deals':10,reseller:11,nft:12,subscriptions:13,'ai-ops':14,admin:15};
   if(navMap[sec]!==undefined) document.querySelectorAll('.nav-links a')[navMap[sec]]?.classList.add('active');
   // close mobile nav
   document.getElementById('navLinks').classList.remove('open');
@@ -1846,6 +2070,7 @@ function renderListings(){
     const askDisplay = l.currency==='USD' ? fmt(l.askingUSD||toUSD(l.askingINR),'USD')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(l.askingINR,'INR')+'</span>' : fmtShort(l.askingINR,'INR')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(toUSD(l.askingINR),'USD')+'</span>';
     const multiple = (getAsking(l)/(getProfit(l)*12)).toFixed(1);
     return `<div class="listing-card" onclick="openListing('${l.id}')">
+      <span class="fw-platform-badge">FW</span>
       <span class="listing-badge ${l.badge}">${l.type}</span>
       <div class="listing-name">${l.name}</div>
       <div class="listing-desc">${l.desc}</div>
@@ -1871,6 +2096,7 @@ function sortListings(sort,btn){
 
 /* ===== LISTING DETAIL MODAL ===== */
 function openListing(id){
+  if(!fwRevealListing(id)) return;
   const l = LISTINGS.find(x=>x.id===id);
   if(!l) return;
   const cur = l.currency;
@@ -2386,7 +2612,7 @@ function buildBrandPreview(){
     const avail = hash2 < 60;
     return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px">
       <span>${s}: @${slug}</span>
-      <span style="color:${avail?'var(--green)':'var(--red)};font-weight:600;font-size:12px">${avail?'Available':'Taken'}</span>
+      <span style="color:${avail?"var(--green)":"var(--red)"};font-weight:600;font-size:12px">${avail?"Available":"Taken"}</span>
     </div>`;
   }).join('');
 
@@ -2655,12 +2881,226 @@ function deleteFlow(flowId){
   renderCustomFlows(state);
 }
 
+/* ===== ROLE-BASED NAV VISIBILITY ===== */
+const FW_NAV_VISIBILITY = {
+  'marketplace': ['buyer','seller','broker','reseller','service_provider','admin','operator'],
+  'sell': ['seller','broker','service_provider','admin'],
+  'valuation': ['buyer','seller','broker','service_provider','admin'],
+  'hiw': ['buyer','seller','broker','reseller','service_provider'],
+  'escrow': ['buyer','seller','broker','operator','admin'],
+  'pipeline': ['buyer','seller','broker','operator','admin'],
+  'community': ['buyer','seller','broker','reseller','service_provider'],
+  'domains': ['buyer','seller','broker','admin'],
+  'agent': ['seller','broker','admin','operator'],
+  'brand-box': ['buyer','seller','broker'],
+  'hot-deals': ['buyer','seller','broker','reseller'],
+  'reseller': ['reseller','admin'],
+  'nft': ['buyer','seller','broker','admin'],
+  'subscriptions': ['buyer','seller','broker','reseller','service_provider'],
+  'ai-ops': ['admin','operator'],
+  'admin': ['admin']
+};
+
+function setFwUserRole(role) {
+  localStorage.setItem('fw_user_role', role);
+  applyFwNavVisibility();
+}
+
+function getFwUserRole() {
+  return localStorage.getItem('fw_user_role') || 'buyer';
+}
+
+function applyFwNavVisibility() {
+  const role = getFwUserRole();
+  const navLinks = document.querySelectorAll('#navLinks a');
+  navLinks.forEach(link => {
+    const onclick = link.getAttribute('onclick') || '';
+    const match = onclick.match(/showSection\('([^']+)'\)/);
+    if (match && match[1] && FW_NAV_VISIBILITY[match[1]]) {
+      link.style.display = FW_NAV_VISIBILITY[match[1]].includes(role) ? '' : 'none';
+    }
+  });
+}
+
+/* ===== MULTI-FILE UPLOAD ===== */
+function initFwMultiUpload(containerId, category, maxFiles, maxSizeMB) {
+  maxFiles = maxFiles || 10;
+  maxSizeMB = maxSizeMB || 25;
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = `
+    <div style="border:2px dashed var(--line);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:border-color .2s;" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--line)'" ondrop="handleFwFileDrop(event,'${containerId}','${category}',${maxFiles},${maxSizeMB})">
+      <input type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" style="display:none" id="${containerId}-input" onchange="handleFwFileSelect(this,'${containerId}','${category}',${maxFiles},${maxSizeMB})">
+      <div style="font-size:28px;margin-bottom:6px;">&#128206;</div>
+      <p style="color:var(--ink);font-weight:600;font-size:14px;">Drop files or <a href="#" onclick="document.getElementById('${containerId}-input').click();return false" style="color:var(--accent)">browse</a></p>
+      <p style="color:var(--muted);font-size:11px;">Up to ${maxFiles} files, max ${maxSizeMB}MB each</p>
+    </div>
+    <div id="${containerId}-list" style="margin-top:8px;"></div>
+  `;
+}
+
+function handleFwFileDrop(event, cid, cat, max, maxMB) {
+  event.preventDefault();
+  event.currentTarget.style.borderColor='var(--line)';
+  processFwFiles(Array.from(event.dataTransfer.files), cid, cat, max, maxMB);
+}
+function handleFwFileSelect(input, cid, cat, max, maxMB) {
+  processFwFiles(Array.from(input.files), cid, cat, max, maxMB);
+  input.value='';
+}
+function processFwFiles(files, cid, cat, max, maxMB) {
+  const key='fw_uploads_'+cid;
+  const existing=JSON.parse(localStorage.getItem(key)||'[]');
+  const maxB=maxMB*1024*1024;
+  files.forEach(f=>{
+    if(existing.length>=max){alert('Max '+max+' files.');return;}
+    if(f.size>maxB){alert(f.name+' exceeds '+maxMB+'MB.');return;}
+    existing.push({name:f.name,size:f.size,type:f.type,category:cat,uploaded_at:new Date().toISOString(),status:'pending_upload'});
+  });
+  localStorage.setItem(key,JSON.stringify(existing));
+  renderFwUploadList(cid);
+}
+function renderFwUploadList(cid) {
+  const files=JSON.parse(localStorage.getItem('fw_uploads_'+cid)||'[]');
+  const list=document.getElementById(cid+'-list');
+  if(!list)return;
+  if(!files.length){list.innerHTML='';return;}
+  list.innerHTML=files.map((f,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:3px;font-size:12px;">
+      <span>&#128196; ${f.name} <span style="color:var(--muted);font-size:10px">(${(f.size/1024/1024).toFixed(1)}MB)</span></span>
+      <button onclick="removeFwUpload('${cid}',${i})" style="background:none;border:none;color:var(--red);cursor:pointer;">&#10005;</button>
+    </div>
+  `).join('');
+}
+function removeFwUpload(cid,idx){
+  const key='fw_uploads_'+cid;
+  const files=JSON.parse(localStorage.getItem(key)||'[]');
+  files.splice(idx,1);
+  localStorage.setItem(key,JSON.stringify(files));
+  renderFwUploadList(cid);
+}
+
+/* ===== SUBSCRIPTIONS & PLANS ===== */
+function selectPlan(plan){
+  localStorage.setItem('fw_subscription', plan);
+  updatePlanDisplay();
+  alert('Plan selected: ' + plan.charAt(0).toUpperCase() + plan.slice(1) + '. In production this would redirect to checkout.');
+}
+
+function updatePlanDisplay(){
+  const plan = localStorage.getItem('fw_subscription') || 'free';
+  const el = document.getElementById('fwCurrentPlan');
+  if(el) el.textContent = 'Current plan: ' + plan.charAt(0).toUpperCase() + plan.slice(1);
+}
+
+function upgradeToPaidBuyer(){
+  localStorage.setItem('fw_paid_buyer', 'true');
+  selectPlan('pro');
+}
+
+/* ===== FW VERIFICATION ===== */
+let fwCurrentVerifyStep = 1;
+
+function openFwVerifyModal(){
+  document.getElementById('fwVerificationModal').classList.remove('hidden');
+  fwCurrentVerifyStep = 1;
+  updateFwVerifySteps();
+}
+
+function closeFwVerifyModal(){
+  document.getElementById('fwVerificationModal').classList.add('hidden');
+}
+
+function fwVerifyStep(step){
+  if(step === 'next'){
+    if(fwCurrentVerifyStep < 3){
+      fwCurrentVerifyStep++;
+    } else {
+      localStorage.setItem('fw_verified', 'true');
+      closeFwVerifyModal();
+      return;
+    }
+  } else {
+    fwCurrentVerifyStep = step;
+  }
+  updateFwVerifySteps();
+  if(fwCurrentVerifyStep === 3){
+    localStorage.setItem('fw_verified', 'true');
+    setTimeout(()=>closeFwVerifyModal(), 1200);
+  }
+}
+
+function updateFwVerifySteps(){
+  for(let i=1;i<=3;i++){
+    const el = document.getElementById('fwStep'+i);
+    if(!el) continue;
+    el.classList.remove('active','done');
+    if(i < fwCurrentVerifyStep) el.classList.add('done');
+    else if(i === fwCurrentVerifyStep) el.classList.add('active');
+  }
+}
+
+function skipFwVerification(){
+  localStorage.setItem('fw_verify_skipped', 'true');
+  closeFwVerifyModal();
+}
+
+function isFwVerified(){
+  return localStorage.getItem('fw_verified') === 'true' || localStorage.getItem('fw_verify_skipped') === 'true';
+}
+
+/* ===== FW REVEAL LIMITS ===== */
+function getFwReveals(){
+  const data = JSON.parse(localStorage.getItem('fw_reveals') || '{"ids":[],"month":""}');
+  const now = new Date();
+  const curMonth = now.getFullYear()+'-'+(now.getMonth()+1);
+  if(data.month !== curMonth) return {ids:[], month:curMonth};
+  return data;
+}
+
+function canFwReveal(id){
+  const plan = localStorage.getItem('fw_subscription') || 'free';
+  if(plan === 'pro' || plan === 'enterprise') return true;
+  const reveals = getFwReveals();
+  if(reveals.ids.includes(id)) return true;
+  return reveals.ids.length < 3;
+}
+
+function fwRevealListing(id){
+  if(!isFwVerified()){
+    openFwVerifyModal();
+    return false;
+  }
+  if(!canFwReveal(id)){
+    showFwRevealPopup();
+    return false;
+  }
+  const reveals = getFwReveals();
+  if(!reveals.ids.includes(id)){
+    const now = new Date();
+    reveals.month = now.getFullYear()+'-'+(now.getMonth()+1);
+    reveals.ids.push(id);
+    localStorage.setItem('fw_reveals', JSON.stringify(reveals));
+  }
+  return true;
+}
+
+function showFwRevealPopup(){
+  document.getElementById('fwRevealPopup').classList.remove('hidden');
+}
+
+function closeFwRevealPopup(){
+  document.getElementById('fwRevealPopup').classList.add('hidden');
+}
+
 /* ===== KEYBOARD ===== */
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
 /* ===== INIT ===== */
 // Show hero by default
 document.getElementById('sec-hero').classList.remove('hidden');
+updatePlanDisplay();
+applyFwNavVisibility();
 </script>
 </body>
 </html>
