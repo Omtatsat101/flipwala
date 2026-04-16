@@ -616,6 +616,102 @@ input,select,textarea{font-family:var(--font)}
 }
 .fw-auth-error.show{display:block}
 
+/* ====== SIGNUP MULTI-STEP ====== */
+.fw-signup-steps-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 24px;
+}
+.fw-signup-step-indicator {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  padding: 6px 12px; border-radius: var(--radius-pill);
+  transition: all 0.25s;
+}
+.fw-signup-step-indicator .step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font: 700 12px/1 var(--font-mono); border: 2px solid var(--line);
+  color: var(--muted); transition: all 0.25s; flex-shrink: 0;
+}
+.fw-signup-step-indicator .step-label {
+  font: 600 11px/1 var(--font-mono); text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--muted); transition: color 0.25s;
+  white-space: nowrap;
+}
+.fw-signup-step-indicator.active .step-num {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+.fw-signup-step-indicator.active .step-label { color: var(--ink-bright); }
+.fw-signup-step-indicator.completed .step-num {
+  background: var(--green); border-color: var(--green); color: #fff;
+}
+.fw-signup-step-indicator.completed .step-label { color: var(--green); }
+.fw-signup-step-connector {
+  width: 24px; height: 2px; background: var(--line); flex-shrink: 0;
+}
+.fw-signup-step { display: none; }
+.fw-signup-step.active { display: block; }
+.fw-signup-step-buttons {
+  display: flex; gap: 12px; margin-top: 8px;
+}
+.fw-signup-step-buttons .fw-auth-submit { flex: 1; }
+.fw-auth-submit-outline {
+  background: transparent !important; border: 2px solid var(--line) !important;
+  color: var(--ink) !important; box-shadow: none !important;
+}
+.fw-auth-submit-outline:hover {
+  border-color: var(--accent) !important; color: var(--ink-bright) !important;
+  background: rgba(255,255,255,0.04) !important; transform: translateY(-1px);
+}
+.fw-field-req { color: var(--red); }
+.fw-field-hint { font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; font-size: 11px; }
+.fw-checkbox-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+.fw-cb-label {
+  display: flex; align-items: center; gap: 8px;
+  font: 400 13px/1.4 var(--font-body); color: var(--ink);
+  cursor: pointer; padding: 6px 0; text-transform: none;
+  letter-spacing: 0;
+}
+.fw-cb-label input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; }
+.fw-toggle-group { display: flex; gap: 0; border-radius: var(--radius-pill); overflow: hidden; border: 1px solid var(--line); }
+.fw-toggle-btn {
+  flex: 1; padding: 10px 20px; text-align: center; font: 700 12px/1 var(--font-mono);
+  text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer;
+  background: transparent; border: none; color: var(--muted); transition: all 0.25s;
+}
+.fw-toggle-btn.active { background: var(--accent); color: #fff; }
+.fw-toggle-btn:hover:not(.active) { background: rgba(255,255,255,0.06); color: var(--ink-bright); }
+.fw-role-fields { animation: fwFadeSlide 0.3s ease; }
+@keyframes fwFadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.fw-signup-decentralized-id {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 20px; margin: 20px 0;
+}
+.fw-signup-decentralized-id .fw-section-subtitle {
+  font: 700 12px/1 var(--font-mono); text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--ink-bright); margin-bottom: 8px;
+}
+.fw-did-description {
+  font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 14px;
+}
+.fw-did-buttons { display: flex; gap: 10px; }
+.fw-did-btn {
+  flex: 1; padding: 10px 16px; border-radius: var(--radius);
+  background: rgba(255,255,255,0.06); border: 1px solid var(--line);
+  color: var(--ink); font: 600 12px/1 var(--font-mono);
+  cursor: pointer; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.fw-did-btn:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 600px) {
+  .fw-signup-step-indicator .step-label { display: none; }
+  .fw-signup-step-connector { width: 16px; }
+  .fw-checkbox-grid { grid-template-columns: 1fr; }
+  .fw-did-buttons { flex-direction: column; }
+  .fw-signup-step-buttons { flex-direction: column; }
+}
+
 /* ====== USER MENU (Nav) ====== */
 .fw-nav-auth{display:flex;align-items:center;gap:12px}
 .fw-nav-signin{
@@ -2037,40 +2133,405 @@ input,select,textarea{font-family:var(--font)}
       <div class="fw-auth-switch">Don't have an account? <a onclick="switchFwAuthTab('signup')">Sign Up</a></div>
     </div>
 
-    <!-- SIGNUP PANE -->
+    <!-- SIGNUP PANE (Multi-Step) -->
     <div class="fw-auth-pane" id="fwAuthPaneSignup">
-      <div class="fw-auth-field">
-        <label>Full Name</label>
-        <input type="text" id="fwSignupName" placeholder="Your full name">
-      </div>
-      <div class="fw-auth-field">
-        <label>Email</label>
-        <input type="email" id="fwSignupEmail" placeholder="you@example.com">
-      </div>
-      <div class="fw-auth-field">
-        <label>Password</label>
-        <div class="fw-input-wrap">
-          <input type="password" id="fwSignupPassword" placeholder="Create a strong password" oninput="fwCheckPwdStrength(this.value)">
-          <button class="fw-pwd-toggle" type="button" onclick="fwTogglePasswordVis('fwSignupPassword',this)" title="Show password">&#128065;</button>
+      <!-- Step Indicators -->
+      <div class="fw-signup-steps-bar">
+        <div class="fw-signup-step-indicator active" id="fwSignupStepInd1" onclick="fwGoToSignupStep(1)">
+          <span class="step-num">1</span><span class="step-label">Basic Info</span>
         </div>
-        <div class="fw-pwd-strength"><div class="bar" id="fwPwdStrengthBar"></div></div>
-        <div class="fw-pwd-label" id="fwPwdStrengthLabel"></div>
+        <div class="fw-signup-step-connector"></div>
+        <div class="fw-signup-step-indicator" id="fwSignupStepInd2" onclick="fwGoToSignupStep(2)">
+          <span class="step-num">2</span><span class="step-label">Role Details</span>
+        </div>
+        <div class="fw-signup-step-connector"></div>
+        <div class="fw-signup-step-indicator" id="fwSignupStepInd3" onclick="fwGoToSignupStep(3)">
+          <span class="step-num">3</span><span class="step-label">Verification</span>
+        </div>
       </div>
-      <div class="fw-auth-field">
-        <label>I am a...</label>
-        <select id="fwSignupRole">
-          <option value="buyer">Buyer</option>
-          <option value="seller">Seller</option>
-          <option value="broker">Broker / Advisor</option>
-          <option value="reseller">Reseller / Affiliate</option>
-          <option value="service_provider">Service Provider</option>
-        </select>
+
+      <!-- STEP 1: Basic Info -->
+      <div class="fw-signup-step active" id="fwSignupStep1">
+        <div class="fw-auth-field">
+          <label>Full Legal Name <span class="fw-field-req">*</span></label>
+          <input type="text" id="fwSignupName" placeholder="Your full legal name" required>
+        </div>
+        <div class="fw-auth-field">
+          <label>Email <span class="fw-field-req">*</span></label>
+          <input type="email" id="fwSignupEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="fw-auth-field">
+          <label>Password <span class="fw-field-req">*</span> <span class="fw-field-hint">(8+ characters)</span></label>
+          <div class="fw-input-wrap">
+            <input type="password" id="fwSignupPassword" placeholder="Create a strong password" oninput="fwCheckPwdStrength(this.value)" required>
+            <button class="fw-pwd-toggle" type="button" onclick="fwTogglePasswordVis('fwSignupPassword',this)" title="Show password">&#128065;</button>
+          </div>
+          <div class="fw-pwd-strength"><div class="bar" id="fwPwdStrengthBar"></div></div>
+          <div class="fw-pwd-label" id="fwPwdStrengthLabel"></div>
+        </div>
+        <div class="fw-auth-field">
+          <label>Phone Number <span class="fw-field-req">*</span></label>
+          <input type="tel" id="fwSignupPhone" placeholder="+91 98765 43210" required>
+        </div>
+        <div class="fw-auth-field">
+          <label>Country <span class="fw-field-req">*</span></label>
+          <select id="fwSignupCountry" required>
+            <option value="">Select your country</option>
+            <option value="IN">India</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="CA">Canada</option>
+            <option value="AU">Australia</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="NL">Netherlands</option>
+            <option value="SG">Singapore</option>
+            <option value="AE">United Arab Emirates</option>
+            <option value="JP">Japan</option>
+            <option value="BR">Brazil</option>
+            <option value="MX">Mexico</option>
+            <option value="NG">Nigeria</option>
+            <option value="KE">Kenya</option>
+            <option value="ZA">South Africa</option>
+            <option value="PH">Philippines</option>
+            <option value="PK">Pakistan</option>
+            <option value="BD">Bangladesh</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+        <button class="fw-auth-submit" onclick="fwGoToSignupStep(2)">Continue</button>
+        <div class="fw-auth-switch">Already have an account? <a onclick="switchFwAuthTab('login')">Sign In</a></div>
       </div>
-      <div class="fw-auth-terms">
-        <label><input type="checkbox" id="fwSignupTerms"> I agree to the <a href="#" onclick="event.preventDefault()">Terms of Service</a> and <a href="#" onclick="event.preventDefault()">Privacy Policy</a></label>
+
+      <!-- STEP 2: Role Selection + Role-Specific Fields -->
+      <div class="fw-signup-step" id="fwSignupStep2">
+        <div class="fw-auth-field">
+          <label>I am a... <span class="fw-field-req">*</span></label>
+          <select id="fwSignupRole" onchange="fwShowRoleFields()">
+            <option value="">Select your role</option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+            <option value="broker">Broker / Advisor</option>
+            <option value="reseller">Reseller / Affiliate</option>
+            <option value="service_provider">Service Provider</option>
+          </select>
+        </div>
+
+        <!-- BUYER FIELDS -->
+        <div class="fw-role-fields" id="fwRoleFieldsBuyer" style="display:none;">
+          <div class="fw-auth-field">
+            <label>Budget Range <span class="fw-field-req">*</span></label>
+            <select id="fwBuyerBudget" required>
+              <option value="">Select budget range</option>
+              <option value="under_5l">Under 5 Lakh</option>
+              <option value="5l_25l">5 - 25 Lakh</option>
+              <option value="25l_1cr">25 Lakh - 1 Crore</option>
+              <option value="1cr_5cr">1 - 5 Crore</option>
+              <option value="5cr_plus">5 Crore+</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>What are you looking for?</label>
+            <div class="fw-checkbox-grid">
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="ecommerce"> eCommerce</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="saas"> SaaS</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="app"> App</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="domain"> Domain</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="content_site"> Content Site</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="edtech"> EdTech</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="d2c_brand"> D2C Brand</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBuyerInterests" value="social_account"> Social Account</label>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>How did you hear about us?</label>
+            <select id="fwBuyerReferral">
+              <option value="">Select one</option>
+              <option value="google">Google Search</option>
+              <option value="social_media">Social Media</option>
+              <option value="referral">Referral / Word of Mouth</option>
+              <option value="blog">Blog / Article</option>
+              <option value="podcast">Podcast</option>
+              <option value="youtube">YouTube</option>
+              <option value="community">Community / Forum</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SELLER FIELDS -->
+        <div class="fw-role-fields" id="fwRoleFieldsSeller" style="display:none;">
+          <div class="fw-auth-field">
+            <label>Business Name <span class="fw-field-req">*</span></label>
+            <input type="text" id="fwSellerBizName" placeholder="Your business name" required>
+          </div>
+          <div class="fw-auth-field">
+            <label>Business URL <span class="fw-field-req">*</span></label>
+            <input type="url" id="fwSellerBizUrl" placeholder="https://yourbusiness.com" required>
+          </div>
+          <div class="fw-auth-field">
+            <label>Business Type <span class="fw-field-req">*</span></label>
+            <select id="fwSellerBizType" required>
+              <option value="">Select type</option>
+              <option value="ecommerce">eCommerce</option>
+              <option value="saas">SaaS</option>
+              <option value="content">Content</option>
+              <option value="app">App</option>
+              <option value="agency">Agency</option>
+              <option value="d2c_brand">D2C Brand</option>
+              <option value="edtech">EdTech</option>
+              <option value="domain_portfolio">Domain Portfolio</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>Monthly Revenue Range</label>
+            <select id="fwSellerRevenue">
+              <option value="">Select range</option>
+              <option value="pre_revenue">Pre-Revenue</option>
+              <option value="under_50k">Under 50K</option>
+              <option value="50k_2l">50K - 2 Lakh</option>
+              <option value="2l_10l">2 - 10 Lakh</option>
+              <option value="10l_50l">10 - 50 Lakh</option>
+              <option value="50l_plus">50 Lakh+</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>How long have you owned this business?</label>
+            <select id="fwSellerOwnership">
+              <option value="">Select duration</option>
+              <option value="under_6mo">Less than 6 months</option>
+              <option value="6_12mo">6 - 12 months</option>
+              <option value="1_2yr">1 - 2 years</option>
+              <option value="2_5yr">2 - 5 years</option>
+              <option value="5yr_plus">5+ years</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>Upload Revenue Proof</label>
+            <div id="fw-signup-revenue-proof"></div>
+          </div>
+        </div>
+
+        <!-- BROKER / ADVISOR FIELDS -->
+        <div class="fw-role-fields" id="fwRoleFieldsBroker" style="display:none;">
+          <div class="fw-auth-field">
+            <label>Company / Brokerage Name <span class="fw-field-req">*</span></label>
+            <input type="text" id="fwBrokerCompany" placeholder="Your brokerage or company" required>
+          </div>
+          <div class="fw-auth-field">
+            <label>Broker Subtype(s)</label>
+            <div class="fw-checkbox-grid">
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSubtype" value="domain_broker"> Domain Broker</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSubtype" value="digital_asset"> Digital Asset Broker</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSubtype" value="brand_broker"> Brand Broker</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSubtype" value="business_broker"> Business Broker</label>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>Do you hold a broker license?</label>
+            <div class="fw-toggle-group">
+              <button type="button" class="fw-toggle-btn" id="fwBrokerLicYes" onclick="fwToggleBrokerLicense(true)">Yes</button>
+              <button type="button" class="fw-toggle-btn active" id="fwBrokerLicNo" onclick="fwToggleBrokerLicense(false)">No</button>
+            </div>
+          </div>
+          <!-- License fields (shown when Yes) -->
+          <div id="fwBrokerLicenseFields" style="display:none;">
+            <div class="fw-auth-field">
+              <label>License Number <span class="fw-field-req">*</span></label>
+              <input type="text" id="fwBrokerLicNumber" placeholder="License number">
+            </div>
+            <div class="fw-auth-field">
+              <label>Issuing State / Authority <span class="fw-field-req">*</span></label>
+              <input type="text" id="fwBrokerLicState" placeholder="e.g. Maharashtra, SEBI, RERA">
+            </div>
+            <div class="fw-auth-field">
+              <label>License Type <span class="fw-field-req">*</span></label>
+              <select id="fwBrokerLicType">
+                <option value="">Select type</option>
+                <option value="real_estate">Real Estate</option>
+                <option value="business">Business</option>
+                <option value="financial">Financial</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="fw-auth-field">
+              <label>Upload License Document</label>
+              <div id="fw-signup-license-doc"></div>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>Years of Experience</label>
+            <select id="fwBrokerExperience">
+              <option value="">Select range</option>
+              <option value="under_1">Less than 1 year</option>
+              <option value="1_3">1 - 3 years</option>
+              <option value="3_5">3 - 5 years</option>
+              <option value="5_10">5 - 10 years</option>
+              <option value="10_plus">10+ years</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>Portfolio / Website URL</label>
+            <input type="url" id="fwBrokerPortfolioUrl" placeholder="https://yourportfolio.com">
+          </div>
+          <div class="fw-auth-field">
+            <label>Number of Deals Closed</label>
+            <input type="number" id="fwBrokerDeals" placeholder="0" min="0">
+          </div>
+          <div class="fw-auth-field">
+            <label>Specialization Areas</label>
+            <div class="fw-checkbox-grid">
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="valuation"> Valuation</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="due_diligence"> Due Diligence</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="deal_structuring"> Deal Structuring</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="legal_coordination"> Legal Coordination</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="asset_packaging"> Asset Packaging</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwBrokerSpecializations" value="go_to_market"> Go-to-Market</label>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>E&amp;O Insurance?</label>
+            <div class="fw-toggle-group">
+              <button type="button" class="fw-toggle-btn" id="fwBrokerEoYes" onclick="fwToggleEoInsurance(true)">Yes</button>
+              <button type="button" class="fw-toggle-btn active" id="fwBrokerEoNo" onclick="fwToggleEoInsurance(false)">No</button>
+            </div>
+          </div>
+          <div class="fw-auth-terms">
+            <label><input type="checkbox" id="fwBrokerEscrowAck"> I understand lead generation enrollment requires a 1% escrow fee on commissions earned</label>
+          </div>
+        </div>
+
+        <!-- RESELLER / AFFILIATE FIELDS -->
+        <div class="fw-role-fields" id="fwRoleFieldsReseller" style="display:none;">
+          <div class="fw-auth-field">
+            <label>Company / Personal Brand Name</label>
+            <input type="text" id="fwResellerBrand" placeholder="Your brand name">
+          </div>
+          <div class="fw-auth-field">
+            <label>Marketing Channels</label>
+            <div class="fw-checkbox-grid">
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="social_media"> Social Media</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="blog_website"> Blog / Website</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="email_list"> Email List</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="youtube"> YouTube</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="podcast"> Podcast</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwResellerChannels" value="community_forum"> Community / Forum</label>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>Estimated Audience Size</label>
+            <select id="fwResellerAudience">
+              <option value="">Select range</option>
+              <option value="under_1k">Under 1K</option>
+              <option value="1k_10k">1K - 10K</option>
+              <option value="10k_50k">10K - 50K</option>
+              <option value="50k_100k">50K - 100K</option>
+              <option value="100k_plus">100K+</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>Website / Social URL</label>
+            <input type="url" id="fwResellerUrl" placeholder="https://yoursite.com">
+          </div>
+          <div class="fw-auth-terms">
+            <label><input type="checkbox" id="fwResellerAgreement"> I agree to the FlipWala Affiliate Program Terms</label>
+          </div>
+        </div>
+
+        <!-- SERVICE PROVIDER FIELDS -->
+        <div class="fw-role-fields" id="fwRoleFieldsServiceProvider" style="display:none;">
+          <div class="fw-auth-field">
+            <label>Company / Freelancer Name <span class="fw-field-req">*</span></label>
+            <input type="text" id="fwSpName" placeholder="Your company or name" required>
+          </div>
+          <div class="fw-auth-field">
+            <label>Service Categories</label>
+            <div class="fw-checkbox-grid">
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="due_diligence"> Due Diligence</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="valuation"> Valuation</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="legal_review"> Legal Review</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="migration_transfer"> Migration / Transfer</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="development"> Development</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="design"> Design</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="seo_marketing"> SEO / Marketing</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="content"> Content</label>
+              <label class="fw-cb-label"><input type="checkbox" name="fwSpCategories" value="accounting_tax"> Accounting / Tax</label>
+            </div>
+          </div>
+          <div class="fw-auth-field">
+            <label>Portfolio URL or Upload Past Work</label>
+            <input type="url" id="fwSpPortfolioUrl" placeholder="https://portfolio.com" style="margin-bottom:10px;">
+            <div id="fw-signup-portfolio"></div>
+          </div>
+          <div class="fw-auth-field">
+            <label>Certifications / Credentials</label>
+            <input type="text" id="fwSpCertifications" placeholder="e.g. CA, CPA, PMP, CISA">
+          </div>
+          <div class="fw-auth-field">
+            <label>Hourly Rate Range</label>
+            <select id="fwSpRate">
+              <option value="">Select range</option>
+              <option value="under_1k">Under 1,000/hr</option>
+              <option value="1k_3k">1,000 - 3,000/hr</option>
+              <option value="3k_5k">3,000 - 5,000/hr</option>
+              <option value="5k_10k">5,000 - 10,000/hr</option>
+              <option value="10k_plus">10,000+/hr</option>
+            </select>
+          </div>
+          <div class="fw-auth-field">
+            <label>Availability</label>
+            <select id="fwSpAvailability">
+              <option value="">Select availability</option>
+              <option value="full_time">Full-time</option>
+              <option value="part_time">Part-time</option>
+              <option value="project_based">Project-based</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fw-signup-step-buttons">
+          <button class="fw-auth-submit fw-auth-submit-outline" onclick="fwGoToSignupStep(1)">Back</button>
+          <button class="fw-auth-submit" onclick="fwGoToSignupStep(3)">Continue</button>
+        </div>
       </div>
-      <button class="fw-auth-submit" onclick="fwSignup()">Create Account</button>
-      <div class="fw-auth-switch">Already have an account? <a onclick="switchFwAuthTab('login')">Sign In</a></div>
+
+      <!-- STEP 3: Identity Verification -->
+      <div class="fw-signup-step" id="fwSignupStep3">
+        <div class="fw-auth-field">
+          <label>ID Type <span class="fw-field-req">*</span></label>
+          <select id="fwSignupIdType" required>
+            <option value="">Select ID type</option>
+            <option value="aadhaar">Aadhaar</option>
+            <option value="pan">PAN Card</option>
+            <option value="passport">Passport</option>
+            <option value="drivers_license">Driver's License</option>
+            <option value="voter_id">Voter ID</option>
+          </select>
+        </div>
+        <div class="fw-auth-field">
+          <label>Government ID Upload <span class="fw-field-req">*</span></label>
+          <div id="fw-signup-id-doc"></div>
+        </div>
+
+        <div class="fw-signup-decentralized-id">
+          <p class="fw-section-subtitle">Decentralized Identity (Optional)</p>
+          <p class="fw-did-description">Decentralized ID provides privacy-preserving verification. You can use traditional ID upload or a decentralized credential.</p>
+          <div class="fw-did-buttons">
+            <button type="button" class="fw-did-btn" onclick="alert('Coming Soon: Zero-knowledge proof of personhood via World ID.')">Verify with World ID</button>
+            <button type="button" class="fw-did-btn" onclick="alert('Coming Soon: Civic decentralized identity verification.')">Verify with Civic</button>
+          </div>
+        </div>
+
+        <div class="fw-auth-terms">
+          <label><input type="checkbox" id="fwSignupTerms" required> I agree to the <a href="#" onclick="event.preventDefault()">Terms of Service</a> and <a href="#" onclick="event.preventDefault()">Privacy Policy</a></label>
+        </div>
+
+        <div class="fw-signup-step-buttons">
+          <button class="fw-auth-submit fw-auth-submit-outline" onclick="fwGoToSignupStep(2)">Back</button>
+          <button class="fw-auth-submit" onclick="fwSignup()">Create Account</button>
+        </div>
+        <div class="fw-auth-switch">Already have an account? <a onclick="switchFwAuthTab('login')">Sign In</a></div>
+      </div>
     </div>
   </div>
 </div>
@@ -3393,31 +3854,211 @@ function fwLogin() {
   fwCompleteLogin(user, remember);
 }
 
-function fwSignup() {
-  const name = document.getElementById('fwSignupName').value.trim();
-  const email = document.getElementById('fwSignupEmail').value.trim().toLowerCase();
-  const password = document.getElementById('fwSignupPassword').value;
-  const role = document.getElementById('fwSignupRole').value;
-  const terms = document.getElementById('fwSignupTerms').checked;
-  hideFwAuthError();
+/* ===== MULTI-STEP SIGNUP STATE ===== */
+var fwSignupCurrentStep = 1;
+var fwBrokerHasLicense = false;
+var fwBrokerHasEo = false;
 
-  if (!name) { showFwAuthError('Please enter your full name.'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFwAuthError('Please enter a valid email address.'); return; }
-  if (password.length < 6) { showFwAuthError('Password must be at least 6 characters.'); return; }
+function fwGoToSignupStep(step) {
+  hideFwAuthError();
+  if (step > fwSignupCurrentStep) {
+    if (fwSignupCurrentStep === 1 && !fwValidateSignupStep1()) return;
+    if (fwSignupCurrentStep === 2 && !fwValidateSignupStep2()) return;
+  }
+  fwSignupCurrentStep = step;
+  document.querySelectorAll('.fw-signup-step').forEach(function(s) { s.classList.remove('active'); });
+  var target = document.getElementById('fwSignupStep' + step);
+  if (target) target.classList.add('active');
+  for (var i = 1; i <= 3; i++) {
+    var ind = document.getElementById('fwSignupStepInd' + i);
+    ind.classList.remove('active', 'completed');
+    if (i < step) ind.classList.add('completed');
+    else if (i === step) ind.classList.add('active');
+  }
+  if (step === 3) {
+    initFwMultiUpload('fw-signup-id-doc', 'id_document', 3, 25);
+  }
+  if (step === 2) {
+    var role = document.getElementById('fwSignupRole').value;
+    if (role === 'seller') initFwMultiUpload('fw-signup-revenue-proof', 'revenue_proof', 5, 25);
+    if (role === 'broker') initFwMultiUpload('fw-signup-license-doc', 'license_document', 3, 25);
+    if (role === 'service_provider') initFwMultiUpload('fw-signup-portfolio', 'portfolio', 5, 25);
+  }
+}
+
+function fwValidateSignupStep1() {
+  var name = document.getElementById('fwSignupName').value.trim();
+  var email = document.getElementById('fwSignupEmail').value.trim();
+  var password = document.getElementById('fwSignupPassword').value;
+  var phone = document.getElementById('fwSignupPhone').value.trim();
+  var country = document.getElementById('fwSignupCountry').value;
+
+  if (!name) { showFwAuthError('Please enter your full legal name.'); return false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFwAuthError('Please enter a valid email address.'); return false; }
+  if (password.length < 8) { showFwAuthError('Password must be at least 8 characters.'); return false; }
+  if (!phone) { showFwAuthError('Please enter your phone number.'); return false; }
+  if (!country) { showFwAuthError('Please select your country.'); return false; }
+  if (FW_DEMO_ACCOUNTS[email.toLowerCase()]) { showFwAuthError('This email is reserved. Please use a different email.'); return false; }
+  var users = JSON.parse(localStorage.getItem('fw_users') || '{}');
+  if (users[email.toLowerCase()]) { showFwAuthError('An account with this email already exists. Please sign in.'); return false; }
+  return true;
+}
+
+function fwValidateSignupStep2() {
+  var role = document.getElementById('fwSignupRole').value;
+  if (!role) { showFwAuthError('Please select a role.'); return false; }
+  if (role === 'buyer') {
+    if (!document.getElementById('fwBuyerBudget').value) { showFwAuthError('Please select your budget range.'); return false; }
+  }
+  if (role === 'seller') {
+    if (!document.getElementById('fwSellerBizName').value.trim()) { showFwAuthError('Please enter your business name.'); return false; }
+    if (!document.getElementById('fwSellerBizUrl').value.trim()) { showFwAuthError('Please enter your business URL.'); return false; }
+    if (!document.getElementById('fwSellerBizType').value) { showFwAuthError('Please select your business type.'); return false; }
+  }
+  if (role === 'broker') {
+    if (!document.getElementById('fwBrokerCompany').value.trim()) { showFwAuthError('Please enter your company or brokerage name.'); return false; }
+    if (fwBrokerHasLicense) {
+      if (!document.getElementById('fwBrokerLicNumber').value.trim()) { showFwAuthError('Please enter your license number.'); return false; }
+      if (!document.getElementById('fwBrokerLicState').value.trim()) { showFwAuthError('Please enter the issuing state or authority.'); return false; }
+      if (!document.getElementById('fwBrokerLicType').value) { showFwAuthError('Please select your license type.'); return false; }
+    }
+  }
+  if (role === 'service_provider') {
+    if (!document.getElementById('fwSpName').value.trim()) { showFwAuthError('Please enter your company or freelancer name.'); return false; }
+  }
+  return true;
+}
+
+function fwShowRoleFields() {
+  var role = document.getElementById('fwSignupRole').value;
+  document.querySelectorAll('.fw-role-fields').forEach(function(f) { f.style.display = 'none'; });
+  var map = { buyer: 'fwRoleFieldsBuyer', seller: 'fwRoleFieldsSeller', broker: 'fwRoleFieldsBroker', reseller: 'fwRoleFieldsReseller', service_provider: 'fwRoleFieldsServiceProvider' };
+  if (map[role]) {
+    document.getElementById(map[role]).style.display = 'block';
+    if (role === 'seller') initFwMultiUpload('fw-signup-revenue-proof', 'revenue_proof', 5, 25);
+    if (role === 'broker') initFwMultiUpload('fw-signup-license-doc', 'license_document', 3, 25);
+    if (role === 'service_provider') initFwMultiUpload('fw-signup-portfolio', 'portfolio', 5, 25);
+  }
+}
+
+function fwToggleBrokerLicense(hasLicense) {
+  fwBrokerHasLicense = hasLicense;
+  document.getElementById('fwBrokerLicYes').classList.toggle('active', hasLicense);
+  document.getElementById('fwBrokerLicNo').classList.toggle('active', !hasLicense);
+  document.getElementById('fwBrokerLicenseFields').style.display = hasLicense ? 'block' : 'none';
+  if (hasLicense) initFwMultiUpload('fw-signup-license-doc', 'license_document', 3, 25);
+}
+
+function fwToggleEoInsurance(hasEo) {
+  fwBrokerHasEo = hasEo;
+  document.getElementById('fwBrokerEoYes').classList.toggle('active', hasEo);
+  document.getElementById('fwBrokerEoNo').classList.toggle('active', !hasEo);
+}
+
+function fwGetCheckedValues(name) {
+  return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function(cb) { return cb.value; });
+}
+
+function fwCollectRoleData(role) {
+  var data = {};
+  if (role === 'buyer') {
+    data.budget = document.getElementById('fwBuyerBudget').value;
+    data.interests = fwGetCheckedValues('fwBuyerInterests');
+    data.referral = document.getElementById('fwBuyerReferral').value;
+  }
+  if (role === 'seller') {
+    data.businessName = document.getElementById('fwSellerBizName').value.trim();
+    data.businessUrl = document.getElementById('fwSellerBizUrl').value.trim();
+    data.businessType = document.getElementById('fwSellerBizType').value;
+    data.monthlyRevenue = document.getElementById('fwSellerRevenue').value;
+    data.ownershipDuration = document.getElementById('fwSellerOwnership').value;
+    data.revenueProofFiles = JSON.parse(localStorage.getItem('fw_uploads_fw-signup-revenue-proof') || '[]');
+  }
+  if (role === 'broker') {
+    data.company = document.getElementById('fwBrokerCompany').value.trim();
+    data.subtypes = fwGetCheckedValues('fwBrokerSubtype');
+    data.hasLicense = fwBrokerHasLicense;
+    if (fwBrokerHasLicense) {
+      data.licenseNumber = document.getElementById('fwBrokerLicNumber').value.trim();
+      data.licenseState = document.getElementById('fwBrokerLicState').value.trim();
+      data.licenseType = document.getElementById('fwBrokerLicType').value;
+      data.licenseDocFiles = JSON.parse(localStorage.getItem('fw_uploads_fw-signup-license-doc') || '[]');
+    }
+    data.displayRole = fwBrokerHasLicense ? 'Licensed Broker' : 'Advisor';
+    data.experience = document.getElementById('fwBrokerExperience').value;
+    data.portfolioUrl = document.getElementById('fwBrokerPortfolioUrl').value.trim();
+    data.dealsClosed = document.getElementById('fwBrokerDeals').value;
+    data.specializations = fwGetCheckedValues('fwBrokerSpecializations');
+    data.hasEoInsurance = fwBrokerHasEo;
+    data.escrowAcknowledged = document.getElementById('fwBrokerEscrowAck').checked;
+  }
+  if (role === 'reseller') {
+    data.brandName = document.getElementById('fwResellerBrand').value.trim();
+    data.channels = fwGetCheckedValues('fwResellerChannels');
+    data.audienceSize = document.getElementById('fwResellerAudience').value;
+    data.url = document.getElementById('fwResellerUrl').value.trim();
+    data.affiliateAgreed = document.getElementById('fwResellerAgreement').checked;
+  }
+  if (role === 'service_provider') {
+    data.companyName = document.getElementById('fwSpName').value.trim();
+    data.categories = fwGetCheckedValues('fwSpCategories');
+    data.portfolioUrl = document.getElementById('fwSpPortfolioUrl').value.trim();
+    data.portfolioFiles = JSON.parse(localStorage.getItem('fw_uploads_fw-signup-portfolio') || '[]');
+    data.certifications = document.getElementById('fwSpCertifications').value.trim();
+    data.hourlyRate = document.getElementById('fwSpRate').value;
+    data.availability = document.getElementById('fwSpAvailability').value;
+  }
+  return data;
+}
+
+function fwSignup() {
+  hideFwAuthError();
+  var idType = document.getElementById('fwSignupIdType').value;
+  var terms = document.getElementById('fwSignupTerms').checked;
+  var idFiles = JSON.parse(localStorage.getItem('fw_uploads_fw-signup-id-doc') || '[]');
+
+  if (!idType) { showFwAuthError('Please select your ID type.'); return; }
+  if (!idFiles.length) { showFwAuthError('Please upload a government-issued ID.'); return; }
   if (!terms) { showFwAuthError('You must agree to the Terms of Service and Privacy Policy.'); return; }
 
-  if (FW_DEMO_ACCOUNTS[email]) { showFwAuthError('This email is reserved. Please use a different email.'); return; }
-  const users = JSON.parse(localStorage.getItem('fw_users') || '{}');
-  if (users[email]) { showFwAuthError('An account with this email already exists. Please sign in.'); return; }
+  var role = document.getElementById('fwSignupRole').value;
+  if (role === 'reseller') {
+    var agreed = document.getElementById('fwResellerAgreement');
+    if (agreed && !agreed.checked) { showFwAuthError('Please agree to the Affiliate Program Terms.'); fwGoToSignupStep(2); return; }
+  }
 
-  const userId = 'fw-usr-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
-  const now = new Date().toISOString();
+  var name = document.getElementById('fwSignupName').value.trim();
+  var email = document.getElementById('fwSignupEmail').value.trim().toLowerCase();
+  var password = document.getElementById('fwSignupPassword').value;
+  var phone = document.getElementById('fwSignupPhone').value.trim();
+  var country = document.getElementById('fwSignupCountry').value;
+  var roleData = fwCollectRoleData(role);
 
-  users[email] = { id: userId, name, password, role, tier: 'free', verified: false, created_at: now };
+  var userId = 'fw-usr-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
+  var now = new Date().toISOString();
+
+  var users = JSON.parse(localStorage.getItem('fw_users') || '{}');
+  users[email] = {
+    id: userId, name: name, password: password, role: role, phone: phone, country: country,
+    tier: 'free', verified: false, created_at: now,
+    idType: idType,
+    idFiles: idFiles,
+    roleData: roleData
+  };
   localStorage.setItem('fw_users', JSON.stringify(users));
 
-  const user = { id: userId, name, email, role, tier: 'free', verified: false, created_at: now, login_at: Date.now() };
+  ['fw-signup-id-doc', 'fw-signup-revenue-proof', 'fw-signup-license-doc', 'fw-signup-portfolio'].forEach(function(k) {
+    localStorage.removeItem('fw_uploads_' + k);
+  });
+
+  var user = {
+    id: userId, name: name, email: email, role: role, phone: phone, country: country,
+    tier: 'free', verified: false, created_at: now, login_at: Date.now(),
+    idType: idType, roleData: roleData
+  };
   fwCompleteLogin(user, false);
+
+  fwSignupCurrentStep = 1;
 }
 
 function fwCompleteLogin(user, remember) {
@@ -3464,6 +4105,17 @@ function switchFwAuthTab(tab) {
   document.getElementById('fwAuthPaneLogin').classList.toggle('active', tab === 'login');
   document.getElementById('fwAuthPaneSignup').classList.toggle('active', tab === 'signup');
   hideFwAuthError();
+  if (tab === 'signup') {
+    fwSignupCurrentStep = 1;
+    document.querySelectorAll('.fw-signup-step').forEach(function(s) { s.classList.remove('active'); });
+    var s1 = document.getElementById('fwSignupStep1');
+    if (s1) s1.classList.add('active');
+    for (var i = 1; i <= 3; i++) {
+      var ind = document.getElementById('fwSignupStepInd' + i);
+      if (ind) { ind.classList.remove('active', 'completed'); if (i === 1) ind.classList.add('active'); }
+    }
+    document.querySelectorAll('.fw-role-fields').forEach(function(f) { f.style.display = 'none'; });
+  }
 }
 
 function showFwAuthError(msg) {
