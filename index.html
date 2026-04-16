@@ -512,6 +512,161 @@ input,select,textarea{font-family:var(--font)}
 @media(max-width:768px){
   .sub-tiers,.ai-ops-grid{grid-template-columns:1fr}
 }
+
+/* ====== AUTH SYSTEM ====== */
+.fw-auth-modal{
+  display:none;position:fixed;inset:0;z-index:3000;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  justify-content:center;align-items:center;padding:20px;
+}
+.fw-auth-modal.open{display:flex}
+.fw-auth-box{
+  background:linear-gradient(165deg,rgba(35,40,46,0.97),rgba(23,26,29,0.99));
+  border:1px solid var(--line);border-radius:var(--radius-lg);max-width:440px;width:100%;
+  padding:40px 36px 36px;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 60px rgba(227,133,64,0.15);
+}
+.fw-auth-box-close{
+  position:absolute;top:14px;right:18px;background:none;border:none;
+  color:var(--muted);font-size:24px;cursor:pointer;line-height:1;transition:color .2s;
+}
+.fw-auth-box-close:hover{color:var(--ink)}
+.fw-auth-logo{text-align:center;margin-bottom:24px}
+.fw-auth-logo .fw-auth-mark{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,var(--accent),#f5c78a);display:inline-flex;
+  align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#171a1d;
+  box-shadow:0 0 30px rgba(227,133,64,0.25);
+}
+.fw-auth-logo h2{font-size:24px;font-weight:800;color:var(--ink);margin-top:12px;letter-spacing:-0.03em}
+.fw-auth-logo h2 span{color:var(--accent)}
+.fw-auth-logo p{color:var(--muted);font-size:14px;margin-top:4px}
+.fw-auth-tabs{
+  display:flex;gap:0;margin-bottom:28px;border-radius:var(--radius-pill);overflow:hidden;
+  background:rgba(255,255,255,0.04);border:1px solid var(--line);
+}
+.fw-auth-tab{
+  flex:1;padding:12px;text-align:center;font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);
+  background:transparent;border:none;cursor:pointer;transition:all .25s;
+}
+.fw-auth-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 12px rgba(227,133,64,0.3)}
+.fw-auth-tab:hover:not(.active){color:var(--ink);background:rgba(255,255,255,0.06)}
+.fw-auth-pane{display:none}
+.fw-auth-pane.active{display:block}
+.fw-auth-field{margin-bottom:18px}
+.fw-auth-field label{
+  display:block;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.06em;color:var(--muted);margin-bottom:8px;
+}
+.fw-auth-field input,.fw-auth-field select{
+  width:100%;padding:13px 16px;border-radius:var(--radius);
+  background:rgba(255,255,255,0.06);border:1px solid var(--line);
+  color:var(--ink);font-size:14px;font-family:var(--font);transition:border-color .2s,box-shadow .2s;
+}
+.fw-auth-field input:focus,.fw-auth-field select:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(227,133,64,0.15);
+}
+.fw-auth-field select option{background:var(--bg);color:var(--ink)}
+.fw-auth-field .fw-input-wrap{position:relative}
+.fw-pwd-toggle{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;transition:color .2s;
+}
+.fw-pwd-toggle:hover{color:var(--ink)}
+.fw-pwd-strength{height:4px;border-radius:2px;margin-top:8px;background:rgba(255,255,255,0.08);overflow:hidden}
+.fw-pwd-strength .bar{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.fw-pwd-strength .bar.weak{width:33%;background:var(--red)}
+.fw-pwd-strength .bar.medium{width:66%;background:#fbbf24}
+.fw-pwd-strength .bar.strong{width:100%;background:var(--green)}
+.fw-pwd-label{font-size:11px;margin-top:4px;font-weight:600}
+.fw-pwd-label.weak{color:var(--red)}
+.fw-pwd-label.medium{color:#fbbf24}
+.fw-pwd-label.strong{color:var(--green)}
+.fw-auth-row{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px;
+}
+.fw-auth-row label{
+  display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer;
+  font-size:13px;text-transform:none;letter-spacing:0;font-weight:500;
+}
+.fw-auth-row label input[type="checkbox"]{accent-color:var(--accent);width:16px;height:16px}
+.fw-auth-row a{color:var(--accent);font-size:13px}
+.fw-auth-submit{
+  width:100%;padding:14px;border-radius:var(--radius-pill);
+  background:var(--accent);color:#fff;border:none;font-size:14px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;
+  box-shadow:0 4px 20px rgba(227,133,64,0.3);transition:all .25s;
+}
+.fw-auth-submit:hover{background:var(--accent2);transform:translateY(-1px)}
+.fw-auth-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.fw-auth-switch{text-align:center;margin-top:20px;font-size:13px;color:var(--muted)}
+.fw-auth-switch a{color:var(--accent);font-weight:600;cursor:pointer}
+.fw-auth-terms{margin-bottom:20px}
+.fw-auth-terms label{
+  display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);
+  cursor:pointer;font-weight:400;text-transform:none;letter-spacing:0;
+}
+.fw-auth-terms label input[type="checkbox"]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.fw-auth-terms a{color:var(--accent)}
+.fw-auth-error{
+  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);
+  border-radius:var(--radius);padding:10px 14px;color:var(--red);font-size:13px;
+  margin-bottom:16px;display:none;
+}
+.fw-auth-error.show{display:block}
+
+/* ====== USER MENU (Nav) ====== */
+.fw-nav-auth{display:flex;align-items:center;gap:12px}
+.fw-nav-signin{
+  padding:8px 20px;border-radius:var(--radius-pill);background:var(--accent);color:#fff;
+  border:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+  cursor:pointer;box-shadow:0 2px 12px rgba(227,133,64,0.3);transition:all .25s;
+}
+.fw-nav-signin:hover{background:var(--accent2);transform:translateY(-1px)}
+.fw-user-menu{position:relative}
+.fw-user-avatar{
+  width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;
+  text-transform:uppercase;cursor:pointer;border:2px solid rgba(227,133,64,0.6);transition:box-shadow .2s;
+}
+.fw-user-avatar:hover{box-shadow:0 0 16px rgba(227,133,64,0.4)}
+.fw-user-dropdown{
+  display:none;position:absolute;top:calc(100% + 10px);right:0;
+  min-width:240px;background:rgba(29,34,39,0.98);
+  border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:8px 0;box-shadow:0 16px 48px rgba(0,0,0,0.5);z-index:3100;
+}
+.fw-user-dropdown.open{display:block}
+.fw-user-dropdown-header{padding:14px 18px;border-bottom:1px solid var(--line)}
+.fw-user-dropdown-header .fwd-name{font-size:15px;font-weight:700;color:var(--ink)}
+.fw-user-dropdown-header .fwd-email{font-size:12px;color:var(--muted);margin-top:2px}
+.fw-role-badge{
+  display:inline-block;padding:3px 8px;border-radius:var(--radius-pill);
+  font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:6px;
+}
+.fw-role-badge.rb-buyer{background:rgba(52,211,153,0.15);color:var(--green)}
+.fw-role-badge.rb-seller{background:rgba(96,165,250,0.15);color:var(--blue)}
+.fw-role-badge.rb-broker{background:rgba(251,191,36,0.15);color:#fbbf24}
+.fw-role-badge.rb-reseller{background:rgba(167,139,250,0.15);color:#a78bfa}
+.fw-role-badge.rb-service_provider{background:rgba(248,113,113,0.15);color:var(--red)}
+.fw-role-badge.rb-admin{background:rgba(248,113,113,0.2);color:var(--red)}
+.fw-role-badge.rb-operator{background:rgba(251,191,36,0.2);color:#fbbf24}
+.fw-user-dropdown a,.fw-user-dropdown button{
+  display:flex;align-items:center;gap:10px;width:100%;padding:11px 18px;
+  border:none;background:none;color:var(--muted);font-size:14px;font-family:var(--font);
+  cursor:pointer;text-align:left;transition:all .15s;text-decoration:none;
+}
+.fw-user-dropdown a:hover,.fw-user-dropdown button:hover{
+  background:rgba(227,133,64,0.12);color:var(--ink);text-decoration:none;
+}
+.fw-user-dropdown .fwd-divider{height:1px;background:var(--line);margin:4px 0}
+.fw-user-dropdown .fwd-plan{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent)}
+
+@media(max-width:900px){
+  .fw-auth-box{padding:28px 20px 24px;margin:10px}
+  .fw-user-dropdown{right:-40px;min-width:220px}
+}
 </style>
 </head>
 <body>
@@ -541,6 +696,9 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('ai-ops');return false">AI Ops</a>
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
+  </div>
+  <div class="fw-nav-auth" id="fwNavAuth">
+    <button class="fw-nav-signin" onclick="openFwAuthModal('login')">Sign In</button>
   </div>
   <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
 </div>
@@ -1841,6 +1999,82 @@ input,select,textarea{font-family:var(--font)}
 </div>
 </footer>
 
+<!-- ====== AUTH MODAL ====== -->
+<div class="fw-auth-modal" id="fwAuthModal">
+  <div class="fw-auth-box">
+    <button class="fw-auth-box-close" onclick="closeFwAuthModal()">&times;</button>
+    <div class="fw-auth-logo">
+      <div class="fw-auth-mark">FW</div>
+      <h2>Flip<span>Wala</span></h2>
+      <p>Digital Asset Brokerage</p>
+    </div>
+
+    <div class="fw-auth-tabs">
+      <button class="fw-auth-tab active" onclick="switchFwAuthTab('login')" id="fwAuthTabLogin">Sign In</button>
+      <button class="fw-auth-tab" onclick="switchFwAuthTab('signup')" id="fwAuthTabSignup">Sign Up</button>
+    </div>
+
+    <div class="fw-auth-error" id="fwAuthError"></div>
+
+    <!-- LOGIN PANE -->
+    <div class="fw-auth-pane active" id="fwAuthPaneLogin">
+      <div class="fw-auth-field">
+        <label>Email</label>
+        <input type="email" id="fwLoginEmail" placeholder="you@example.com" onkeydown="if(event.key==='Enter')fwLogin()">
+      </div>
+      <div class="fw-auth-field">
+        <label>Password</label>
+        <div class="fw-input-wrap">
+          <input type="password" id="fwLoginPassword" placeholder="Enter your password" onkeydown="if(event.key==='Enter')fwLogin()">
+          <button class="fw-pwd-toggle" type="button" onclick="fwTogglePasswordVis('fwLoginPassword',this)" title="Show password">&#128065;</button>
+        </div>
+      </div>
+      <div class="fw-auth-row">
+        <label><input type="checkbox" id="fwLoginRemember"> Remember me</label>
+        <a href="#" onclick="event.preventDefault();alert('Password reset will be available with Supabase Auth integration.')">Forgot password?</a>
+      </div>
+      <button class="fw-auth-submit" onclick="fwLogin()">Sign In</button>
+      <div class="fw-auth-switch">Don't have an account? <a onclick="switchFwAuthTab('signup')">Sign Up</a></div>
+    </div>
+
+    <!-- SIGNUP PANE -->
+    <div class="fw-auth-pane" id="fwAuthPaneSignup">
+      <div class="fw-auth-field">
+        <label>Full Name</label>
+        <input type="text" id="fwSignupName" placeholder="Your full name">
+      </div>
+      <div class="fw-auth-field">
+        <label>Email</label>
+        <input type="email" id="fwSignupEmail" placeholder="you@example.com">
+      </div>
+      <div class="fw-auth-field">
+        <label>Password</label>
+        <div class="fw-input-wrap">
+          <input type="password" id="fwSignupPassword" placeholder="Create a strong password" oninput="fwCheckPwdStrength(this.value)">
+          <button class="fw-pwd-toggle" type="button" onclick="fwTogglePasswordVis('fwSignupPassword',this)" title="Show password">&#128065;</button>
+        </div>
+        <div class="fw-pwd-strength"><div class="bar" id="fwPwdStrengthBar"></div></div>
+        <div class="fw-pwd-label" id="fwPwdStrengthLabel"></div>
+      </div>
+      <div class="fw-auth-field">
+        <label>I am a...</label>
+        <select id="fwSignupRole">
+          <option value="buyer">Buyer</option>
+          <option value="seller">Seller</option>
+          <option value="broker">Broker / Advisor</option>
+          <option value="reseller">Reseller / Affiliate</option>
+          <option value="service_provider">Service Provider</option>
+        </select>
+      </div>
+      <div class="fw-auth-terms">
+        <label><input type="checkbox" id="fwSignupTerms"> I agree to the <a href="#" onclick="event.preventDefault()">Terms of Service</a> and <a href="#" onclick="event.preventDefault()">Privacy Policy</a></label>
+      </div>
+      <button class="fw-auth-submit" onclick="fwSignup()">Create Account</button>
+      <div class="fw-auth-switch">Already have an account? <a onclick="switchFwAuthTab('login')">Sign In</a></div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ===== DATA ===== */
 const LISTINGS = [
@@ -3094,12 +3328,284 @@ function closeFwRevealPopup(){
 }
 
 /* ===== KEYBOARD ===== */
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeModal();closeFwAuthModal();closeFwUserDropdown();}
+});
+
+/* ====== AUTH SYSTEM ====== */
+const FW_DEMO_ACCOUNTS = {
+  'admin@flipwala.com': { password: 'FW-Admin-2026!', role: 'admin', tier: 'enterprise', name: 'FW Admin' },
+  'operator@flipwala.com': { password: 'FW-Ops-2026!', role: 'operator', tier: 'pro', name: 'FW Operator' }
+};
+
+function isFwLoggedIn() {
+  const user = localStorage.getItem('fw_auth_user');
+  if (!user) return false;
+  try {
+    const u = JSON.parse(user);
+    if (u.login_at && (Date.now() - u.login_at > 86400000)) {
+      fwLogout(true);
+      return false;
+    }
+    return true;
+  } catch(e) { return false; }
+}
+
+function getFwCurrentUser() {
+  try { return JSON.parse(localStorage.getItem('fw_auth_user')); }
+  catch(e) { return null; }
+}
+
+function fwLogin() {
+  const email = document.getElementById('fwLoginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('fwLoginPassword').value;
+  const remember = document.getElementById('fwLoginRemember').checked;
+  hideFwAuthError();
+
+  if (!email || !password) { showFwAuthError('Please enter your email and password.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFwAuthError('Please enter a valid email address.'); return; }
+
+  // Check demo/admin accounts
+  const demo = FW_DEMO_ACCOUNTS[email];
+  if (demo) {
+    if (password !== demo.password) { showFwAuthError('Incorrect password.'); return; }
+    const user = {
+      id: 'fw-usr-' + (email === 'admin@flipwala.com' ? 'admin' : 'ops'),
+      name: demo.name, email: email, role: demo.role,
+      tier: demo.tier, verified: true,
+      created_at: '2026-01-01T00:00:00Z', login_at: Date.now()
+    };
+    fwCompleteLogin(user, remember);
+    return;
+  }
+
+  // Check localStorage registered users
+  const users = JSON.parse(localStorage.getItem('fw_users') || '{}');
+  const stored = users[email];
+  if (!stored) { showFwAuthError('No account found with this email. Please sign up.'); return; }
+  if (stored.password !== password) { showFwAuthError('Incorrect password.'); return; }
+
+  const user = {
+    id: stored.id, name: stored.name, email: email, role: stored.role,
+    tier: stored.tier || 'free', verified: stored.verified || false,
+    created_at: stored.created_at, login_at: Date.now()
+  };
+  fwCompleteLogin(user, remember);
+}
+
+function fwSignup() {
+  const name = document.getElementById('fwSignupName').value.trim();
+  const email = document.getElementById('fwSignupEmail').value.trim().toLowerCase();
+  const password = document.getElementById('fwSignupPassword').value;
+  const role = document.getElementById('fwSignupRole').value;
+  const terms = document.getElementById('fwSignupTerms').checked;
+  hideFwAuthError();
+
+  if (!name) { showFwAuthError('Please enter your full name.'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFwAuthError('Please enter a valid email address.'); return; }
+  if (password.length < 6) { showFwAuthError('Password must be at least 6 characters.'); return; }
+  if (!terms) { showFwAuthError('You must agree to the Terms of Service and Privacy Policy.'); return; }
+
+  if (FW_DEMO_ACCOUNTS[email]) { showFwAuthError('This email is reserved. Please use a different email.'); return; }
+  const users = JSON.parse(localStorage.getItem('fw_users') || '{}');
+  if (users[email]) { showFwAuthError('An account with this email already exists. Please sign in.'); return; }
+
+  const userId = 'fw-usr-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4);
+  const now = new Date().toISOString();
+
+  users[email] = { id: userId, name, password, role, tier: 'free', verified: false, created_at: now };
+  localStorage.setItem('fw_users', JSON.stringify(users));
+
+  const user = { id: userId, name, email, role, tier: 'free', verified: false, created_at: now, login_at: Date.now() };
+  fwCompleteLogin(user, false);
+}
+
+function fwCompleteLogin(user, remember) {
+  localStorage.setItem('fw_auth_user', JSON.stringify(user));
+  setFwUserRole(user.role);
+  if (user.tier && user.tier !== 'free') {
+    localStorage.setItem('fw_subscription', user.tier);
+  }
+  if (user.role === 'admin' || user.role === 'operator') {
+    sessionStorage.setItem('fw_admin_auth', 'true');
+  }
+  closeFwAuthModal();
+  renderFwUserNav();
+  applyFwNavVisibility();
+  updatePlanDisplay();
+}
+
+function fwLogout(silent) {
+  localStorage.removeItem('fw_auth_user');
+  sessionStorage.removeItem('fw_admin_auth');
+  setFwUserRole('buyer');
+  renderFwUserNav();
+  applyFwNavVisibility();
+  updatePlanDisplay();
+  showSection('hero');
+  if (!silent) openFwAuthModal('login');
+}
+
+function openFwAuthModal(tab) {
+  document.getElementById('fwAuthModal').classList.add('open');
+  switchFwAuthTab(tab || 'login');
+  hideFwAuthError();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFwAuthModal() {
+  document.getElementById('fwAuthModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function switchFwAuthTab(tab) {
+  document.getElementById('fwAuthTabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('fwAuthTabSignup').classList.toggle('active', tab === 'signup');
+  document.getElementById('fwAuthPaneLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('fwAuthPaneSignup').classList.toggle('active', tab === 'signup');
+  hideFwAuthError();
+}
+
+function showFwAuthError(msg) {
+  const el = document.getElementById('fwAuthError');
+  el.textContent = msg; el.classList.add('show');
+}
+function hideFwAuthError() {
+  const el = document.getElementById('fwAuthError');
+  el.textContent = ''; el.classList.remove('show');
+}
+
+function fwTogglePasswordVis(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') { input.type = 'text'; btn.innerHTML = '&#128064;'; }
+  else { input.type = 'password'; btn.innerHTML = '&#128065;'; }
+}
+
+function fwCheckPwdStrength(pw) {
+  const bar = document.getElementById('fwPwdStrengthBar');
+  const label = document.getElementById('fwPwdStrengthLabel');
+  if (!pw) { bar.className = 'bar'; label.className = 'fw-pwd-label'; label.textContent = ''; return; }
+  let score = 0;
+  if (pw.length >= 6) score++;
+  if (pw.length >= 10) score++;
+  if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+  if (score <= 2) { bar.className = 'bar weak'; label.className = 'fw-pwd-label weak'; label.textContent = 'Weak'; }
+  else if (score <= 3) { bar.className = 'bar medium'; label.className = 'fw-pwd-label medium'; label.textContent = 'Medium'; }
+  else { bar.className = 'bar strong'; label.className = 'fw-pwd-label strong'; label.textContent = 'Strong'; }
+}
+
+function renderFwUserNav() {
+  const authEl = document.getElementById('fwNavAuth');
+  if (!isFwLoggedIn()) {
+    authEl.innerHTML = '<button class="fw-nav-signin" onclick="openFwAuthModal(\'login\')">Sign In</button>';
+    return;
+  }
+  const user = getFwCurrentUser();
+  const initial = (user.name || user.email || '?')[0].toUpperCase();
+  const roleBadgeClass = 'rb-' + (user.role || 'buyer');
+  const roleLabel = { buyer:'Buyer', seller:'Seller', broker:'Broker', reseller:'Reseller', service_provider:'Service Provider', admin:'Admin', operator:'Operator' }[user.role] || user.role;
+  const tierLabel = (user.tier || 'free').charAt(0).toUpperCase() + (user.tier || 'free').slice(1);
+
+  let switchRoleHtml = '';
+  if (user.role === 'admin' || user.role === 'operator') {
+    switchRoleHtml = '<button onclick="fwPromptSwitchRole()">&#128260; Switch Role</button>';
+  }
+
+  authEl.innerHTML = `
+    <div class="fw-user-menu">
+      <div class="fw-user-avatar" onclick="toggleFwUserDropdown()" title="${user.name}">${initial}</div>
+      <div class="fw-user-dropdown" id="fwUserDropdown">
+        <div class="fw-user-dropdown-header">
+          <div class="fwd-name">${user.name || 'User'}</div>
+          <div class="fwd-email">${user.email}</div>
+          <span class="fw-role-badge ${roleBadgeClass}">${roleLabel}</span>
+        </div>
+        <a href="#" onclick="event.preventDefault();closeFwUserDropdown();showSection('subscriptions')">&#128100; My Profile</a>
+        <a href="#" onclick="event.preventDefault();closeFwUserDropdown();showSection('subscriptions')">&#11088; <span class="fwd-plan">My Plan: ${tierLabel}</span></a>
+        ${switchRoleHtml}
+        <a href="#" onclick="event.preventDefault();closeFwUserDropdown();showSection('subscriptions')">&#9881; Settings</a>
+        <div class="fwd-divider"></div>
+        <button onclick="closeFwUserDropdown();fwLogout()">&#128682; Sign Out</button>
+      </div>
+    </div>
+  `;
+}
+
+function toggleFwUserDropdown() {
+  const dd = document.getElementById('fwUserDropdown');
+  if (dd) dd.classList.toggle('open');
+}
+function closeFwUserDropdown() {
+  const dd = document.getElementById('fwUserDropdown');
+  if (dd) dd.classList.remove('open');
+}
+
+function fwPromptSwitchRole() {
+  closeFwUserDropdown();
+  const roles = ['buyer','seller','broker','reseller','service_provider','admin','operator'];
+  const user = getFwCurrentUser();
+  const allowed = (user.role === 'admin') ? roles : roles.filter(r => r !== 'admin');
+  const choice = prompt('Switch role to:\n' + allowed.map((r,i) => (i+1) + '. ' + r).join('\n') + '\n\nEnter role name:');
+  if (choice && allowed.includes(choice.trim().toLowerCase())) {
+    user.role = choice.trim().toLowerCase();
+    localStorage.setItem('fw_auth_user', JSON.stringify(user));
+    setFwUserRole(user.role);
+    renderFwUserNav();
+    applyFwNavVisibility();
+  }
+}
+
+// Close user dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.fw-user-menu')) closeFwUserDropdown();
+});
+
+// Close auth modal on backdrop click
+document.getElementById('fwAuthModal').addEventListener('click', function(e) {
+  if (e.target === this) closeFwAuthModal();
+});
+
+// Auth-gate: intercept showSection calls when not logged in
+const FW_AUTH_FREE_SECTIONS = ['hero', 'marketplace', 'hiw', 'community'];
+const _originalShowSection = showSection;
+showSection = function(sectionId) {
+  if (!isFwLoggedIn() && !FW_AUTH_FREE_SECTIONS.includes(sectionId)) {
+    openFwAuthModal('login');
+    return;
+  }
+  _originalShowSection(sectionId);
+};
+
+function initFwAuth() {
+  if (isFwLoggedIn()) {
+    const user = getFwCurrentUser();
+    setFwUserRole(user.role);
+    if (user.role === 'admin' || user.role === 'operator') {
+      sessionStorage.setItem('fw_admin_auth', 'true');
+    }
+    renderFwUserNav();
+  } else {
+    renderFwUserNav();
+    // Auto-show auth modal for first-time visitors after 3s
+    if (!localStorage.getItem('fw_auth_seen')) {
+      setTimeout(function() {
+        if (!isFwLoggedIn()) {
+          openFwAuthModal('login');
+          localStorage.setItem('fw_auth_seen', '1');
+        }
+      }, 3000);
+    }
+  }
+}
 
 /* ===== INIT ===== */
 // Show hero by default
 document.getElementById('sec-hero').classList.remove('hidden');
 updatePlanDisplay();
+initFwAuth();
 applyFwNavVisibility();
 </script>
 </body>
