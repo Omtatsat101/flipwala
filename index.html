@@ -763,6 +763,105 @@ input,select,textarea{font-family:var(--font)}
   .fw-auth-box{padding:28px 20px 24px;margin:10px}
   .fw-user-dropdown{right:-40px;min-width:220px}
 }
+
+/* ===== V3 UX ENHANCEMENTS ===== */
+.fw-nav-search{position:relative;flex:0 1 260px;margin:0 12px}
+.fw-nav-search input{width:100%;padding:8px 14px;border-radius:var(--radius-pill);border:1px solid var(--line);background:rgba(255,255,255,0.04);color:var(--ink);font-size:13px;outline:none}
+.fw-nav-search input:focus{border-color:var(--accent);background:rgba(255,255,255,0.07)}
+.fw-search-results{position:absolute;top:44px;left:0;right:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);max-height:360px;overflow-y:auto;display:none;z-index:1100;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.fw-search-results.open{display:block}
+.fw-search-item{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line);font-size:13px}
+.fw-search-item:hover{background:rgba(227,133,64,0.1);color:var(--accent)}
+.fw-search-item small{color:var(--muted);display:block;font-size:11px;margin-top:2px}
+.fw-search-section{padding:6px 14px;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:rgba(0,0,0,0.2)}
+
+.fw-nav-bell{position:relative;margin-right:10px}
+.fw-bell-btn{background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:10px;position:relative;font-size:16px}
+.fw-bell-btn:hover{background:rgba(255,255,255,0.08)}
+.fw-bell-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 5px;min-width:16px;line-height:1;display:none}
+.fw-bell-badge.show{display:inline-block}
+.fw-notif-dropdown{position:absolute;top:48px;right:0;width:340px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);display:none;z-index:1100;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.fw-notif-dropdown.open{display:block}
+.fw-notif-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.fw-notif-clear{background:none;border:none;color:var(--accent);font-size:12px;font-weight:600}
+.fw-notif-list{max-height:380px;overflow-y:auto}
+.fw-notif-item{padding:12px 16px;border-bottom:1px solid var(--line);cursor:pointer;font-size:13px;display:flex;gap:10px}
+.fw-notif-item.unread{background:rgba(227,133,64,0.06)}
+.fw-notif-item:hover{background:rgba(255,255,255,0.04)}
+.fw-notif-icon{font-size:18px;flex-shrink:0}
+.fw-notif-body{flex:1}
+.fw-notif-title{font-weight:600;color:var(--ink);margin-bottom:2px}
+.fw-notif-time{font-size:11px;color:var(--muted)}
+.fw-notif-empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+
+/* Onboarding */
+.fw-onboard-banner{max-width:1280px;margin:12px auto;padding:12px 24px;background:linear-gradient(90deg,rgba(227,133,64,0.15),rgba(227,133,64,0.05));border:1px solid rgba(227,133,64,0.3);border-radius:var(--radius);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.fw-onboard-text{font-size:14px;font-weight:600;color:var(--ink)}
+.fw-onboard-steps{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.fw-onboard-pill{padding:5px 10px;background:rgba(255,255,255,0.05);border:1px solid var(--line);border-radius:var(--radius-pill);font-size:12px;color:var(--muted);cursor:pointer}
+.fw-onboard-pill.done{background:rgba(52,211,153,0.15);border-color:rgba(52,211,153,0.4);color:var(--green)}
+.fw-onboard-pill.done::before{content:'\2713 ';font-weight:700}
+.fw-onboard-pill:hover{border-color:var(--accent)}
+.fw-onboard-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer}
+
+/* Next step banner */
+.fw-nextstep-banner{max-width:1280px;margin:8px auto;padding:14px 20px;background:rgba(227,133,64,0.08);border-left:3px solid var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fw-nextstep-text{color:var(--ink);font-size:14px}
+.fw-nextstep-text strong{color:var(--accent)}
+.fw-nextstep-actions{display:flex;gap:8px;align-items:center}
+
+/* Status badges */
+.fw-status-badge{position:absolute;top:10px;right:44px;padding:3px 10px;border-radius:var(--radius-pill);font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;z-index:2}
+.fw-status-live{background:rgba(52,211,153,0.2);color:#34d399;border:1px solid rgba(52,211,153,0.4)}
+.fw-status-offer{background:rgba(250,204,21,0.18);color:#facc15;border:1px solid rgba(250,204,21,0.4)}
+.fw-status-escrow{background:rgba(96,165,250,0.2);color:#60a5fa;border:1px solid rgba(96,165,250,0.4)}
+.fw-status-sold{background:rgba(120,120,120,0.3);color:#aaa;border:1px solid rgba(160,160,160,0.3)}
+.fw-status-hot{background:rgba(168,85,247,0.2);color:#c084fc;border:1px solid rgba(168,85,247,0.4)}
+.listing-card{position:relative}
+
+/* FAB */
+.fw-fab{position:fixed;bottom:28px;right:28px;width:58px;height:58px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:28px;font-weight:300;box-shadow:0 8px 30px rgba(227,133,64,0.5);z-index:900;transition:transform .25s;display:flex;align-items:center;justify-content:center}
+.fw-fab:hover{background:var(--accent2);transform:scale(1.05)}
+.fw-fab.open{transform:rotate(45deg)}
+.fw-fab-menu{position:fixed;bottom:100px;right:28px;display:none;flex-direction:column;gap:10px;z-index:899}
+.fw-fab-menu.open{display:flex}
+.fw-fab-action{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:10px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.fw-fab-action:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Dashboard */
+.fw-dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:24px}
+.fw-dash-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.fw-dash-card h3{font-size:14px;text-transform:uppercase;color:var(--muted);letter-spacing:0.1em;margin-bottom:12px}
+.fw-dash-stat{font-size:32px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.fw-dash-sub{font-size:13px;color:var(--muted)}
+.fw-dash-list{list-style:none;padding:0;margin:0}
+.fw-dash-list li{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.fw-dash-list li:last-child{border:none}
+.fw-dash-hero{background:linear-gradient(135deg,rgba(227,133,64,0.15),rgba(227,133,64,0.03));padding:28px;border-radius:var(--radius-lg);border:1px solid rgba(227,133,64,0.25);margin-bottom:16px}
+.fw-dash-hero h2{font-size:28px;font-weight:800;margin-bottom:8px}
+.fw-dash-hero p{color:var(--muted);font-size:15px}
+
+/* Deal Room */
+.fw-dr-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:24px;overflow-x:auto;flex-wrap:wrap}
+.fw-dr-tab{padding:10px 18px;background:none;border:none;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.fw-dr-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.fw-dr-pane{display:none}
+.fw-dr-pane.active{display:block}
+.fw-dr-msg{padding:12px;background:var(--card);border-radius:10px;margin-bottom:8px;font-size:14px}
+.fw-dr-msg strong{color:var(--accent)}
+.fw-dr-msg small{color:var(--muted);font-size:11px;display:block;margin-top:4px}
+.fw-dr-doc{display:flex;justify-content:space-between;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14px}
+.fw-dr-check{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--line)}
+.fw-dr-milestone{padding:16px;border-left:3px solid var(--line);margin-left:8px;position:relative;padding-left:24px}
+.fw-dr-milestone.done{border-color:var(--green)}
+.fw-dr-milestone.active{border-color:var(--accent)}
+.fw-dr-milestone::before{content:'';position:absolute;left:-7px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--line)}
+.fw-dr-milestone.done::before{background:var(--green)}
+.fw-dr-milestone.active::before{background:var(--accent)}
+
+@media(max-width:900px){
+  .fw-nav-search{display:none}
+}
 </style>
 </head>
 <body>
@@ -775,7 +874,9 @@ input,select,textarea{font-family:var(--font)}
     <div class="brand-name">Flip<span>Wala</span></div>
   </div>
   <div class="nav-links" id="navLinks">
+    <a href="#" onclick="showSection('dashboard');return false">Dashboard</a>
     <a href="#" onclick="showSection('marketplace');return false">Marketplace</a>
+    <a href="#" onclick="showSection('dealroom');return false">Deal Room</a>
     <a href="#" onclick="showSection('sell');return false">Sell</a>
     <a href="#" onclick="showSection('valuation');return false">Valuations</a>
     <a href="#" onclick="showSection('hiw');return false">How It Works</a>
@@ -793,12 +894,61 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
   </div>
+  <div class="fw-nav-search" id="fwNavSearchWrap">
+    <input type="text" id="fwNavSearch" placeholder="Search listings, pages... (press /)" autocomplete="off" oninput="fwSearchInput(this.value)" onfocus="fwSearchInput(this.value)">
+    <div class="fw-search-results" id="fwSearchResults"></div>
+  </div>
+  <div class="fw-nav-bell" id="fwNavBellWrap">
+    <button class="fw-bell-btn" onclick="fwToggleNotifications(event)" title="Notifications">&#128276;<span class="fw-bell-badge" id="fwBellBadge">0</span></button>
+    <div class="fw-notif-dropdown" id="fwNotifDropdown">
+      <div class="fw-notif-head"><strong>Notifications</strong><button onclick="fwClearNotifications()" class="fw-notif-clear">Clear all</button></div>
+      <div class="fw-notif-list" id="fwNotifList"></div>
+    </div>
+  </div>
   <div class="fw-nav-auth" id="fwNavAuth">
     <button class="fw-nav-signin" onclick="openFwAuthModal('login')">Sign In</button>
   </div>
   <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
 </div>
 </nav>
+
+<!-- V3: Onboarding Banner -->
+<div id="fwOnboardBanner" class="fw-onboard-banner hidden"></div>
+<!-- V3: Next-step Banner -->
+<div id="fwNextStepBanner" class="fw-nextstep-banner hidden"></div>
+
+<!-- V3: Smart Dashboard -->
+<section class="section hidden" id="sec-dashboard">
+  <div id="fwDashboardContent"></div>
+</section>
+
+<!-- V3: Deal Room -->
+<section class="section hidden" id="sec-dealroom">
+  <div class="section-label">Deal Room</div>
+  <h2 class="section-title" id="fwDealRoomTitle">ChaiCart Acquisition Deal</h2>
+  <p class="section-sub">Secure workspace for buyer, seller, and broker to close the deal.</p>
+  <div class="fw-dr-tabs" id="fwDrTabs">
+    <button class="fw-dr-tab active" data-tab="overview" onclick="fwDrSwitchTab('overview')">Overview</button>
+    <button class="fw-dr-tab" data-tab="messages" onclick="fwDrSwitchTab('messages')">Messages</button>
+    <button class="fw-dr-tab" data-tab="documents" onclick="fwDrSwitchTab('documents')">Documents</button>
+    <button class="fw-dr-tab" data-tab="escrow" onclick="fwDrSwitchTab('escrow')">Escrow</button>
+    <button class="fw-dr-tab" data-tab="checklist" onclick="fwDrSwitchTab('checklist')">Checklist</button>
+    <button class="fw-dr-tab" data-tab="milestones" onclick="fwDrSwitchTab('milestones')">Milestones</button>
+    <button class="fw-dr-tab" data-tab="nft" onclick="fwDrSwitchTab('nft')">NFT Transfer</button>
+  </div>
+  <div id="fwDrPanes"></div>
+</section>
+
+<!-- V3: Quick Action FAB -->
+<div class="fw-fab-menu" id="fwFabMenu">
+  <button class="fw-fab-action" onclick="fwFabAction('list')">&#128196; List a Business</button>
+  <button class="fw-fab-action" onclick="fwFabAction('search')">&#128269; Find a Deal</button>
+  <button class="fw-fab-action" onclick="fwFabAction('valuation')">&#128200; Get Valuation</button>
+  <button class="fw-fab-action" onclick="fwFabAction('broker')">&#129309; Talk to Broker</button>
+  <button class="fw-fab-action" onclick="fwFabAction('dealroom')">&#128274; Open Deal Room</button>
+  <button class="fw-fab-action" onclick="fwFabAction('support')">&#128172; Support</button>
+</div>
+<button class="fw-fab" id="fwFab" onclick="fwToggleFab()" title="Quick actions">+</button>
 
 <!-- HERO -->
 <section class="hero-section" id="sec-hero">
@@ -2764,9 +2914,11 @@ function renderListings(){
     const revDisplay = l.currency==='USD' ? fmt(l.revenueUSD||toUSD(l.revenueINR),'USD')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(l.revenueINR,'INR')+'</span>' : fmt(l.revenueINR,'INR')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(toUSD(l.revenueINR),'USD')+'</span>';
     const askDisplay = l.currency==='USD' ? fmt(l.askingUSD||toUSD(l.askingINR),'USD')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(l.askingINR,'INR')+'</span>' : fmtShort(l.askingINR,'INR')+' <span style="font-size:12px;color:var(--muted)">/ '+fmtShort(toUSD(l.askingINR),'USD')+'</span>';
     const multiple = (getAsking(l)/(getProfit(l)*12)).toFixed(1);
+    const statusBadge = fwGetStatusBadge(l);
     return `<div class="listing-card" onclick="openListing('${l.id}')">
       <span class="fw-platform-badge">FW</span>
       <span class="listing-badge ${l.badge}">${l.type}</span>
+      ${statusBadge}
       <div class="listing-name">${l.name}</div>
       <div class="listing-desc">${l.desc}</div>
       <div class="listing-metrics">
@@ -4074,6 +4226,9 @@ function fwCompleteLogin(user, remember) {
   renderFwUserNav();
   applyFwNavVisibility();
   updatePlanDisplay();
+  if (typeof fwRenderOnboarding==='function') fwRenderOnboarding();
+  if (typeof fwRenderNextStep==='function') fwRenderNextStep();
+  if (typeof fwRenderDashboard==='function') { showSection('dashboard'); }
 }
 
 function fwLogout(silent) {
@@ -4221,7 +4376,7 @@ document.getElementById('fwAuthModal').addEventListener('click', function(e) {
 });
 
 // Auth-gate: intercept showSection calls when not logged in
-const FW_AUTH_FREE_SECTIONS = ['hero', 'marketplace', 'hiw', 'community'];
+const FW_AUTH_FREE_SECTIONS = ['hero', 'marketplace', 'hiw', 'community', 'dashboard'];
 const _originalShowSection = showSection;
 showSection = function(sectionId) {
   if (!isFwLoggedIn() && !FW_AUTH_FREE_SECTIONS.includes(sectionId)) {
@@ -4253,12 +4408,432 @@ function initFwAuth() {
   }
 }
 
+/* ============================================================
+   V3 UX ENHANCEMENTS — Dashboard, Onboarding, Notifications,
+   Search, Status Badges, FAB, Deal Room, Next-Step Banner
+   ============================================================ */
+
+/* Assign statuses to existing LISTINGS (non-destructive) */
+(function fwAssignListingStatus(){
+  if (typeof LISTINGS === 'undefined') return;
+  const statuses = ['live','live','hot','live','offer','live','escrow','live','sold','live','hot','live'];
+  LISTINGS.forEach((l,i)=>{ if(!l.status) l.status = statuses[i % statuses.length]; });
+})();
+
+function fwGetStatusBadge(l){
+  const map = {
+    live:{cls:'fw-status-live',icon:'\u{1F7E2}',label:'Live'},
+    offer:{cls:'fw-status-offer',icon:'\u{1F7E1}',label:'Under Offer'},
+    escrow:{cls:'fw-status-escrow',icon:'\u{1F535}',label:'In Escrow'},
+    sold:{cls:'fw-status-sold',icon:'\u{26AB}',label:'Sold'},
+    hot:{cls:'fw-status-hot',icon:'\u{1F7E3}',label:'Hot Deal'}
+  };
+  const s = map[l.status] || map.live;
+  return `<span class="fw-status-badge ${s.cls}">${s.icon} ${s.label}</span>`;
+}
+
+/* ===== NOTIFICATIONS ===== */
+const FW_DEFAULT_NOTIFS = [
+  {id:'n1',icon:'\u{1F525}',title:'New hot deal: BollywoodBeats listed at \u20B948L',time:'2h ago',unread:true,section:'marketplace'},
+  {id:'n2',icon:'\u{1F4AC}',title:'Broker sent you a message about ChaiCart',time:'5h ago',unread:true,section:'dealroom'},
+  {id:'n3',icon:'\u{1F512}',title:'Escrow for TiffinTech is now funded',time:'1d ago',unread:true,section:'escrow'},
+  {id:'n4',icon:'\u{1F4C8}',title:'Your valuation report for CodeGuru is ready',time:'2d ago',unread:false,section:'valuation'},
+  {id:'n5',icon:'\u{1F3AF}',title:'Welcome to FlipWala — complete your profile',time:'3d ago',unread:true,section:'subscriptions'}
+];
+
+function fwGetNotifications(){
+  const raw = localStorage.getItem('fw_notifications');
+  if (!raw){
+    localStorage.setItem('fw_notifications', JSON.stringify(FW_DEFAULT_NOTIFS));
+    return FW_DEFAULT_NOTIFS.slice();
+  }
+  try { return JSON.parse(raw); } catch(e){ return FW_DEFAULT_NOTIFS.slice(); }
+}
+function fwSaveNotifications(n){ localStorage.setItem('fw_notifications', JSON.stringify(n)); }
+function fwRenderNotifications(){
+  const list = fwGetNotifications();
+  const unread = list.filter(n=>n.unread).length;
+  const badge = document.getElementById('fwBellBadge');
+  if (badge){
+    badge.textContent = unread;
+    badge.classList.toggle('show', unread>0);
+  }
+  const listEl = document.getElementById('fwNotifList');
+  if (!listEl) return;
+  if (!list.length){ listEl.innerHTML = '<div class="fw-notif-empty">No notifications</div>'; return; }
+  listEl.innerHTML = list.map(n=>`
+    <div class="fw-notif-item ${n.unread?'unread':''}" onclick="fwNotifClick('${n.id}')">
+      <div class="fw-notif-icon">${n.icon}</div>
+      <div class="fw-notif-body">
+        <div class="fw-notif-title">${n.title}</div>
+        <div class="fw-notif-time">${n.time}</div>
+      </div>
+    </div>`).join('');
+}
+function fwToggleNotifications(e){
+  if (e) e.stopPropagation();
+  const dd = document.getElementById('fwNotifDropdown');
+  dd.classList.toggle('open');
+  document.getElementById('fwSearchResults')?.classList.remove('open');
+}
+function fwNotifClick(id){
+  const list = fwGetNotifications();
+  const n = list.find(x=>x.id===id);
+  if (!n) return;
+  n.unread = false;
+  fwSaveNotifications(list);
+  fwRenderNotifications();
+  document.getElementById('fwNotifDropdown').classList.remove('open');
+  if (n.section) showSection(n.section);
+}
+function fwClearNotifications(){
+  const list = fwGetNotifications().map(n=>({...n,unread:false}));
+  fwSaveNotifications(list);
+  fwRenderNotifications();
+}
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.fw-nav-bell')) document.getElementById('fwNotifDropdown')?.classList.remove('open');
+  if (!e.target.closest('.fw-nav-search')) document.getElementById('fwSearchResults')?.classList.remove('open');
+  if (!e.target.closest('.fw-fab') && !e.target.closest('.fw-fab-menu')) {
+    document.getElementById('fwFabMenu')?.classList.remove('open');
+    document.getElementById('fwFab')?.classList.remove('open');
+  }
+});
+
+/* ===== UNIVERSAL SEARCH ===== */
+const FW_SEARCH_PAGES = [
+  {label:'Marketplace',section:'marketplace',desc:'Browse all digital businesses'},
+  {label:'Dashboard',section:'dashboard',desc:'Your personalized home'},
+  {label:'Deal Room',section:'dealroom',desc:'Active deal workspace'},
+  {label:'Escrow',section:'escrow',desc:'Secure transaction vault'},
+  {label:'Valuations',section:'valuation',desc:'AI-powered valuation'},
+  {label:'Pipeline',section:'pipeline',desc:'Your deal flow'},
+  {label:'Hot Deals',section:'hot-deals',desc:'Curated picks'},
+  {label:'Domains',section:'domains',desc:'Domain portfolio'},
+  {label:'AI Agent',section:'agent',desc:'Autonomous deal sourcing'},
+  {label:'Subscriptions',section:'subscriptions',desc:'Plans and billing'},
+  {label:'AI Ops',section:'ai-ops',desc:'Ops control center'}
+];
+function fwSearchInput(q){
+  const res = document.getElementById('fwSearchResults');
+  if (!res) return;
+  q = (q||'').trim().toLowerCase();
+  if (!q){
+    const hist = JSON.parse(localStorage.getItem('fw_search_history')||'[]').slice(0,5);
+    if (hist.length){
+      res.innerHTML = '<div class="fw-search-section">Recent</div>' + hist.map(h=>`<div class="fw-search-item" onclick="fwSearchPick('${h.replace(/'/g,'\\\'')}')">${h}</div>`).join('');
+      res.classList.add('open');
+    } else res.classList.remove('open');
+    return;
+  }
+  const listings = (typeof LISTINGS!=='undefined'?LISTINGS:[]).filter(l=>(l.name+' '+l.desc+' '+l.type).toLowerCase().includes(q)).slice(0,5);
+  const pages = FW_SEARCH_PAGES.filter(p=>(p.label+' '+p.desc).toLowerCase().includes(q)).slice(0,5);
+  let html = '';
+  if (listings.length){
+    html += '<div class="fw-search-section">Listings</div>';
+    html += listings.map(l=>`<div class="fw-search-item" onclick="fwSearchOpenListing('${l.id}','${l.name.replace(/'/g,'\\\'')}')">${l.name}<small>${l.type} \u00B7 ${l.region}</small></div>`).join('');
+  }
+  if (pages.length){
+    html += '<div class="fw-search-section">Pages</div>';
+    html += pages.map(p=>`<div class="fw-search-item" onclick="fwSearchGo('${p.section}','${p.label}')">${p.label}<small>${p.desc}</small></div>`).join('');
+  }
+  if (!html) html = '<div class="fw-notif-empty">No matches</div>';
+  res.innerHTML = html;
+  res.classList.add('open');
+}
+function fwSaveSearchTerm(term){
+  if (!term) return;
+  let hist = JSON.parse(localStorage.getItem('fw_search_history')||'[]');
+  hist = [term, ...hist.filter(h=>h!==term)].slice(0,10);
+  localStorage.setItem('fw_search_history', JSON.stringify(hist));
+}
+function fwSearchPick(term){
+  document.getElementById('fwNavSearch').value = term;
+  fwSearchInput(term);
+}
+function fwSearchGo(section, label){
+  fwSaveSearchTerm(label);
+  document.getElementById('fwSearchResults').classList.remove('open');
+  document.getElementById('fwNavSearch').value = '';
+  showSection(section);
+}
+function fwSearchOpenListing(id, name){
+  fwSaveSearchTerm(name);
+  document.getElementById('fwSearchResults').classList.remove('open');
+  document.getElementById('fwNavSearch').value = '';
+  showSection('marketplace');
+  setTimeout(()=>{ if (typeof openListing==='function') openListing(id); }, 120);
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === '/' && document.activeElement.tagName!=='INPUT' && document.activeElement.tagName!=='TEXTAREA'){
+    const inp = document.getElementById('fwNavSearch');
+    if (inp){ e.preventDefault(); inp.focus(); }
+  }
+});
+
+/* ===== ONBOARDING TRACKER ===== */
+function fwGetOnboardSteps(){
+  const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+  const saved = JSON.parse(localStorage.getItem('fw_onboarding_progress')||'{}');
+  const verified = localStorage.getItem('fw_verified')==='true';
+  const hasSub = (localStorage.getItem('fw_subscription')||'free') !== 'free';
+  return [
+    {key:'account', label:'Create account', done: !!user, action:()=>openFwAuthModal('signup')},
+    {key:'profile', label:'Complete profile', done: !!(user && user.name && user.phone), action:()=>showSection('subscriptions')},
+    {key:'verify', label:'Verify identity', done: verified || !!saved.verify, action:()=>{ if(typeof startVerification==='function') startVerification(); else showSection('subscriptions'); }},
+    {key:'plan', label:'Pick a plan', done: hasSub || !!saved.plan, action:()=>showSection('subscriptions')},
+    {key:'first_action', label:'Save first listing', done: !!saved.first_action, action:()=>showSection('marketplace')}
+  ];
+}
+function fwRenderOnboarding(){
+  const banner = document.getElementById('fwOnboardBanner');
+  if (!banner) return;
+  const dismissed = localStorage.getItem('fw_onboard_dismissed')==='1';
+  const steps = fwGetOnboardSteps();
+  const done = steps.filter(s=>s.done).length;
+  if (dismissed || done === steps.length){ banner.classList.add('hidden'); return; }
+  banner.classList.remove('hidden');
+  banner.innerHTML = `
+    <div class="fw-onboard-text">\u{1F680} Complete your profile (${done} of ${steps.length})</div>
+    <div class="fw-onboard-steps">
+      ${steps.map((s,i)=>`<span class="fw-onboard-pill ${s.done?'done':''}" onclick="fwOnboardClick(${i})">${s.label}</span>`).join('')}
+    </div>
+    <button class="fw-onboard-close" onclick="fwDismissOnboard()" title="Dismiss">&times;</button>`;
+}
+function fwOnboardClick(i){
+  const steps = fwGetOnboardSteps();
+  const s = steps[i];
+  if (s && s.action) s.action();
+  const saved = JSON.parse(localStorage.getItem('fw_onboarding_progress')||'{}');
+  saved[s.key] = true;
+  localStorage.setItem('fw_onboarding_progress', JSON.stringify(saved));
+  fwRenderOnboarding();
+}
+function fwDismissOnboard(){ localStorage.setItem('fw_onboard_dismissed','1'); fwRenderOnboarding(); }
+
+/* ===== NEXT STEP BANNER ===== */
+function fwRenderNextStep(){
+  const banner = document.getElementById('fwNextStepBanner');
+  if (!banner) return;
+  const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+  let cta = null;
+  if (!user){
+    cta = {id:'signup',text:'New to FlipWala?',strong:'Sign up in 60 seconds.',btn:'Get Started',action:()=>openFwAuthModal('signup')};
+  } else if (!user.verified && localStorage.getItem('fw_verified')!=='true' && localStorage.getItem('fw_verify_skipped')!=='true'){
+    cta = {id:'verify',text:'Unlock full access:',strong:'Verify your identity.',btn:'Verify Now',action:()=>{ if(typeof startVerification==='function') startVerification(); else showSection('subscriptions'); }};
+  } else if ((localStorage.getItem('fw_subscription')||'free')==='free'){
+    cta = {id:'plan',text:'Ready for premium listings?',strong:'Upgrade your plan.',btn:'See Plans',action:()=>showSection('subscriptions')};
+  } else if (user.role==='seller'){
+    cta = {id:'list',text:'Maximize your sale:',strong:'List your business today.',btn:'List Now',action:()=>showSection('sell')};
+  } else if (user.role==='broker'){
+    cta = {id:'pipeline',text:'Stay on top of deals:',strong:'Review your pipeline.',btn:'Open Pipeline',action:()=>showSection('pipeline')};
+  } else {
+    cta = {id:'browse',text:'Find your next deal:',strong:'Browse hot listings.',btn:'Browse',action:()=>showSection('marketplace')};
+  }
+  const dismissed = JSON.parse(localStorage.getItem('fw_next_step_dismissed')||'[]');
+  if (dismissed.includes(cta.id)){ banner.classList.add('hidden'); return; }
+  banner.classList.remove('hidden');
+  banner.innerHTML = `
+    <div class="fw-nextstep-text">${cta.text} <strong>${cta.strong}</strong></div>
+    <div class="fw-nextstep-actions">
+      <button class="btn btn-primary btn-sm" onclick="fwNextStepAction('${cta.id}')">${cta.btn}</button>
+      <button class="fw-onboard-close" onclick="fwDismissNextStep('${cta.id}')" title="Dismiss">&times;</button>
+    </div>`;
+  banner._action = cta.action;
+}
+function fwNextStepAction(id){
+  const banner = document.getElementById('fwNextStepBanner');
+  if (banner && banner._action) banner._action();
+}
+function fwDismissNextStep(id){
+  const dismissed = JSON.parse(localStorage.getItem('fw_next_step_dismissed')||'[]');
+  if (!dismissed.includes(id)) dismissed.push(id);
+  localStorage.setItem('fw_next_step_dismissed', JSON.stringify(dismissed));
+  fwRenderNextStep();
+}
+
+/* ===== QUICK ACTION FAB ===== */
+function fwToggleFab(){
+  document.getElementById('fwFab').classList.toggle('open');
+  document.getElementById('fwFabMenu').classList.toggle('open');
+}
+function fwFabAction(kind){
+  fwToggleFab();
+  const map = {list:'sell', search:'marketplace', valuation:'valuation', broker:'community', dealroom:'dealroom', support:'community'};
+  if (map[kind]) showSection(map[kind]);
+}
+
+/* ===== DASHBOARD ===== */
+function fwRenderDashboard(){
+  const host = document.getElementById('fwDashboardContent');
+  if (!host) return;
+  const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+  const role = user ? user.role : 'explorer';
+  const name = user ? (user.name || 'there') : 'Explorer';
+  let body = '';
+  const hero = `<div class="fw-dash-hero"><h2>Welcome back, ${name} \u{1F44B}</h2><p>Your ${role.replace('_',' ')} dashboard \u2014 everything in one place.</p></div>`;
+
+  if (!user){
+    body = `<div class="section-label">Dashboard</div>
+      <div class="fw-dash-hero"><h2>Welcome to FlipWala</h2><p>Sign up to unlock your personalized dashboard, pipeline, and deal room.</p><div style="margin-top:16px"><button class="btn btn-primary" onclick="openFwAuthModal('signup')">Create Free Account</button> <button class="btn btn-outline" onclick="showSection('marketplace')" style="margin-left:8px">Browse Listings</button></div></div>
+      <div class="fw-dash-grid">
+        <div class="fw-dash-card"><h3>Featured Listings</h3><div class="fw-dash-stat">12</div><div class="fw-dash-sub">Hot deals this week</div></div>
+        <div class="fw-dash-card"><h3>Total Inventory</h3><div class="fw-dash-stat">${(typeof LISTINGS!=='undefined'?LISTINGS.length:50)}+</div><div class="fw-dash-sub">Active digital businesses</div></div>
+        <div class="fw-dash-card"><h3>Avg Multiple</h3><div class="fw-dash-stat">2.8x</div><div class="fw-dash-sub">Annual profit multiple</div></div>
+      </div>`;
+  } else if (role==='buyer'){
+    const pipeline = JSON.parse(localStorage.getItem('fw_pipeline')||'{}');
+    const watching = (pipeline.watching||[]).length;
+    body = hero + `<div class="fw-dash-grid">
+      <div class="fw-dash-card"><h3>Watching</h3><div class="fw-dash-stat">${watching}</div><div class="fw-dash-sub">Listings in your pipeline</div></div>
+      <div class="fw-dash-card"><h3>Matched Listings</h3><div class="fw-dash-stat">5</div><div class="fw-dash-sub">Match your budget & interests</div><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="showSection('marketplace')">View Matches</button></div>
+      <div class="fw-dash-card"><h3>Action Items</h3><ul class="fw-dash-list"><li>Review ChaiCart LOI <a href="#" onclick="showSection('dealroom');return false">Open</a></li><li>Schedule broker call <a href="#" onclick="showSection('community');return false">Book</a></li><li>Complete verification <a href="#" onclick="showSection('subscriptions');return false">Verify</a></li></ul></div>
+      <div class="fw-dash-card"><h3>Hot This Week</h3><ul class="fw-dash-list"><li>BollywoodBeats <span style="color:var(--accent)">\u20B948L</span></li><li>TiffinTech <span style="color:var(--accent)">$140K</span></li><li>ChaiCart <span style="color:var(--accent)">\u20B985L</span></li></ul></div>
+    </div>`;
+  } else if (role==='seller'){
+    body = hero + `<div class="fw-dash-grid">
+      <div class="fw-dash-card"><h3>Listing Views</h3><div class="fw-dash-stat">1,284</div><div class="fw-dash-sub">Past 30 days</div></div>
+      <div class="fw-dash-card"><h3>Interested Buyers</h3><div class="fw-dash-stat">7</div><div class="fw-dash-sub">Inquiries awaiting reply</div><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="showSection('dealroom')">Open Deal Room</button></div>
+      <div class="fw-dash-card"><h3>Action Items</h3><ul class="fw-dash-list"><li>Respond to 3 new inquiries</li><li>Upload revenue proof docs</li><li>Review current offers</li></ul></div>
+      <div class="fw-dash-card"><h3>Avg Sale Multiple</h3><div class="fw-dash-stat">3.1x</div><div class="fw-dash-sub">For your business type</div></div>
+    </div>`;
+  } else if (role==='broker'){
+    body = hero + `<div class="fw-dash-grid">
+      <div class="fw-dash-card"><h3>Active Deals</h3><div class="fw-dash-stat">4</div><div class="fw-dash-sub">In progress</div></div>
+      <div class="fw-dash-card"><h3>Pipeline Value</h3><div class="fw-dash-stat">$2.4M</div><div class="fw-dash-sub">Across all stages</div></div>
+      <div class="fw-dash-card"><h3>Commission YTD</h3><div class="fw-dash-stat">$86K</div><div class="fw-dash-sub">Closed deals this year</div></div>
+      <div class="fw-dash-card"><h3>Action Items</h3><ul class="fw-dash-list"><li>Close ChaiCart escrow</li><li>Send LOI for CodeGuru</li><li>3 new seller leads to review</li></ul><button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="showSection('pipeline')">Open Pipeline</button></div>
+    </div>`;
+  } else if (role==='reseller' || role==='service_provider'){
+    const isCoder = role==='service_provider';
+    body = hero + `<div class="fw-dash-grid">
+      <div class="fw-dash-card"><h3>${isCoder?'Active Builds':'Referrals'}</h3><div class="fw-dash-stat">${isCoder?3:12}</div><div class="fw-dash-sub">${isCoder?'In progress':'This month'}</div></div>
+      <div class="fw-dash-card"><h3>${isCoder?'Completed Projects':'Commission Earned'}</h3><div class="fw-dash-stat">${isCoder?'24':'$1,840'}</div><div class="fw-dash-sub">All time</div></div>
+      <div class="fw-dash-card"><h3>Action Items</h3><ul class="fw-dash-list"><li>${isCoder?'Deliver ChaiCart redesign':'Share hot deal link'}</li><li>${isCoder?'Update portfolio':'Check referral payouts'}</li><li>Respond to 2 inquiries</li></ul></div>
+    </div>`;
+  } else {
+    body = hero + `<div class="fw-dash-grid">
+      <div class="fw-dash-card"><h3>Explore Marketplace</h3><div class="fw-dash-sub">${(typeof LISTINGS!=='undefined'?LISTINGS.length:0)} live listings. Filter by type, region, price.</div><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="showSection('marketplace')">Browse</button></div>
+      <div class="fw-dash-card"><h3>How It Works</h3><div class="fw-dash-sub">6-step journey from discovery to ownership transfer.</div><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="showSection('hiw')">Learn More</button></div>
+      <div class="fw-dash-card"><h3>Get a Valuation</h3><div class="fw-dash-sub">AI-powered valuation in under 60 seconds.</div><button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="showSection('valuation')">Start</button></div>
+    </div>`;
+  }
+  host.innerHTML = body;
+}
+
+/* ===== DEAL ROOM ===== */
+let fwDrCurrentTab = 'overview';
+function fwDrSwitchTab(tab){
+  fwDrCurrentTab = tab;
+  document.querySelectorAll('.fw-dr-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  fwRenderDealRoom();
+}
+function fwRenderDealRoom(){
+  const panes = document.getElementById('fwDrPanes');
+  if (!panes) return;
+  const t = fwDrCurrentTab;
+  let html = '';
+  if (t==='overview'){
+    html = `<div class="fw-dr-pane active">
+      <div class="fw-dash-grid">
+        <div class="fw-dash-card"><h3>Asset</h3><div style="font-weight:700;font-size:18px">ChaiCart</div><div class="fw-dash-sub">D2C chai + masala eCommerce</div></div>
+        <div class="fw-dash-card"><h3>Deal Price</h3><div class="fw-dash-stat">\u20B985L</div><div class="fw-dash-sub">$102K USD</div></div>
+        <div class="fw-dash-card"><h3>Parties</h3><div class="fw-dash-sub">Seller: Jaipur Tea Co.<br>Buyer: Acme Holdings<br>Broker: FW Desk</div></div>
+        <div class="fw-dash-card"><h3>Stage</h3><div style="color:var(--accent);font-weight:700">Due Diligence</div><div class="fw-dash-sub">Target close: May 15, 2026</div></div>
+      </div></div>`;
+  } else if (t==='messages'){
+    const msgs = JSON.parse(localStorage.getItem('fw_dr_messages')||'null') || [
+      {from:'Broker (FW Desk)',text:'Welcome to the deal room. All questions go here.',time:'Apr 12, 9:04 AM'},
+      {from:'Buyer',text:'Can we see the last 3 months of Razorpay statements?',time:'Apr 12, 11:20 AM'},
+      {from:'Seller',text:'Uploaded in Documents tab.',time:'Apr 12, 1:45 PM'}
+    ];
+    if (!localStorage.getItem('fw_dr_messages')) localStorage.setItem('fw_dr_messages', JSON.stringify(msgs));
+    html = `<div class="fw-dr-pane active">
+      <div id="fwDrMsgList">${msgs.map(m=>`<div class="fw-dr-msg"><strong>${m.from}:</strong> ${m.text}<small>${m.time}</small></div>`).join('')}</div>
+      <textarea id="fwDrMsgInput" placeholder="Write a message..." style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-height:80px;margin-top:12px"></textarea>
+      <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="fwDrSendMsg()">Send</button>
+    </div>`;
+  } else if (t==='documents'){
+    html = `<div class="fw-dr-pane active">
+      <div class="fw-dr-doc"><span>\u{1F4C4} P&L_2025.pdf</span><span style="color:var(--muted)">2.1 MB</span></div>
+      <div class="fw-dr-doc"><span>\u{1F4C4} Razorpay_Statements.pdf</span><span style="color:var(--muted)">1.4 MB</span></div>
+      <div class="fw-dr-doc"><span>\u{1F4C4} LOI_Signed.pdf</span><span style="color:var(--muted)">360 KB</span></div>
+      <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="alert('Upload coming soon \u2014 stubbed for demo.')">\u{1F4C2} Upload Document</button>
+    </div>`;
+  } else if (t==='escrow'){
+    html = `<div class="fw-dr-pane active">
+      <p style="color:var(--muted);margin-bottom:16px">Escrow is managed in the dedicated Escrow section.</p>
+      <button class="btn btn-primary" onclick="showSection('escrow')">Open Escrow Vault</button>
+    </div>`;
+  } else if (t==='checklist'){
+    const items = ['Financial statements reviewed','Traffic & analytics verified','Legal entity documents','Tech stack handoff plan','Customer list NDA','Domain transfer scheduled','Training & transition SOP'];
+    html = `<div class="fw-dr-pane active">${items.map((it,i)=>`<div class="fw-dr-check"><input type="checkbox" id="fwdrck${i}" ${i<3?'checked':''}><label for="fwdrck${i}">${it}</label></div>`).join('')}</div>`;
+  } else if (t==='milestones'){
+    const ms = [
+      {label:'LOI Signed',done:true,date:'Apr 8'},
+      {label:'Due Diligence Started',done:true,date:'Apr 12'},
+      {label:'Escrow Funded',done:false,active:true,date:'Apr 20 (target)'},
+      {label:'Purchase Agreement Executed',done:false,date:'May 1 (target)'},
+      {label:'Asset & Domain Transfer',done:false,date:'May 10 (target)'},
+      {label:'NFT Ownership Mint',done:false,date:'May 15 (target)'}
+    ];
+    html = `<div class="fw-dr-pane active">${ms.map(m=>`<div class="fw-dr-milestone ${m.done?'done':''} ${m.active?'active':''}"><strong>${m.label}</strong><div style="color:var(--muted);font-size:12px;margin-top:4px">${m.date}</div></div>`).join('')}</div>`;
+  } else if (t==='nft'){
+    html = `<div class="fw-dr-pane active">
+      <div class="fw-dash-card" style="text-align:center;padding:40px">
+        <div style="font-size:64px">\u{1F5BC}</div>
+        <h3 style="margin:12px 0">NFT Ownership Certificate</h3>
+        <p style="color:var(--muted);max-width:480px;margin:0 auto">On close, ownership of ChaiCart will be minted as a non-transferable NFT on Polygon. This acts as immutable proof of acquisition.</p>
+        <div style="margin-top:20px;font-family:var(--mono);color:var(--muted);font-size:12px">Status: pending deal close</div>
+      </div>
+    </div>`;
+  }
+  panes.innerHTML = html;
+}
+function fwDrSendMsg(){
+  const inp = document.getElementById('fwDrMsgInput');
+  if (!inp || !inp.value.trim()) return;
+  const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+  const msgs = JSON.parse(localStorage.getItem('fw_dr_messages')||'[]');
+  msgs.push({from: user ? (user.name || 'You') : 'You', text: inp.value.trim(), time: new Date().toLocaleString()});
+  localStorage.setItem('fw_dr_messages', JSON.stringify(msgs));
+  inp.value='';
+  fwRenderDealRoom();
+}
+
+/* ===== HOOK INTO showSection ===== */
+(function fwV3WrapShowSection(){
+  const prev = showSection;
+  showSection = function(sec){
+    prev.call(this, sec);
+    if (sec==='dashboard') fwRenderDashboard();
+    if (sec==='dealroom') fwRenderDealRoom();
+  };
+})();
+
+/* ===== V3 INIT ===== */
+function fwV3Init(){
+  fwRenderNotifications();
+  fwRenderOnboarding();
+  fwRenderNextStep();
+  // Logged-in landing: dashboard. Logged-out: keep hero.
+  if (typeof isFwLoggedIn==='function' && isFwLoggedIn()){
+    // Wait a tick so original init has run
+    setTimeout(()=>{
+      document.querySelectorAll('.hero-section,.section').forEach(el=>el.classList.add('hidden'));
+      const dash = document.getElementById('sec-dashboard');
+      if (dash){ dash.classList.remove('hidden'); fwRenderDashboard(); }
+    }, 0);
+  }
+}
+
 /* ===== INIT ===== */
 // Show hero by default
 document.getElementById('sec-hero').classList.remove('hidden');
 updatePlanDisplay();
 initFwAuth();
 applyFwNavVisibility();
+fwV3Init();
 </script>
 </body>
 </html>
