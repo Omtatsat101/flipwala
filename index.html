@@ -4601,7 +4601,13 @@ document.getElementById('fwAuthModal').addEventListener('click', function(e) {
 });
 
 // Auth-gate: intercept showSection calls when not logged in
-const FW_AUTH_FREE_SECTIONS = ['hero', 'marketplace', 'hiw', 'community', 'dashboard'];
+// Public sections (browseable without login — lead-gen + top-of-funnel).
+// Gated sections remain: pipeline, agent, reseller, admin, dealroom, deal-pipeline.
+const FW_AUTH_FREE_SECTIONS = [
+  'hero', 'dashboard', 'marketplace', 'hiw', 'community',
+  'valuations', 'domains', 'brand-box', 'hot-deals', 'nft',
+  'subscriptions', 'about'
+];
 const _originalShowSection = showSection;
 showSection = function(sectionId) {
   if (!isFwLoggedIn() && !FW_AUTH_FREE_SECTIONS.includes(sectionId)) {
