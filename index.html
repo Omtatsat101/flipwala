@@ -1001,6 +1001,7 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('reseller');return false">Reseller</a>
     <a href="#" onclick="showSection('nft');return false">NFT</a>
     <a href="#" onclick="showSection('subscriptions');return false">Subscriptions</a>
+    <a href="#" onclick="showSection('roadmap');return false">Roadmap</a>
     <a href="#" onclick="showSection('ai-ops');return false">AI Ops</a>
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
@@ -2440,33 +2441,43 @@ input,select,textarea{font-family:var(--font)}
   <div class="footer-col">
     <h4>Platform</h4>
     <a href="#" onclick="showSection('marketplace');return false">Marketplace</a>
-    <a href="#" onclick="showSection('sell');return false">Sell Your Business</a>
+    <a href="#" onclick="showSection('sell');return false">Sell</a>
     <a href="#" onclick="showSection('valuation');return false">Valuations</a>
-    <a href="#" onclick="showSection('pipeline');return false">Deal Pipeline</a>
+    <a href="#" onclick="showSection('domains');return false">Domains</a>
     <a href="#" onclick="showSection('hot-deals');return false">Hot Deals</a>
-    <a href="#" onclick="showSection('brand-box');return false">Brand-in-a-Box</a>
+    <a href="#" onclick="showSection('brand-box');return false">Brand Box</a>
+    <a href="#" onclick="showSection('pipeline');return false">Deal Pipeline</a>
   </div>
   <div class="footer-col">
-    <h4>Resources</h4>
+    <h4>For Pros</h4>
+    <a href="#" onclick="showSection('community');return false">Brokers</a>
+    <a href="#" onclick="showSection('agent');return false">Vibe Coders</a>
+    <a href="#" onclick="showSection('reseller');return false">Resellers</a>
+    <a href="#" onclick="showSection('admin');return false">Admin</a>
+  </div>
+  <div class="footer-col">
+    <h4>Learn</h4>
     <a href="#" onclick="showSection('hiw');return false">How It Works</a>
-    <a href="#" onclick="showSection('escrow');return false">Escrow Center</a>
-    <a href="#" onclick="showSection('community');return false">Community</a>
-    <a href="#" onclick="showSection('domains');return false">Domain Services</a>
-    <a href="#" onclick="showSection('agent');return false">AI Agent</a>
-    <a href="#" onclick="showSection('reseller');return false">Reseller</a>
+    <a href="#" onclick="showSection('about');return false">About</a>
     <a href="#" onclick="showSection('nft');return false">NFT Ownership</a>
+    <a href="#" onclick="showSection('roadmap');return false">Roadmap &amp; Vote</a>
+    <a href="#">Blog</a>
+    <a href="#">API Docs</a>
   </div>
   <div class="footer-col">
-    <h4>Company</h4>
-    <a href="#">About</a>
-    <a href="#">Careers</a>
-    <a href="#">Blog</a>
+    <h4>Legal</h4>
+    <a href="#" onclick="fwV33OpenLegal('terms');return false">Terms of Service</a>
+    <a href="#" onclick="fwV33OpenLegal('privacy');return false">Privacy Policy</a>
+    <a href="#" onclick="showSection('escrow');return false">Escrow Terms</a>
     <a href="#">Contact</a>
+    <a href="https://www.legalzoom.com/business/business-compliance/" target="_blank" rel="noopener">Need a real attorney?</a>
+    <a href="#" onclick="fwV33OpenLegal('dmca');return false">DMCA / IP Takedown</a>
+    <div class="fwV33-legal-badge">&#128196; Legal docs auto-updated via Termly</div>
   </div>
 </div>
 <div class="footer-bottom">
   <span>&copy; 2026 FlipWala. All rights reserved.</span>
-  <span><a href="https://wa.me/1234567890" target="_blank">&#9742; WhatsApp</a> &bull; <a href="#">Privacy</a> &bull; <a href="#">Terms</a></span>
+  <span><a href="https://wa.me/1234567890" target="_blank">&#9742; WhatsApp</a> &bull; <a href="#" onclick="fwV33OpenLegal('privacy');return false">Privacy</a> &bull; <a href="#" onclick="fwV33OpenLegal('terms');return false">Terms</a></span>
 </div>
 </footer>
 
@@ -4600,21 +4611,40 @@ document.getElementById('fwAuthModal').addEventListener('click', function(e) {
   if (e.target === this) closeFwAuthModal();
 });
 
-// Auth-gate: intercept showSection calls when not logged in
-// Public sections (browseable without login — lead-gen + top-of-funnel).
-// Gated sections remain: pipeline, agent, reseller, admin, dealroom, deal-pipeline.
-const FW_AUTH_FREE_SECTIONS = [
-  'hero', 'dashboard', 'marketplace', 'hiw', 'community',
-  'valuations', 'domains', 'brand-box', 'hot-deals', 'nft',
-  'subscriptions', 'about'
-];
+// v3.3 — replace full-page auth-wall with blur+card inline unlock per UX-GATED-PATTERNS.md
+// Gate types: public | soft | preview | subscription | admin
+const FW_V33_GATE_MAP = {
+  // public — render fully
+  hero:'public', marketplace:'public', hiw:'public', community:'public',
+  valuations:'public', valuation:'public', domains:'public', 'brand-box':'public',
+  'hot-deals':'public', nft:'public', subscriptions:'public', about:'public',
+  escrow:'public', sell:'public', 'ai-ops':'public', roadmap:'public',
+  // soft gate — explorer + inline signup card (Dashboard, Deal Room)
+  dashboard:'soft', dealroom:'soft',
+  // preview gate — blur + unlock card (Deal Pipeline, Listing Detail)
+  pipeline:'preview', 'deal-pipeline':'preview',
+  // subscription gate — marketing landing + subscribe CTA
+  agent:'subscription', reseller:'subscription',
+  // admin — hidden from nav if role != admin, but if navigated reveal preview gate
+  admin:'admin'
+};
 const _originalShowSection = showSection;
 showSection = function(sectionId) {
-  if (!isFwLoggedIn() && !FW_AUTH_FREE_SECTIONS.includes(sectionId)) {
-    openFwAuthModal('login');
+  // Always render the section first so user sees context (per spec: "don't block — tease")
+  _originalShowSection(sectionId);
+  if (isFwLoggedIn()) { fwV33ClearGate(sectionId); return; }
+  const gate = FW_V33_GATE_MAP[sectionId] || 'public';
+  if (gate === 'public') { fwV33ClearGate(sectionId); return; }
+  if (gate === 'admin') {
+    const user = getFwCurrentUser ? getFwCurrentUser() : null;
+    if (user && user.role === 'admin') { fwV33ClearGate(sectionId); return; }
+    // hide from non-admins — redirect to marketplace
+    _originalShowSection('marketplace');
     return;
   }
-  _originalShowSection(sectionId);
+  // session-dismissed check
+  if (sessionStorage.getItem('fw_v33_gate_dismiss_' + sectionId) === '1') return;
+  showFwInlineUnlock(sectionId, gate);
 };
 
 function initFwAuth() {
@@ -4627,15 +4657,7 @@ function initFwAuth() {
     renderFwUserNav();
   } else {
     renderFwUserNav();
-    // Auto-show auth modal for first-time visitors after 3s
-    if (!localStorage.getItem('fw_auth_seen')) {
-      setTimeout(function() {
-        if (!isFwLoggedIn()) {
-          openFwAuthModal('login');
-          localStorage.setItem('fw_auth_seen', '1');
-        }
-      }, 3000);
-    }
+    // v3.3: auto-popup disabled — inline unlock cards do the conversion work
   }
 }
 
@@ -5697,6 +5719,415 @@ window.v32 = (function(){
   // Online/offline indicator
   window.addEventListener('online',  ()=>{ try { v32.status.refresh(); } catch(e){} });
   window.addEventListener('offline', ()=>{ try { v32.status.refresh(); } catch(e){} });
+})();
+
+/* ============================================================
+   v3.3 — Inline Unlock Gates, Feature Voting, Legal Modals,
+   Footer, Continuous Improvement Banner
+   ============================================================ */
+(function fwV33Init(){
+  // Inject CSS once
+  if (document.getElementById('fwV33Styles')) return;
+  const css = `
+  .v33-gate-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:50;background:rgba(23,26,29,0.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:24px;animation:v33FadeIn .25s ease}
+  @keyframes v33FadeIn{from{opacity:0}to{opacity:1}}
+  .v33-gate-card{position:relative;width:340px;max-width:100%;background:linear-gradient(180deg,#1f2328,#171a1d);border:1px solid rgba(227,133,64,0.35);border-radius:14px;padding:28px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(227,133,64,0.08);text-align:center}
+  .v33-gate-card::before{content:"";position:absolute;inset:0;border-radius:14px;padding:1px;background:linear-gradient(135deg,#e38540,transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .v33-gate-icon{font-size:40px;opacity:.85;margin-bottom:10px;line-height:1}
+  .v33-gate-card h3{font-size:22px;font-weight:800;margin:0 0 8px;color:#fff;letter-spacing:-.01em}
+  .v33-gate-card p{font-size:14px;color:#a9b0b8;line-height:1.5;margin:0 0 18px}
+  .v33-gate-btn{display:block;width:100%;padding:11px 14px;background:#e38540;color:#171a1d;font-weight:700;font-size:14px;border:0;border-radius:8px;cursor:pointer;transition:.15s;margin-bottom:10px}
+  .v33-gate-btn:hover{background:#f09852;transform:translateY(-1px)}
+  .v33-gate-btn.sub{background:transparent;color:#e38540;border:1px solid rgba(227,133,64,.4);font-weight:600}
+  .v33-gate-btn.sub:hover{background:rgba(227,133,64,.08)}
+  .v33-gate-link{display:inline-block;margin-top:6px;font-size:12px;color:#8a9099;cursor:pointer;text-decoration:none}
+  .v33-gate-link:hover{color:#e38540;text-decoration:underline}
+  .v33-gate-close{position:absolute;top:10px;right:12px;background:none;border:0;color:#8a9099;font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px}
+  .v33-gate-close:hover{background:rgba(255,255,255,.06);color:#fff}
+  .v33-soft-card{max-width:720px;margin:16px auto 24px;padding:16px 20px;display:flex;align-items:center;gap:16px;background:linear-gradient(90deg,rgba(227,133,64,.12),rgba(227,133,64,.04));border:1px solid rgba(227,133,64,.25);border-radius:12px}
+  .v33-soft-card .ico{font-size:24px}
+  .v33-soft-card .body{flex:1;min-width:0}
+  .v33-soft-card h4{margin:0 0 2px;font-size:15px;font-weight:700;color:#fff}
+  .v33-soft-card p{margin:0;font-size:13px;color:#a9b0b8}
+  .v33-soft-card button{background:#e38540;color:#171a1d;font-weight:700;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;font-size:13px}
+  .v33-soft-card button:hover{background:#f09852}
+  section{position:relative}
+  /* roadmap section */
+  #roadmap{padding:80px 24px;max-width:1100px;margin:0 auto}
+  .v33-rm-head{text-align:center;margin-bottom:32px}
+  .v33-rm-head h1{font-size:36px;font-weight:800;margin:0 0 8px;color:#fff}
+  .v33-rm-head p{color:#a9b0b8;font-size:15px;margin:0}
+  .v33-rm-tools{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+  .v33-rm-sort{display:flex;gap:6px}
+  .v33-rm-sort button{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#a9b0b8;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+  .v33-rm-sort button.active{background:rgba(227,133,64,.15);border-color:#e38540;color:#e38540}
+  .v33-rm-suggest-btn{background:#e38540;color:#171a1d;font-weight:700;border:0;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px}
+  .v33-rm-list{display:grid;gap:12px}
+  .v33-rm-card{display:flex;gap:16px;align-items:center;padding:16px 20px;background:#1f2328;border:1px solid rgba(255,255,255,.06);border-radius:12px;transition:.15s}
+  .v33-rm-card:hover{border-color:rgba(227,133,64,.3)}
+  .v33-vote{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:60px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;cursor:pointer;transition:.15s}
+  .v33-vote:hover{background:rgba(227,133,64,.1);border-color:#e38540}
+  .v33-vote.voted{background:rgba(227,133,64,.18);border-color:#e38540;color:#e38540}
+  .v33-vote .arr{font-size:14px;font-weight:800}
+  .v33-vote .cnt{font-size:16px;font-weight:800;color:#fff}
+  .v33-vote.voted .cnt{color:#e38540}
+  .v33-rm-body{flex:1;min-width:0}
+  .v33-rm-body h4{margin:0 0 4px;font-size:16px;font-weight:700;color:#fff}
+  .v33-rm-body p{margin:0;font-size:13px;color:#8a9099}
+  .v33-rm-status{padding:5px 11px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .v33-rm-status.planned{background:rgba(100,150,255,.15);color:#6496ff}
+  .v33-rm-status.considering{background:rgba(150,150,150,.15);color:#a9b0b8}
+  .v33-rm-status.in-progress{background:rgba(251,191,36,.15);color:#fbbf24}
+  .v33-rm-status.shipped{background:rgba(34,197,94,.15);color:#22c55e}
+  /* legal modal */
+  .v33-legal-modal{position:fixed;inset:0;background:rgba(0,0,0,0.82);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;animation:v33FadeIn .2s ease}
+  .v33-legal-box{background:#1f2328;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:32px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+  .v33-legal-box h2{margin:0 0 12px;color:#fff;font-size:22px}
+  .v33-legal-box p{color:#a9b0b8;font-size:14px;line-height:1.6}
+  .v33-legal-box .close{position:absolute;top:12px;right:14px;background:none;border:0;color:#8a9099;font-size:24px;cursor:pointer}
+  .v33-legal-box a{color:#e38540}
+  .v33-legal-box input,.v33-legal-box textarea{width:100%;padding:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;margin-bottom:10px;font-family:inherit;font-size:14px}
+  .v33-legal-box textarea{min-height:100px;resize:vertical}
+  .v33-legal-box button.sbmt{background:#e38540;color:#171a1d;font-weight:700;border:0;padding:10px 18px;border-radius:8px;cursor:pointer}
+  .fwV33-legal-badge{margin-top:12px;padding:8px 10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:6px;font-size:11px;color:#22c55e;font-weight:600}
+  /* ship banner */
+  #fwV33ShipBanner{position:fixed;bottom:20px;left:20px;background:#1f2328;border:1px solid rgba(227,133,64,.4);border-radius:10px;padding:10px 16px;font-size:13px;color:#fff;z-index:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
+  #fwV33ShipBanner:hover{border-color:#e38540}
+  #fwV33ShipBanner .em{color:#e38540;font-weight:700;margin-right:6px}
+  @media(max-width:640px){
+    #fwV33ShipBanner{left:12px;right:12px;bottom:12px;font-size:12px}
+    .v33-gate-card{width:100%}
+    .v33-rm-card{flex-wrap:wrap}
+  }
+  `;
+  const style = document.createElement('style');
+  style.id = 'fwV33Styles';
+  style.textContent = css;
+  document.head.appendChild(style);
+})();
+
+// ---------- Inline Unlock Helper ----------
+function showFwInlineUnlock(sectionId, gateType){
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  fwV33ClearGate(sectionId);
+  const copy = fwV33GateCopy(sectionId, gateType);
+  if (gateType === 'soft'){
+    // inject small inline signup card at top (no blur)
+    const card = document.createElement('div');
+    card.className = 'v33-soft-card fwV33Gate';
+    card.dataset.gateFor = sectionId;
+    card.innerHTML = `
+      <div class="ico">\u2728</div>
+      <div class="body">
+        <h4>${copy.title}</h4>
+        <p>${copy.body}</p>
+      </div>
+      <button onclick="openFwAuthModal('signup')">${copy.cta}</button>
+    `;
+    // place at top of section
+    const target = section.querySelector(':scope > .container') || section;
+    target.insertBefore(card, target.firstChild);
+    return;
+  }
+  // preview or subscription — blur overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'v33-gate-overlay fwV33Gate';
+  overlay.dataset.gateFor = sectionId;
+  const secondary = (gateType === 'subscription')
+    ? `<button class="v33-gate-btn sub" onclick="openFwAuthModal('login')">Already subscribed? Sign in</button>`
+    : `<a class="v33-gate-link" onclick="openFwAuthModal('login')">Already have an account? Sign in</a>`;
+  overlay.innerHTML = `
+    <div class="v33-gate-card">
+      <button class="v33-gate-close" onclick="fwV33DismissGate('${sectionId}')" aria-label="Dismiss">&times;</button>
+      <div class="v33-gate-icon">\u{1F512}</div>
+      <h3>${copy.title}</h3>
+      <p>${copy.body}</p>
+      <button class="v33-gate-btn" onclick="${copy.action || "openFwAuthModal('signup')"}">${copy.cta}</button>
+      ${secondary}
+    </div>
+  `;
+  if (getComputedStyle(section).position === 'static') section.style.position = 'relative';
+  section.appendChild(overlay);
+}
+
+function fwV33GateCopy(sectionId, gateType){
+  const T = {
+    dashboard: {title:'See your personal dashboard', body:'Matched listings, saved searches, deal alerts — free forever.', cta:'Create free account'},
+    dealroom: {title:'Build your first deal room', body:'Messages, documents, escrow, NFT transfer — when you close a deal.', cta:'Sign in to start'},
+    pipeline: {title:'Track your deals in one place', body:'Kanban board, escrow status, transfer checklist — free account.', cta:'Create free account'},
+    'deal-pipeline': {title:'Track your deals in one place', body:'Kanban board, escrow status, transfer checklist — free account.', cta:'Create free account'},
+    listing: {title:'Unlock the full listing', body:'Traffic sources, P&L, seller Q&A — free, 20 seconds.', cta:'Unlock listing'},
+    agent: {title:'Enable your AI Agent', body:'Auto-review listings, detect duplicates, match buyers.', cta:'Subscribe — Pro $149/mo', action:"showSection('subscriptions')"},
+    reseller: {title:'Join the Reseller Program', body:'Build & sell templates on the platform, earn 5% on referrals.', cta:'Subscribe — $49/mo', action:"showSection('subscriptions')"},
+    admin: {title:'Admin access required', body:'This area is for platform administrators.', cta:'Sign in'}
+  };
+  return T[sectionId] || {title:'Sign in to continue', body:'Create a free account to unlock this feature.', cta:'Create free account'};
+}
+
+function fwV33ClearGate(sectionId){
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  section.querySelectorAll('.fwV33Gate').forEach(el => el.remove());
+}
+
+function fwV33DismissGate(sectionId){
+  sessionStorage.setItem('fw_v33_gate_dismiss_' + sectionId, '1');
+  fwV33ClearGate(sectionId);
+}
+
+// ESC dismisses overlay
+document.addEventListener('keydown', function(e){
+  if (e.key !== 'Escape') return;
+  const open = document.querySelector('.v33-gate-overlay');
+  if (open){
+    const sid = open.dataset.gateFor;
+    if (sid) fwV33DismissGate(sid);
+  }
+  const lm = document.getElementById('fwV33LegalModal');
+  if (lm) lm.remove();
+});
+
+// ---------- Feature Feedback Voting ----------
+const FW_V33_SEED_FEATURES = [
+  {id:'f1', title:'Multi-Language Deal Rooms', desc:'Hindi, Tamil, Bengali, Spanish support in deal rooms.', status:'Planned', votes:47},
+  {id:'f2', title:'Mobile App', desc:'Native iOS + Android for buyers and sellers.', status:'Considering', votes:89},
+  {id:'f3', title:'AI Due Diligence Reports', desc:'Auto-generate DD reports from listing metrics + docs.', status:'In Progress', votes:124},
+  {id:'f4', title:'Cross-Border Payment Expansion', desc:'INR, PHP, IDR, AED direct payouts via Wise + Razorpay.', status:'Planned', votes:62},
+  {id:'f5', title:'Portfolio Management Dashboard', desc:'Track all owned assets, revenue, ROI in one view.', status:'Planned', votes:38},
+  {id:'f6', title:'Video Deal Rooms', desc:'Built-in seller walkthroughs + live Q&A.', status:'Considering', votes:29},
+  {id:'f7', title:'Auto-Valuation Connectors (Stripe/Shopify)', desc:'One-click connect to pull revenue for instant valuation.', status:'In Progress', votes:103},
+  {id:'f8', title:'Brand Marketplace (Complete Packaged Brands)', desc:'Ready-to-run brand kits: logo, store, domain, socials.', status:'Planned', votes:71}
+];
+
+function fwV33GetFeatures(){
+  try {
+    let list = JSON.parse(localStorage.getItem('fw_feature_list') || 'null');
+    if (!list){ list = FW_V33_SEED_FEATURES.slice(); localStorage.setItem('fw_feature_list', JSON.stringify(list)); }
+    // Merge user suggestions
+    const sugg = JSON.parse(localStorage.getItem('fw_feature_suggestions') || '[]');
+    sugg.forEach(s => { if (!list.find(f => f.id === s.id)) list.push(s); });
+    // Apply votes
+    const votes = JSON.parse(localStorage.getItem('fw_feature_votes') || '{}');
+    list.forEach(f => { if (votes[f.id] != null) f.votes = votes[f.id]; });
+    return list;
+  } catch(e){ return FW_V33_SEED_FEATURES.slice(); }
+}
+
+function fwV33ToggleVote(fid){
+  const votes = JSON.parse(localStorage.getItem('fw_feature_votes') || '{}');
+  const mine = JSON.parse(localStorage.getItem('fw_feature_my_votes') || '[]');
+  const list = fwV33GetFeatures();
+  const f = list.find(x => x.id === fid);
+  if (!f) return;
+  const idx = mine.indexOf(fid);
+  if (idx >= 0){ mine.splice(idx,1); votes[fid] = (votes[fid]!=null?votes[fid]:f.votes) - 1; }
+  else { mine.push(fid); votes[fid] = (votes[fid]!=null?votes[fid]:f.votes) + 1; }
+  localStorage.setItem('fw_feature_votes', JSON.stringify(votes));
+  localStorage.setItem('fw_feature_my_votes', JSON.stringify(mine));
+  fwV33RenderRoadmap();
+}
+
+let FW_V33_RM_SORT = 'voted';
+function fwV33SetSort(s){ FW_V33_RM_SORT = s; fwV33RenderRoadmap(); }
+
+function fwV33RenderRoadmap(){
+  const sec = document.getElementById('roadmap');
+  if (!sec) return;
+  const list = fwV33GetFeatures();
+  const mine = JSON.parse(localStorage.getItem('fw_feature_my_votes') || '[]');
+  let sorted = list.slice();
+  if (FW_V33_RM_SORT === 'voted') sorted.sort((a,b)=>b.votes-a.votes);
+  else if (FW_V33_RM_SORT === 'newest') sorted.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  else if (FW_V33_RM_SORT === 'status'){
+    const rank = {'In Progress':0,'Planned':1,'Considering':2,'Shipped':3};
+    sorted.sort((a,b)=>(rank[a.status]||9)-(rank[b.status]||9));
+  }
+  const btn = s => `<button class="${FW_V33_RM_SORT===s?'active':''}" onclick="fwV33SetSort('${s}')">${s==='voted'?'Most Voted':s==='newest'?'Newest':'Status'}</button>`;
+  sec.innerHTML = `
+    <div class="v33-rm-head">
+      <h1>Roadmap &amp; Vote</h1>
+      <p>Shape FlipWala. Upvote what matters — we ship the top requests first.</p>
+    </div>
+    <div class="v33-rm-tools">
+      <div class="v33-rm-sort">${btn('voted')}${btn('newest')}${btn('status')}</div>
+      <button class="v33-rm-suggest-btn" onclick="fwV33OpenSuggest()">+ Suggest a Feature</button>
+    </div>
+    <div class="v33-rm-list">
+      ${sorted.map(f => `
+        <div class="v33-rm-card">
+          <div class="v33-vote ${mine.includes(f.id)?'voted':''}" onclick="fwV33ToggleVote('${f.id}')">
+            <span class="arr">\u25B2</span><span class="cnt">${f.votes}</span>
+          </div>
+          <div class="v33-rm-body">
+            <h4>${f.title}</h4>
+            <p>${f.desc||''}</p>
+          </div>
+          <span class="v33-rm-status ${f.status.toLowerCase().replace(' ','-')}">${f.status}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function fwV33OpenSuggest(){
+  const m = document.createElement('div');
+  m.className = 'v33-legal-modal';
+  m.id = 'fwV33LegalModal';
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  m.innerHTML = `
+    <div class="v33-legal-box">
+      <button class="close" onclick="document.getElementById('fwV33LegalModal').remove()">&times;</button>
+      <h2>Suggest a Feature</h2>
+      <p>What would make FlipWala better for you?</p>
+      <input id="fwV33SuggTitle" placeholder="Feature title" maxlength="80">
+      <textarea id="fwV33SuggDesc" placeholder="Describe the use case..." maxlength="400"></textarea>
+      <button class="sbmt" onclick="fwV33SubmitSuggest()">Submit</button>
+    </div>
+  `;
+  document.body.appendChild(m);
+}
+function fwV33SubmitSuggest(){
+  const t = (document.getElementById('fwV33SuggTitle').value||'').trim();
+  const d = (document.getElementById('fwV33SuggDesc').value||'').trim();
+  if (!t) { alert('Title required'); return; }
+  const sugg = JSON.parse(localStorage.getItem('fw_feature_suggestions') || '[]');
+  sugg.push({id:'usr_'+Date.now(), title:t, desc:d, status:'Considering', votes:1, createdAt:Date.now()});
+  localStorage.setItem('fw_feature_suggestions', JSON.stringify(sugg));
+  document.getElementById('fwV33LegalModal').remove();
+  fwV33RenderRoadmap();
+  if (typeof fwV33Toast === 'function') fwV33Toast('Thanks! We review suggestions weekly.');
+  else alert('Thanks! We review suggestions weekly.');
+}
+
+// Create roadmap section if it doesn't exist
+(function fwV33EnsureRoadmap(){
+  if (document.getElementById('roadmap')) return;
+  const s = document.createElement('section');
+  s.id = 'roadmap';
+  s.className = 'hidden';
+  // insert before footer
+  const footer = document.querySelector('footer.site-footer');
+  if (footer) footer.parentNode.insertBefore(s, footer);
+  else document.body.appendChild(s);
+  fwV33RenderRoadmap();
+})();
+
+// Hook showSection to render roadmap on demand
+(function fwV33HookRoadmap(){
+  const orig = window.showSection;
+  window.showSection = function(sec){
+    const r = orig.apply(this, arguments);
+    if (sec === 'roadmap') fwV33RenderRoadmap();
+    return r;
+  };
+})();
+
+// ---------- Legal Modals ----------
+function fwV33OpenLegal(kind){
+  const existing = document.getElementById('fwV33LegalModal');
+  if (existing) existing.remove();
+  const m = document.createElement('div');
+  m.className = 'v33-legal-modal';
+  m.id = 'fwV33LegalModal';
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  let html = '';
+  if (kind === 'terms'){
+    html = `
+      <h2>Terms of Service</h2>
+      <p>Our Terms of Service are auto-generated and maintained via <a href="https://termly.io" target="_blank" rel="noopener">Termly</a>, updated automatically as regulations change.</p>
+      <p><em>Placeholder — full legal doc will load from Termly once the Termly account is connected.</em></p>
+      <p>By using FlipWala you agree to buyer/seller conduct rules, escrow terms, and platform fees described in the full terms.</p>
+      <p>Questions? <a href="https://www.legalzoom.com/business/business-compliance/" target="_blank" rel="noopener">Talk to a real attorney via LegalZoom</a>.</p>`;
+  } else if (kind === 'privacy'){
+    html = `
+      <h2>Privacy Policy</h2>
+      <p>Our Privacy Policy is auto-generated and maintained via <a href="https://termly.io" target="_blank" rel="noopener">Termly</a>, covering GDPR, CCPA, and global privacy laws.</p>
+      <p><em>Placeholder — full policy will load from Termly once connected.</em></p>
+      <p>Summary: we store your account + transaction data securely. We never sell personal data. All LLM inference runs on our own infrastructure.</p>`;
+  } else if (kind === 'dmca'){
+    html = `
+      <h2>DMCA / IP Takedown</h2>
+      <p>Found a listing that infringes your copyright or trademark? Submit a takedown request below.</p>
+      <input id="fwV33DmcaName" placeholder="Your name">
+      <input id="fwV33DmcaEmail" placeholder="Your email">
+      <input id="fwV33DmcaUrl" placeholder="URL of infringing listing">
+      <textarea id="fwV33DmcaBody" placeholder="Describe the infringement + cite your IP rights..."></textarea>
+      <button class="sbmt" onclick="fwV33SubmitDmca()">Submit Takedown</button>`;
+  }
+  m.innerHTML = `
+    <div class="v33-legal-box">
+      <button class="close" onclick="document.getElementById('fwV33LegalModal').remove()">&times;</button>
+      ${html}
+    </div>
+  `;
+  document.body.appendChild(m);
+}
+function fwV33SubmitDmca(){
+  const n = document.getElementById('fwV33DmcaName').value;
+  if (!n) { alert('Name required'); return; }
+  const reqs = JSON.parse(localStorage.getItem('fw_v33_dmca') || '[]');
+  reqs.push({
+    name:n,
+    email:document.getElementById('fwV33DmcaEmail').value,
+    url:document.getElementById('fwV33DmcaUrl').value,
+    body:document.getElementById('fwV33DmcaBody').value,
+    ts:Date.now()
+  });
+  localStorage.setItem('fw_v33_dmca', JSON.stringify(reqs));
+  document.getElementById('fwV33LegalModal').remove();
+  alert('Takedown request received. We respond within 48 hours.');
+}
+
+// ---------- Continuous Improvement Banner ----------
+function fwV33RenderShipBanner(){
+  let b = document.getElementById('fwV33ShipBanner');
+  const latest = localStorage.getItem('fw_latest_ship') || 'v3.3 inline unlock + roadmap voting';
+  if (!b){
+    b = document.createElement('div');
+    b.id = 'fwV33ShipBanner';
+    b.onclick = fwV33ShowShipHistory;
+    document.body.appendChild(b);
+  }
+  b.innerHTML = `<span class="em">\u{1F6A2} Shipped today:</span>${latest}`;
+  b.style.display = 'block';
+}
+function fwV33ShowShipHistory(){
+  const hist = JSON.parse(localStorage.getItem('fw_ship_history') || '[]');
+  const items = hist.slice(-5).reverse();
+  const seed = items.length ? items : [
+    {t:'v3.3 inline unlock + roadmap voting', d:'2026-04-19'},
+    {t:'v3.2 Supabase sync layer', d:'2026-04-15'},
+    {t:'v3.1 EF features', d:'2026-04-10'},
+    {t:'v3 dashboard + notifications', d:'2026-04-05'},
+    {t:'Auth flow overhaul', d:'2026-04-01'}
+  ];
+  const m = document.createElement('div');
+  m.className = 'v33-legal-modal';
+  m.id = 'fwV33LegalModal';
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  m.innerHTML = `
+    <div class="v33-legal-box">
+      <button class="close" onclick="document.getElementById('fwV33LegalModal').remove()">&times;</button>
+      <h2>Last 5 Ships</h2>
+      ${seed.map(i => `<p><strong>${i.d||''}</strong> \u2014 ${i.t}</p>`).join('')}
+    </div>
+  `;
+  document.body.appendChild(m);
+}
+// show after 1.5s
+setTimeout(fwV33RenderShipBanner, 1500);
+
+// Hide admin nav link for non-admins
+(function fwV33HideAdmin(){
+  try {
+    const u = (typeof getFwCurrentUser === 'function') ? getFwCurrentUser() : null;
+    if (u && u.role === 'admin') return;
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      const t = (a.textContent||'').trim().toLowerCase();
+      if (t === 'admin') a.style.display = 'none';
+    });
+  } catch(e){}
 })();
 
 /* ---------- v3.2 boot ---------- */
