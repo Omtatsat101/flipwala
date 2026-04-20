@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- v3.2 Supabase sync layer (offline-first, sync-through). Loads BEFORE inline script. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <title>FlipWala — Digital Asset Brokerage</title>
 <meta name="description" content="FlipWala: International digital business marketplace. Buy, sell, and broker websites, SaaS, and online businesses with secure escrow and AI-powered valuations.">
 <link rel="canonical" href="https://flipwala.com/">
@@ -964,6 +966,13 @@ input,select,textarea{font-family:var(--font)}
 .v31-modal-box p{color:var(--muted);font-size:14px;margin-bottom:18px}
 .v31-modal-box input,.v31-modal-box select{width:100%;padding:10px 12px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);font-size:14px;margin-bottom:12px}
 .v31-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+/* v3.2 sync badge */
+#v32SyncBadge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;margin-left:8px;border-radius:999px;background:#1f242a;border:1px solid var(--line);color:var(--muted);font-size:11px;font-family:var(--mono);cursor:default;user-select:none;transition:opacity .2s}
+#v32SyncBadge .v32-dot{width:8px;height:8px;border-radius:50%;background:#facc15;box-shadow:0 0 6px rgba(250,204,21,.6)}
+#v32SyncBadge.v32-synced .v32-dot{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.6)}
+#v32SyncBadge.v32-offline .v32-dot{background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,.6)}
+.v32-toast{position:fixed;bottom:24px;right:24px;background:#1f242a;border:1px solid var(--accent);color:var(--ink);padding:12px 16px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:13px;max-width:320px;z-index:99999;animation:v32slide .25s ease}
+@keyframes v32slide{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
@@ -995,6 +1004,7 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('ai-ops');return false">AI Ops</a>
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
+    <span id="v32SyncBadge" title="Supabase sync status (v3.2)"><span class="v32-dot"></span><span id="v32SyncLabel">Local only</span></span>
   </div>
   <div class="fw-nav-search" id="fwNavSearchWrap">
     <input type="text" id="fwNavSearch" placeholder="Search listings, pages... (press /)" autocomplete="off" oninput="fwSearchInput(this.value)" onfocus="fwSearchInput(this.value)">
@@ -5303,6 +5313,394 @@ initFwAuth();
 applyFwNavVisibility();
 fwV3Init();
 v31Init();
+
+/* ============================================================
+   v3.2 — SUPABASE SYNC LAYER (offline-first, sync-through)
+   - localStorage remains source of truth for UX
+   - Supabase mirrors writes when authed + online + syncEnabled
+   - All identifiers prefixed v32 / namespaced under window.v32
+   - All new localStorage keys prefixed fw_v32_
+   ============================================================ */
+const V32_CONFIG = {
+  supabaseUrl: 'https://YOUR_PROJECT.supabase.co',
+  supabaseAnonKey: 'YOUR_ANON_KEY',
+  platform: 'fw',
+  syncEnabled: false  // default OFF — flip to true once real keys are in
+};
+
+window.v32 = (function(){
+  let _client = null;
+  let _clientTried = false;
+  let _profileId = null;
+  let _channels = [];
+
+  function _idle(fn){
+    if (typeof requestIdleCallback === 'function') requestIdleCallback(fn, {timeout: 1500});
+    else setTimeout(fn, 0);
+  }
+
+  function _enabled(){ return !!(V32_CONFIG.syncEnabled && V32_CONFIG.supabaseUrl && V32_CONFIG.supabaseAnonKey && V32_CONFIG.supabaseUrl.indexOf('YOUR_') === -1); }
+
+  function client(){
+    if (!_enabled()) return null;
+    if (_client) return _client;
+    if (_clientTried) return null;
+    _clientTried = true;
+    try {
+      if (typeof window.supabase === 'undefined' || !window.supabase.createClient) return null;
+      _client = window.supabase.createClient(V32_CONFIG.supabaseUrl, V32_CONFIG.supabaseAnonKey, {
+        auth: { persistSession: true, autoRefreshToken: true, storageKey: 'fw_v32_auth' }
+      });
+      return _client;
+    } catch(e){ return null; }
+  }
+
+  function getProfileId(){
+    if (_profileId) return _profileId;
+    try { _profileId = localStorage.getItem('fw_supabase_profile_id') || null; } catch(e){}
+    return _profileId;
+  }
+  function setProfileId(id){
+    _profileId = id;
+    try { if (id) localStorage.setItem('fw_supabase_profile_id', id); } catch(e){}
+  }
+
+  function isAuthed(){
+    return !!(getProfileId() && (typeof isFwLoggedIn==='function' ? isFwLoggedIn() : true));
+  }
+
+  /* ---------- Sync status badge ---------- */
+  const status = {
+    set(state, label){
+      const el = document.getElementById('v32SyncBadge');
+      const lbl = document.getElementById('v32SyncLabel');
+      if (!el || !lbl) return;
+      el.classList.remove('v32-synced','v32-offline');
+      if (state === 'synced') el.classList.add('v32-synced');
+      else if (state === 'offline') el.classList.add('v32-offline');
+      lbl.textContent = label;
+    },
+    refresh(){
+      if (!V32_CONFIG.syncEnabled) { this.set('local','Local only'); return; }
+      if (!navigator.onLine) { this.set('offline','Offline'); return; }
+      if (isAuthed() && client()) this.set('synced','Synced');
+      else this.set('local','Local only');
+    }
+  };
+
+  /* ---------- Toast (used for realtime notifications) ---------- */
+  function toast(text){
+    const t = document.createElement('div');
+    t.className = 'v32-toast';
+    t.textContent = text;
+    document.body.appendChild(t);
+    setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(), 250); }, 4200);
+  }
+
+  /* ---------- Sync writers (fire-and-forget) ---------- */
+  const sync = {
+    async profileUpsert(user){
+      if (!_enabled()) return;
+      const c = client(); if (!c || !user) return;
+      try {
+        const payload = {
+          email: user.email,
+          name: user.name || null,
+          role: user.role || 'explorer',
+          platform: V32_CONFIG.platform,
+          country: user.country || null,
+          phone: user.phone || null,
+          last_seen_at: new Date().toISOString()
+        };
+        const { data, error } = await c.from('profiles').upsert(payload, { onConflict: 'email' }).select('id').maybeSingle();
+        if (!error && data && data.id) { setProfileId(data.id); status.refresh(); subscribeNotifications(); }
+      } catch(e){ /* silent */ }
+    },
+
+    async savedSearch(entry){
+      if (!_enabled()) return;
+      const c = client(); if (!c || !entry) return;
+      try {
+        const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+        await c.from('saved_searches').insert({
+          profile_id: getProfileId(),
+          email: entry.email || (user && user.email) || 'guest@flipwala.com',
+          platform: V32_CONFIG.platform,
+          name: entry.name,
+          query: entry.query || null,
+          filters: entry.filters || {},
+          alert_frequency: entry.freq === 'instant' ? 'realtime' : (entry.freq || 'daily')
+        });
+      } catch(e){}
+    },
+
+    async unlock(listingExternalId){
+      if (!_enabled()) return;
+      const c = client(); if (!c) return;
+      const pid = getProfileId(); if (!pid) return;
+      try {
+        // Resolve listing UUID by external_id (best-effort; skip insert if not found)
+        const { data: row } = await c.from('listings').select('id').eq('platform', V32_CONFIG.platform).eq('external_id', String(listingExternalId)).maybeSingle();
+        if (!row || !row.id) return;
+        await c.from('listing_unlocks').upsert({
+          profile_id: pid,
+          listing_id: row.id,
+          platform: V32_CONFIG.platform,
+          nda_accepted_at: new Date().toISOString(),
+          unlocked_at: new Date().toISOString()
+        }, { onConflict: 'profile_id,listing_id' });
+      } catch(e){}
+    },
+
+    async ownershipToken(token, method, targetUrl){
+      if (!_enabled()) return;
+      const c = client(); if (!c || !token) return;
+      try {
+        const expires = new Date(Date.now() + 7*86400000).toISOString();
+        await c.from('ownership_verifications').insert({
+          token: token,
+          method: method || 'meta_tag',
+          target_url: targetUrl || null,
+          listing_id: null,
+          seller_id: getProfileId() || null,
+          platform: V32_CONFIG.platform,
+          status: 'pending',
+          expires_at: expires
+        });
+      } catch(e){}
+    },
+
+    async dealMessage(body){
+      if (!_enabled()) return;
+      const c = client(); if (!c || !body) return;
+      const pid = getProfileId();
+      try {
+        // Sample deal room — schema requires UUID; sync only when we have one in local storage
+        const dealRoomId = localStorage.getItem('fw_v32_sample_deal_room_id');
+        if (!dealRoomId) return;
+        await c.from('deal_messages').insert({
+          deal_room_id: dealRoomId,
+          sender_id: pid,
+          body: body
+        });
+      } catch(e){}
+    }
+  };
+
+  /* ---------- Realtime: notifications ---------- */
+  function subscribeNotifications(){
+    if (!_enabled()) return;
+    const c = client(); if (!c) return;
+    const pid = getProfileId(); if (!pid) return;
+    // Tear down old channels
+    _channels.forEach(ch => { try { c.removeChannel(ch); } catch(e){} });
+    _channels = [];
+    try {
+      const ch = c.channel('notifications-' + pid)
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: 'profile_id=eq.' + pid }, (payload) => {
+          try {
+            const row = payload && payload.new; if (!row) return;
+            const list = JSON.parse(localStorage.getItem('fw_notifications') || '[]');
+            list.unshift({
+              id: 'v32-' + row.id,
+              icon: '\u{1F514}',
+              title: row.title || 'New notification',
+              time: 'just now',
+              unread: true,
+              section: 'dashboard'
+            });
+            localStorage.setItem('fw_notifications', JSON.stringify(list.slice(0, 50)));
+            if (typeof renderFwUserNav === 'function') renderFwUserNav();
+            toast(row.title || 'New activity on FlipWala');
+          } catch(e){}
+        })
+        .subscribe();
+      _channels.push(ch);
+    } catch(e){}
+  }
+
+  /* ---------- Initial load sync ---------- */
+  async function initialLoadSync(){
+    if (!_enabled()) return;
+    const c = client(); if (!c) return;
+    try {
+      const user = (typeof getFwCurrentUser==='function') ? getFwCurrentUser() : null;
+      // 1) Profile fetch by email -> capture id
+      if (user && user.email && !getProfileId()){
+        const { data } = await c.from('profiles').select('id, role, subscription_tier').eq('email', user.email).maybeSingle();
+        if (data && data.id) setProfileId(data.id);
+      }
+      const pid = getProfileId();
+      // 2) Saved searches merge
+      if (pid){
+        const { data: rows } = await c.from('saved_searches').select('name, filters, alert_frequency, email').eq('profile_id', pid).limit(100);
+        if (Array.isArray(rows)){
+          let local = [];
+          try { local = JSON.parse(localStorage.getItem('fw_saved_searches') || '[]'); } catch(e){}
+          const byName = {};
+          local.forEach(s => { byName[s.name] = s; });
+          rows.forEach(r => { byName[r.name] = { name: r.name, email: r.email, freq: r.alert_frequency, filters: r.filters || {monet:[],niche:[]}, ts: Date.now() }; });
+          try { localStorage.setItem('fw_saved_searches', JSON.stringify(Object.values(byName))); } catch(e){}
+          if (typeof v31RenderSavedList === 'function') v31RenderSavedList();
+        }
+      }
+      // 3) Notifications (last 50 unread) prepended
+      if (pid){
+        const { data: notes } = await c.from('notifications').select('id, kind, title, body, link_to').is('read_at', null).eq('profile_id', pid).order('created_at', { ascending: false }).limit(50);
+        if (Array.isArray(notes) && notes.length){
+          let local = [];
+          try { local = JSON.parse(localStorage.getItem('fw_notifications') || '[]'); } catch(e){}
+          const mapped = notes.map(n => ({
+            id: 'v32-' + n.id,
+            icon: '\u{1F514}',
+            title: n.title || 'Notification',
+            time: 'recent',
+            unread: true,
+            section: (n.link_to || 'dashboard').replace(/^#?\/?/, '')
+          }));
+          try { localStorage.setItem('fw_notifications', JSON.stringify(mapped.concat(local).slice(0, 80))); } catch(e){}
+          if (typeof renderFwUserNav === 'function') renderFwUserNav();
+        }
+      }
+      // 4) Listings (live-ish) merge by external_id
+      try {
+        const { data: live } = await c.from('listings').select('external_id, asking_price, monthly_revenue, monthly_profit, status, title').eq('platform', V32_CONFIG.platform).in('status', ['live','price_reduced','under_offer']).limit(200);
+        if (Array.isArray(live) && typeof LISTINGS !== 'undefined' && Array.isArray(LISTINGS)){
+          const byExt = {};
+          LISTINGS.forEach((l, i) => { if (l && l.id) byExt[String(l.id)] = i; });
+          live.forEach(r => {
+            if (!r.external_id) return;
+            const idx = byExt[String(r.external_id)];
+            if (idx != null){
+              // Supabase wins on overlapping fields (price/status)
+              if (r.asking_price != null) LISTINGS[idx].price = r.asking_price;
+              if (r.monthly_revenue != null) LISTINGS[idx].revenue = r.monthly_revenue;
+              if (r.monthly_profit != null) LISTINGS[idx].profit = r.monthly_profit;
+              if (r.status) LISTINGS[idx].status = r.status;
+            }
+          });
+          if (typeof renderListings === 'function') { try { renderListings(); } catch(e){} }
+        }
+      } catch(e){}
+      status.refresh();
+      subscribeNotifications();
+    } catch(e){ /* silent */ }
+  }
+
+  /* ---------- Auth signup mirror ---------- */
+  async function authSignUp(user){
+    if (!_enabled()) return;
+    const c = client(); if (!c || !user || !user.email) return;
+    try {
+      // Best-effort signup; password not exposed here, so we use upsert profile only.
+      // If a real password is available via the local 'fw_users' record, attempt auth.signUp.
+      let pwd = null;
+      try {
+        const users = JSON.parse(localStorage.getItem('fw_users') || '{}');
+        if (users[user.email] && users[user.email].password) pwd = users[user.email].password;
+      } catch(e){}
+      if (pwd){
+        try { await c.auth.signUp({ email: user.email, password: pwd }); } catch(e){}
+      }
+      await sync.profileUpsert(user);
+    } catch(e){}
+  }
+
+  return {
+    config: V32_CONFIG,
+    client,
+    sync,
+    status,
+    toast,
+    profile: { upsert: (u)=>sync.profileUpsert(u), authSignUp: authSignUp, getId: getProfileId, setId: setProfileId },
+    subscribeNotifications,
+    initialLoadSync
+  };
+})();
+
+/* ---------- Non-destructive wrappers around existing functions ---------- */
+(function v32WireWrappers(){
+  // (a) Save Search — wrap v31DoSaveSearch (E7 implementation)
+  if (typeof window.v31DoSaveSearch === 'function'){
+    const _orig = window.v31DoSaveSearch;
+    window.v31DoSaveSearch = function(btn){
+      const name = (document.getElementById('v31SaveName')||{}).value;
+      const email = (document.getElementById('v31SaveEmail')||{}).value;
+      const freq = (document.getElementById('v31SaveFreq')||{}).value;
+      const filters = { monet: [...(window.v31FilterState?.monet||[])], niche: [...(window.v31FilterState?.niche||[])] };
+      const r = _orig.apply(this, arguments);
+      try { (window.v32 && setTimeout(()=>v32.sync.savedSearch({ name, email, freq, filters }), 0)); } catch(e){}
+      return r;
+    };
+  }
+
+  // (b) Unlock Listing — wrap openListing (lockwall flow). We mirror an unlock when user is authed.
+  if (typeof window.openListing === 'function'){
+    const _orig = window.openListing;
+    window.openListing = function(id){
+      const r = _orig.apply(this, arguments);
+      try {
+        if (typeof isFwLoggedIn==='function' && isFwLoggedIn()){
+          setTimeout(()=>{ try { v32.sync.unlock(id); } catch(e){} }, 0);
+        }
+      } catch(e){}
+      return r;
+    };
+  }
+
+  // (c) Generate Ownership Token — wrap v31GenToken (E12)
+  if (typeof window.v31GenToken === 'function'){
+    const _orig = window.v31GenToken;
+    window.v31GenToken = function(){
+      const r = _orig.apply(this, arguments);
+      try {
+        const tokEl = document.getElementById('v31OwnToken');
+        const methodEl = document.getElementById('v31OwnMethod');
+        const targetEl = document.getElementById('v31OwnTarget') || document.getElementById('v31OwnUrl');
+        const token = tokEl ? tokEl.textContent.trim() : null;
+        const method = methodEl ? methodEl.value : 'meta_tag';
+        const targetUrl = targetEl ? targetEl.value : null;
+        if (token) setTimeout(()=>{ try { v32.sync.ownershipToken(token, method, targetUrl); } catch(e){} }, 0);
+      } catch(e){}
+      return r;
+    };
+  }
+
+  // (d) Send Deal Message — wrap fwDrSendMsg
+  if (typeof window.fwDrSendMsg === 'function'){
+    const _orig = window.fwDrSendMsg;
+    window.fwDrSendMsg = function(){
+      const inp = document.getElementById('fwDrMsgInput');
+      const body = inp ? inp.value.trim() : '';
+      const r = _orig.apply(this, arguments);
+      try { if (body) setTimeout(()=>{ try { v32.sync.dealMessage(body); } catch(e){} }, 0); } catch(e){}
+      return r;
+    };
+  }
+
+  // Auth hook — mirror profile on login/signup
+  if (typeof window.fwCompleteLogin === 'function'){
+    const _orig = window.fwCompleteLogin;
+    window.fwCompleteLogin = function(user, remember){
+      const r = _orig.apply(this, arguments);
+      try { setTimeout(()=>{ try { v32.profile.authSignUp(user); v32.initialLoadSync(); } catch(e){} }, 0); } catch(e){}
+      return r;
+    };
+  }
+
+  // Online/offline indicator
+  window.addEventListener('online',  ()=>{ try { v32.status.refresh(); } catch(e){} });
+  window.addEventListener('offline', ()=>{ try { v32.status.refresh(); } catch(e){} });
+})();
+
+/* ---------- v3.2 boot ---------- */
+(function v32Boot(){
+  try { v32.status.refresh(); } catch(e){}
+  if (!V32_CONFIG.syncEnabled) return; // ZERO network calls if disabled
+  // Defer initial sync to idle so v3 / v3.1 paint first
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(()=>{ try { v32.initialLoadSync(); } catch(e){} }, { timeout: 2000 });
+  else setTimeout(()=>{ try { v32.initialLoadSync(); } catch(e){} }, 0);
+})();
 </script>
 </body>
 </html>
