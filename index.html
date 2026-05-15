@@ -4063,20 +4063,47 @@ function removeFwUpload(cid,idx){
   renderFwUploadList(cid);
 }
 
-/* ===== SUBSCRIPTIONS & PLANS ===== */
+/* ===== SUBSCRIPTIONS & PLANS =====
+ * Stripe live-mode Payment Links — Legacy Bridge Alliance Group (acct_1TMtoVCj7UcGjwai)
+ * Generated 2026-05-09. To regenerate, see projects/flipwala-vibeflippers/STATUS.md (REQ-005).
+ * Customer Portal for self-service cancel/upgrade lives in the Stripe dashboard.
+ */
+const FW_STRIPE_LINKS = {
+  starter:    'https://buy.stripe.com/fZu28qgSK44B6Kc5qy0oM00',   // $29/mo  — prod_UWTfmuWq5dfUEH
+  pro:        'https://buy.stripe.com/bJe3cucCueJf0lO7yG0oM01',   // $79/mo  — prod_UWTfu13aiZbSv3
+  enterprise: 'https://buy.stripe.com/dRm4gy6e6fNj4C4aKS0oM02'    // $199/mo — prod_UWTfBDagRmulsb
+};
+
 function selectPlan(plan){
-  localStorage.setItem('fw_subscription', plan);
-  updatePlanDisplay();
-  alert('Plan selected: ' + plan.charAt(0).toUpperCase() + plan.slice(1) + '. In production this would redirect to checkout.');
+  // Remember intent locally so the UI reflects "current plan" optimistically.
+  // Source of truth = Stripe dashboard. Customer Portal handles cancel/upgrade.
+  localStorage.setItem('fw_subscription_pending', plan);
+  const url = FW_STRIPE_LINKS[plan];
+  if (!url) {
+    alert('Unknown plan: ' + plan);
+    return;
+  }
+  // Pass back-link so Stripe can return the user to the right brand
+  const ret = encodeURIComponent(window.location.origin + '/?subscription=success&tier=' + plan);
+  window.location.href = url + '?prefilled_promo_code=&client_reference_id=fw_' + plan + '&utm_source=flipwala_site';
 }
 
 function updatePlanDisplay(){
-  const plan = localStorage.getItem('fw_subscription') || 'free';
+  // Prefer confirmed subscription, fall back to pending intent
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('subscription') === 'success' && params.get('tier')) {
+    localStorage.setItem('fw_subscription', params.get('tier'));
+    localStorage.removeItem('fw_subscription_pending');
+  }
+  const plan = localStorage.getItem('fw_subscription')
+    || localStorage.getItem('fw_subscription_pending')
+    || 'free';
   const el = document.getElementById('fwCurrentPlan');
   if(el) el.textContent = 'Current plan: ' + plan.charAt(0).toUpperCase() + plan.slice(1);
 }
 
 function upgradeToPaidBuyer(){
+  // FW doesn't have a buyer-only tier — route to Pro (the listing-reveal tier)
   localStorage.setItem('fw_paid_buyer', 'true');
   selectPlan('pro');
 }
