@@ -14,26 +14,78 @@
 <meta property="og:description" content="Buy, sell, and broker websites, SaaS, and online businesses with secure escrow and AI-powered valuations.">
 <meta property="og:url" content="https://flipwala.com/">
 <meta property="og:site_name" content="FlipWala">
+<meta property="og:image" content="https://flipwala.com/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FlipWala — International Digital Business Marketplace">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="FlipWala — International Digital Business Marketplace">
 <meta name="twitter:description" content="Buy, sell, and broker digital businesses with secure escrow and AI valuations.">
+<meta name="twitter:image" content="https://flipwala.com/og-image.svg">
+<meta name="twitter:image:alt" content="FlipWala — International Digital Business Marketplace">
+<meta name="theme-color" content="#171a1d">
 <meta name="keywords" content="buy online business, sell online business, digital business broker, website marketplace, SaaS acquisition, escrow, flippa alternative, international business broker, digital asset transfer, NFT ownership">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://buy.stripe.com">
+<link rel="dns-prefetch" href="https://wa.me">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "FlipWala",
-  "description": "International digital business marketplace. Buy, sell, and broker websites, SaaS, and online businesses.",
-  "url": "https://flipwala.com",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Web",
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "USD",
-    "lowPrice": "299",
-    "highPrice": "500000",
-    "offerCount": "50+"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://flipwala.com/#org",
+      "name": "FlipWala",
+      "url": "https://flipwala.com",
+      "logo": "https://flipwala.com/og-image.svg",
+      "description": "US-headquartered international digital business marketplace.",
+      "foundingDate": "2026-04",
+      "areaServed": [
+        {"@type":"Country","name":"United States"},
+        {"@type":"Country","name":"India"},
+        {"@type":"Country","name":"United Kingdom"},
+        {"@type":"Country","name":"Australia"},
+        {"@type":"Country","name":"Canada"}
+      ],
+      "sameAs": [
+        "https://github.com/Omtatsat101/flipwala"
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://flipwala.com/#app",
+      "name": "FlipWala",
+      "description": "International digital business marketplace. Buy, sell, and broker websites, SaaS, and online businesses.",
+      "url": "https://flipwala.com",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "publisher": {"@id":"https://flipwala.com/#org"},
+      "offers": [
+        {"@type":"Offer","name":"Starter","price":"29","priceCurrency":"USD","url":"https://flipwala.com/#subscriptions"},
+        {"@type":"Offer","name":"Pro","price":"99","priceCurrency":"USD","url":"https://flipwala.com/#subscriptions"},
+        {"@type":"Offer","name":"Enterprise","price":"199","priceCurrency":"USD","url":"https://flipwala.com/#subscriptions"}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://flipwala.com/"},
+        {"@type":"ListItem","position":2,"name":"Marketplace","item":"https://flipwala.com/#marketplace"},
+        {"@type":"ListItem","position":3,"name":"Sell Your Asset","item":"https://flipwala.com/#sell"},
+        {"@type":"ListItem","position":4,"name":"Valuations","item":"https://flipwala.com/#valuations"},
+        {"@type":"ListItem","position":5,"name":"How It Works","item":"https://flipwala.com/#how-it-works"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"How does FlipWala's escrow work?","acceptedAnswer":{"@type":"Answer","text":"FlipWala uses multi-payment escrow with a 1.0% platform fee. Funds are held until the buyer confirms asset transfer (domain, code, accounts) per the transfer checklist."}},
+        {"@type":"Question","name":"What payment methods do you accept?","acceptedAnswer":{"@type":"Answer","text":"Credit/debit cards, ACH/wire, PayPal, Venmo, Stripe direct, Mercury business banking, and crypto (BTC, ETH, USDC, SOL) with multisig smart-contract escrow."}},
+        {"@type":"Question","name":"How are assets valued?","acceptedAnswer":{"@type":"Answer","text":"Revenue-based multiples ranging from 1.5x (Shopify stores) to 5x (SaaS), adjusted for age, traffic, and margin. Run the calculator at /#valuations for an instant estimate."}},
+        {"@type":"Question","name":"What is NFT ownership transfer?","acceptedAnswer":{"@type":"Answer","text":"After purchase, an ownership NFT is minted on Ethereum, Solana, Polygon, or Base. It serves as an immutable record of ownership transfer alongside the legal asset transfer agreement."}}
+      ]
+    }
+  ]
 }
 </script>
 <style>
@@ -973,12 +1025,16 @@ input,select,textarea{font-family:var(--font)}
 #v32SyncBadge.v32-offline .v32-dot{background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,.6)}
 .v32-toast{position:fixed;bottom:24px;right:24px;background:#1f242a;border:1px solid var(--accent);color:var(--ink);padding:12px 16px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:13px;max-width:320px;z-index:99999;animation:v32slide .25s ease}
 @keyframes v32slide{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:9999;padding:12px 20px;background:var(--accent);color:#171a1d;font-weight:800;border-radius:0 0 var(--radius) 0;text-decoration:none}
+.skip-link:focus{left:0;outline:3px solid #fff;outline-offset:2px}
 </style>
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <!-- NAV -->
-<nav class="topnav">
+<nav class="topnav" role="navigation" aria-label="Primary">
 <div class="topnav-inner">
   <div class="brand" onclick="showSection('hero')">
     <div class="brand-mark">FW</div>
@@ -1064,7 +1120,8 @@ input,select,textarea{font-family:var(--font)}
 <button class="fw-fab" id="fwFab" onclick="fwToggleFab()" title="Quick actions">+</button>
 
 <!-- HERO -->
-<section class="hero-section" id="sec-hero">
+<a id="main-content" tabindex="-1" aria-hidden="true"></a>
+<section class="hero-section" id="sec-hero" role="region" aria-label="Hero — flagship pitch">
 <div class="hero-inner">
   <div class="hero-badge">&#127757; Trusted by 200+ digital business buyers across South Asia</div>
   <h1 class="hero-h1">Buy, sell &amp; flip <span>digital businesses</span> with confidence.</h1>
@@ -2923,6 +2980,57 @@ input,select,textarea{font-family:var(--font)}
 </div>
 
 <script>
+/* ===== CONFIG ===== */
+/* Centralized contact + tracking config. Update FW_CONFIG.whatsappNumber to a real
+   E.164 number (e.g. '+15551234567') and every wa.me link on the page will update.
+   Until set, links keep the historical placeholder so nothing breaks structurally. */
+window.FW_CONFIG = {
+  whatsappNumber: '1234567890',          // PLACEHOLDER — replace with real E.164
+  supportEmail:   'hello@flipwala.com',
+  dmcaEmail:      'dmca@flipwala.com',
+  utmSource:      'flipwala_site',
+  utmMedium:      'organic',
+  utmCampaign:    'v33-may2026'
+};
+window.FW_CONFIG.isPlaceholder = function(){
+  return /^[\d]{0,12}$/.test(String(this.whatsappNumber)) && String(this.whatsappNumber).indexOf('1234567890') !== -1;
+};
+window.fwWaUrl = function(message){
+  var num = String(window.FW_CONFIG.whatsappNumber || '').replace(/[^\d+]/g,'').replace(/^\+/,'');
+  var msg = encodeURIComponent(message || "Hi! I'm interested in FlipWala");
+  return 'https://wa.me/' + num + '?text=' + msg;
+};
+window.fwAddUtm = function(url){
+  try {
+    var u = new URL(url, location.href);
+    if (u.hostname && u.hostname !== location.hostname) {
+      if (!u.searchParams.has('utm_source')) u.searchParams.set('utm_source', window.FW_CONFIG.utmSource);
+      if (!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium', window.FW_CONFIG.utmMedium);
+      if (!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign', window.FW_CONFIG.utmCampaign);
+    }
+    return u.toString();
+  } catch(e){ return url; }
+};
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.FW_CONFIG.isPlaceholder()) {
+    console.warn('[FlipWala] WhatsApp number is still the 1234567890 placeholder — update FW_CONFIG.whatsappNumber to enable real contact links.');
+  }
+  document.querySelectorAll('a[href*="wa.me/1234567890"]').forEach(function(a){
+    var match = a.getAttribute('href').match(/\?text=(.*)$/);
+    var msg = match ? decodeURIComponent(match[1]) : '';
+    a.setAttribute('href', window.fwWaUrl(msg));
+    a.setAttribute('rel', (a.getAttribute('rel') || '') + ' noopener nofollow');
+    a.setAttribute('data-wa-managed', '1');
+  });
+  document.querySelectorAll('a[target="_blank"]').forEach(function(a){
+    if (!a.hasAttribute('rel')) a.setAttribute('rel','noopener');
+    var href = a.getAttribute('href') || '';
+    if (/^https?:/.test(href) && !/wa\.me/.test(href)) {
+      a.setAttribute('href', window.fwAddUtm(href));
+    }
+  });
+});
+
 /* ===== DATA ===== */
 const LISTINGS = [
   {id:'fw001',name:'ChaiCart',type:'eCommerce',badge:'badge-ecommerce',desc:'Premium D2C chai and masala eCommerce brand with 15K monthly orders. Shopify-based, strong Instagram following.',
