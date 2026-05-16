@@ -3457,11 +3457,41 @@ function submitSellForm(){
   if(!data.name||!data.contact){alert('Please fill in the business name and contact email.');return;}
   const dealId = 'FW-'+Date.now().toString(36).toUpperCase();
   data.dealId = dealId;
-  // Save to localStorage
+  // Save to localStorage (preserves submission for offline / device-recovery)
   const submissions = JSON.parse(localStorage.getItem('fw_submissions')||'[]');
   submissions.push(data);
   localStorage.setItem('fw_submissions',JSON.stringify(submissions));
-  // Show confirmation
+  // Build mailto fallback so submission actually reaches the team (no backend dep)
+  try {
+    var to = (window.FW_CONFIG && window.FW_CONFIG.supportEmail) || 'hello@flipwala.com';
+    var subj = '[New Listing] ' + (data.name||'(unnamed)') + ' — ' + dealId;
+    var bodyLines = [
+      'Deal ID: ' + dealId,
+      'Submitted: ' + data.submittedAt,
+      '',
+      'Business: ' + (data.name||''),
+      'Type: ' + (data.type||''),
+      'Region: ' + (data.region||''),
+      'URL: ' + (data.url||''),
+      '',
+      'Revenue ('+data.currency+'): ' + (data.revenue||''),
+      'Profit  ('+data.currency+'): ' + (data.profit||''),
+      'Asking  ('+data.currency+'): ' + (data.asking||''),
+      '',
+      'Contact (seller): ' + (data.contact||''),
+      '',
+      'Description:',
+      (data.desc||''),
+      '',
+      '— Sent from flipwala.com sell-form'
+    ];
+    var mailto = 'mailto:' + encodeURIComponent(to)
+      + '?subject=' + encodeURIComponent(subj)
+      + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+    // Open in same tab so the user's email client takes over without blocked popup
+    window.location.href = mailto;
+  } catch(e){ console.warn('[FlipWala] mailto fallback failed:', e); }
+  // Show confirmation regardless (localStorage already captured the submission)
   document.getElementById('sellForm').classList.add('hidden');
   document.getElementById('sellConfirm').classList.remove('hidden');
   document.getElementById('dealIdDisplay').textContent = dealId;
