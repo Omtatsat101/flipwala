@@ -1061,7 +1061,7 @@ input,select,textarea{font-family:var(--font)}
     <a href="#" onclick="showSection('ai-ops');return false">AI Ops</a>
     <a href="#" onclick="showSection('admin');return false">Admin</a>
     <a href="https://wa.me/1234567890?text=Hi!%20I'm%20interested%20in%20FlipWala" target="_blank" class="nav-wa">&#9742; WhatsApp</a>
-    <span id="v32SyncBadge" title="Supabase sync status (v3.2)"><span class="v32-dot"></span><span id="v32SyncLabel">Local only</span></span>
+    <span id="v32SyncBadge" title="Workspace sync status"><span class="v32-dot"></span><span id="v32SyncLabel">Browser only</span></span>
   </div>
   <div class="fw-nav-search" id="fwNavSearchWrap">
     <input type="text" id="fwNavSearch" placeholder="Search listings, pages... (press /)" autocomplete="off" oninput="fwSearchInput(this.value)" onfocus="fwSearchInput(this.value)">
@@ -1284,6 +1284,7 @@ input,select,textarea{font-family:var(--font)}
   </div>
 
   <form id="sellForm" onsubmit="return false">
+  <input type="text" id="sf_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none">
   <!-- Step 1 -->
   <div class="form-panel" data-step="1">
     <div class="form-group"><label>Business Name</label><input type="text" id="sf_name" required placeholder="e.g. ChaiCart"></div>
@@ -1358,8 +1359,7 @@ input,select,textarea{font-family:var(--font)}
     <h3 style="font-size:24px;font-weight:800;margin-bottom:8px">Listing Submitted!</h3>
     <p style="color:var(--muted);margin-bottom:16px">Your deal has been registered. Our team will review and reach out within 48 hours.</p>
     <div class="deal-id" id="dealIdDisplay">FW-000000</div>
-    <p style="color:var(--muted);font-size:14px;margin-top:16px">Save this deal ID for reference.</p>
-    <a href="https://wa.me/1234567890?text=Hi!%20My%20deal%20ID%20is%20" target="_blank" class="btn btn-wa" style="margin-top:20px">&#9742; Follow Up on WhatsApp</a>
+    <p style="color:var(--muted);font-size:14px;margin-top:16px">Save this deal ID for reference. We will follow up using the email on your submission.</p>
   </div>
 </div>
 
@@ -1667,6 +1667,7 @@ input,select,textarea{font-family:var(--font)}
     <p>Fresh listings, market insights, and acquisition opportunities delivered every Thursday.</p>
     <form onsubmit="digestSignup(event)" style="display:flex;gap:8px;margin-top:8px">
       <input type="email" id="digestEmail" placeholder="your@email.com" required style="flex:1;padding:10px 14px;border-radius:var(--radius);background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink);font-size:14px">
+      <input type="text" id="digestHp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none">
       <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
     </form>
     <div id="digestConfirm" class="hidden" style="margin-top:12px;color:var(--green);font-size:14px;font-weight:600">&#10003; You are subscribed! Check your inbox Thursday.</div>
@@ -3440,7 +3441,7 @@ function setSellCurrency(c,btn){
   btn.classList.add('active');
 }
 
-function submitSellForm(){
+async function submitSellForm(){
   const data = {
     name:document.getElementById('sf_name').value,
     type:document.getElementById('sf_type').value,
@@ -3451,47 +3452,43 @@ function submitSellForm(){
     revenue:document.getElementById('sf_revenue').value,
     profit:document.getElementById('sf_profit').value,
     asking:document.getElementById('sf_asking').value,
+    annual:document.getElementById('sf_annual').value,
+    trend:document.getElementById('sf_trend').value,
+    traffic:document.getElementById('sf_traffic').value,
+    emailSubscribers:document.getElementById('sf_email_subs').value,
+    socialFollowers:document.getElementById('sf_social').value,
+    growthRate:document.getElementById('sf_growth').value,
+    trafficSources:document.getElementById('sf_traffic_src').value,
+    tech:document.getElementById('sf_tech').value,
+    team:document.getElementById('sf_team').value,
+    weeklyHours:document.getElementById('sf_hours').value,
+    dependencies:document.getElementById('sf_deps').value,
+    whySelling:document.getElementById('sf_why').value,
+    buyerProfile:document.getElementById('sf_buyer').value,
     contact:document.getElementById('sf_contact').value,
+    whatsapp:document.getElementById('sf_whatsapp').value,
     submittedAt:new Date().toISOString()
   };
   if(!data.name||!data.contact){alert('Please fill in the business name and contact email.');return;}
+  if(document.getElementById('sf_hp').value){return;}
   const dealId = 'FW-'+Date.now().toString(36).toUpperCase();
   data.dealId = dealId;
+  try {
+    await fwSubmitLeadCapture('seller-intake', {
+      email:data.contact,
+      name:data.name,
+      message:[data.type, data.region, data.url].filter(Boolean).join(' | '),
+      ...data
+    });
+  } catch (err) {
+    alert('We could not save your listing right now. Please try again in a minute.');
+    return;
+  }
   // Save to localStorage (preserves submission for offline / device-recovery)
   const submissions = JSON.parse(localStorage.getItem('fw_submissions')||'[]');
   submissions.push(data);
   localStorage.setItem('fw_submissions',JSON.stringify(submissions));
-  // Build mailto fallback so submission actually reaches the team (no backend dep)
-  try {
-    var to = (window.FW_CONFIG && window.FW_CONFIG.supportEmail) || 'hello@flipwala.com';
-    var subj = '[New Listing] ' + (data.name||'(unnamed)') + ' — ' + dealId;
-    var bodyLines = [
-      'Deal ID: ' + dealId,
-      'Submitted: ' + data.submittedAt,
-      '',
-      'Business: ' + (data.name||''),
-      'Type: ' + (data.type||''),
-      'Region: ' + (data.region||''),
-      'URL: ' + (data.url||''),
-      '',
-      'Revenue ('+data.currency+'): ' + (data.revenue||''),
-      'Profit  ('+data.currency+'): ' + (data.profit||''),
-      'Asking  ('+data.currency+'): ' + (data.asking||''),
-      '',
-      'Contact (seller): ' + (data.contact||''),
-      '',
-      'Description:',
-      (data.desc||''),
-      '',
-      '— Sent from flipwala.com sell-form'
-    ];
-    var mailto = 'mailto:' + encodeURIComponent(to)
-      + '?subject=' + encodeURIComponent(subj)
-      + '&body=' + encodeURIComponent(bodyLines.join('\n'));
-    // Open in same tab so the user's email client takes over without blocked popup
-    window.location.href = mailto;
-  } catch(e){ console.warn('[FlipWala] mailto fallback failed:', e); }
-  // Show confirmation regardless (localStorage already captured the submission)
+  // Show confirmation after both the server-side capture and local backup succeed.
   document.getElementById('sellForm').classList.add('hidden');
   document.getElementById('sellConfirm').classList.remove('hidden');
   document.getElementById('dealIdDisplay').textContent = dealId;
@@ -3773,15 +3770,29 @@ function removePipelineCard(col,idx){
 }
 
 /* ===== DIGEST SIGNUP ===== */
-function digestSignup(e){
+async function digestSignup(e){
   e.preventDefault();
-  const email = document.getElementById('digestEmail').value;
-  if(email){
+  const email = document.getElementById('digestEmail').value.trim();
+  const status = document.getElementById('digestConfirm');
+  if(!email) return;
+  if(document.getElementById('digestHp').value) return;
+  try {
+    await fwSubmitLeadCapture('newsletter', {
+      email,
+      name:'FlipWala Weekly Digest',
+      message:'Weekly deal digest signup'
+    });
     const subs = JSON.parse(localStorage.getItem('fw_digest')||'[]');
     subs.push({email,date:new Date().toISOString()});
     localStorage.setItem('fw_digest',JSON.stringify(subs));
-    document.getElementById('digestConfirm').classList.remove('hidden');
+    status.textContent='✓ You are subscribed! Check your inbox Thursday.';
+    status.style.color='var(--green)';
+    status.classList.remove('hidden');
     document.getElementById('digestEmail').value='';
+  } catch (err) {
+    status.textContent='We could not save your signup right now. Please try again.';
+    status.style.color='var(--red)';
+    status.classList.remove('hidden');
   }
 }
 
@@ -4241,12 +4252,15 @@ function updatePlanDisplay(){
   if (params.get('subscription') === 'success' && params.get('tier')) {
     localStorage.setItem('fw_subscription', params.get('tier'));
     localStorage.removeItem('fw_subscription_pending');
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+    }
   }
   const plan = localStorage.getItem('fw_subscription')
     || localStorage.getItem('fw_subscription_pending')
     || 'free';
   const el = document.getElementById('fwCurrentPlan');
-  if(el) el.textContent = 'Current plan: ' + plan.charAt(0).toUpperCase() + plan.slice(1);
+  if(el) el.textContent = 'Current plan: ' + plan.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
 function upgradeToPaidBuyer(){
@@ -5524,11 +5538,34 @@ v31Init();
    - All new localStorage keys prefixed fw_v32_
    ============================================================ */
 const V32_CONFIG = {
-  supabaseUrl: 'https://YOUR_PROJECT.supabase.co',
-  supabaseAnonKey: 'YOUR_ANON_KEY',
+  supabaseUrl: 'https://doxmbwizpsyqruyrmffs.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRveG1id2l6cHN5cXJ1eXJtZmZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwNDUwNjMsImV4cCI6MjA5MTYyMTA2M30.o9o4UCBib6L1w3glbSi97fyxTQQH548ACZ8nut91CwI',
   platform: 'fw',
   syncEnabled: false  // default OFF — flip to true once real keys are in
 };
+
+async function fwSubmitLeadCapture(form, payload){
+  const email = String(payload.email || '').trim().toLowerCase();
+  if (!email) throw new Error('missing_email');
+  const res = await fetch(V32_CONFIG.supabaseUrl + '/rest/v1/form_submissions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: V32_CONFIG.supabaseAnonKey,
+      Authorization: 'Bearer ' + V32_CONFIG.supabaseAnonKey,
+      Prefer: 'return=minimal'
+    },
+    body: JSON.stringify({
+      site: 'flipwala',
+      form,
+      email,
+      name: String(payload.name || '').trim().slice(0,255),
+      message: String(payload.message || '').trim().slice(0,5000),
+      payload
+    })
+  });
+  if (!res.ok) throw new Error('submit_failed_' + res.status);
+}
 
 window.v32 = (function(){
   let _client = null;
@@ -5583,10 +5620,10 @@ window.v32 = (function(){
       lbl.textContent = label;
     },
     refresh(){
-      if (!V32_CONFIG.syncEnabled) { this.set('local','Local only'); return; }
+      if (!V32_CONFIG.syncEnabled) { this.set('local','Browser only'); return; }
       if (!navigator.onLine) { this.set('offline','Offline'); return; }
       if (isAuthed() && client()) this.set('synced','Synced');
-      else this.set('local','Local only');
+      else this.set('local','Browser only');
     }
   };
 
@@ -6237,15 +6274,25 @@ function fwV33OpenLegal(kind){
   `;
   document.body.appendChild(m);
 }
-function fwV33SubmitDmca(){
+async function fwV33SubmitDmca(){
   const n = document.getElementById('fwV33DmcaName').value;
+  const email = document.getElementById('fwV33DmcaEmail').value.trim();
+  const url = document.getElementById('fwV33DmcaUrl').value;
+  const body = document.getElementById('fwV33DmcaBody').value;
   if (!n) { alert('Name required'); return; }
+  if (!email) { alert('Email required'); return; }
+  try {
+    await fwSubmitLeadCapture('dmca', { email, name:n, message:body, url, body });
+  } catch (err) {
+    alert('We could not save your takedown request right now. Please try again shortly.');
+    return;
+  }
   const reqs = JSON.parse(localStorage.getItem('fw_v33_dmca') || '[]');
   reqs.push({
     name:n,
-    email:document.getElementById('fwV33DmcaEmail').value,
-    url:document.getElementById('fwV33DmcaUrl').value,
-    body:document.getElementById('fwV33DmcaBody').value,
+    email:email,
+    url:url,
+    body:body,
     ts:Date.now()
   });
   localStorage.setItem('fw_v33_dmca', JSON.stringify(reqs));
